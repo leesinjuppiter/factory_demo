@@ -105,3 +105,35 @@ GPU测试覆盖随机旋转框跨64框分块、过滤索引、空输入、全小
 约束：API测试创建独立schema，不指向其他项目数据库。smoke用50张验证流程，不计算精度或全量指标。模拟落盘、WS、历史和预览另行联调。没有工业相机、编码器、机械臂，不以GPU可用、短样本均值或模拟42fps证明生产42fps和动作时限。
 
 实际结果见 [云端验收证据](evidence/cloud-validation-20261028.json)。更改环境或实现后需要重新验证。
+
+## 7. AutoDL 6006 只读展示入口
+
+用户确认使用AutoDL允许映射的6006端口。实例内继续运行HTTP服务；浏览器访问平台提供的HTTPS地址，两者不是同一段协议。[AutoDL官方端口文档](https://www.autodl.com/docs/port/)提供了HTTP映射与HTTPS公网地址的示例，不应把控制台复制的https前缀手工改成http。
+
+本实例已验证的公网地址：
+
+<https://u1101749-9dad-6f2edc53.westb.seetacloud.com:8443/>
+
+准确主机名含westb。此前截图转写成west导致连接失败；以控制台复制地址为准，不推测其他域名。
+
+```bash
+conda activate factory_demo
+cd /root/autodl-tmp/factory_demo
+FACTORY_DISPLAY_HOST=u1101749-9dad-6f2edc53.westb.seetacloud.com \
+python -B -m uvicorn backend.display_gateway:app --host 0.0.0.0 --port 6006 --workers 1
+```
+
+该命令仅在入口未运行时执行。当前已在后台运行，PID与日志位于 `/root/autodl-tmp/tmp/factory-display-6006/gateway.pid` 和同目录gateway.log；重启容器后需要先启动8765主服务，再启动6006入口。映射域名或端口变化时核对平台地址并更新FACTORY_DISPLAY_HOST。
+
+数据路径为：浏览器HTTPS/WSS连接AutoDL入口，平台回源HTTP/WS到6006，只读入口再连接服务器127.0.0.1:8765的展示接口。浏览器无需SSH隧道；管理/历史继续通过原SSH隧道访问。入口不加载模型、不连数据库、不创建任务。
+
+边界约束：
+
+- 只开放展示HTML、display/style静态资源、展示快照、不可变JPEG预览与只读WS；/admin.html、/api/status、/api/runs、/api/uploads、/docs、.env和admin脚本均不公开。
+- 页面隐藏后台管理链接；HTTP控制路由不可达，WS收到应用数据关闭1008，不向主服务转发。前端同源默认地址支持HTTPS，显式display_origin覆盖仍仅允许本机模拟服务，预览必须同源。
+- 主服务和PostgreSQL仍仅监听本机。本入口故障只影响公开展示；8765主服务故障时入口返回通用503或断开WS，不能把旧画面解释为当前检测正常。
+- 公开入口用于用户明确允许展示的图片与结果，不提供账号认证、管理权限或原图历史下载；需要访问控制时另行设计，不以隐藏按钮代替路由隔离。
+- 上游WS订阅仍受主服务16连接上限约束，单入口HTTP连接池16、WS接收队列1；同一帧的图片与坐标一起显示，缓存过期按410处理。
+- 当前页面展示最近一次已停止任务的45框，结果年龄继续增长；后台创建新任务后自动更新，不伪造实时相机输入。
+
+公网HTTPS、JPEG、WSS、只读关闭码、私有路由阻断与浏览器结果见[evidence/public-display-6006-20261028.json](evidence/public-display-6006-20261028.json)，截图见[evidence/public-display-6006-20261028.png](evidence/public-display-6006-20261028.png)。

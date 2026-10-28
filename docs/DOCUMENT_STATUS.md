@@ -14,5 +14,6 @@
 |decoupling_analysis/REVIEW_DEEPSEEK_20261028.md|已确认决策与评审|落盘来源、本机部署、故障策略待定等依据|
 |evidence/v13-validation.json、v13-browser-validation.json、v13-live-flow.json|V1.3 本轮验证|协议、浏览器、真实模型与模拟落盘链路；不能代替42fps验收|
 |CLOUD_DEPLOYMENT.md、evidence/cloud-validation-20261028.json|V1.3 云端CUDA补充|RTX3080Ti、Linux NMS、独立PostgreSQL、50张真实GPU及持续落盘验收；不替换旧CPU证据|
+|CLOUD_DEPLOYMENT.md第7节、evidence/public-display-6006-20261028.json|用户确认的6006只读映射补充|HTTPS/WSS公网展示已验证；管理和数据库继续本机访问，不替换原默认部署边界|
 
 没有设备反馈时，机械臂、带速补偿、抓取准确率和执行时限仍是后续工作。没有目标设备上的真实适配与数值测试时，不将 OpenVINO/TensorRT 写成已支持。

@@ -45,11 +45,11 @@ export function validateSnapshot(value) {
   return value
 }
 
-// 只允许本机端点；同一份构建可用 ?display_origin=http://127.0.0.1:8878 切换模拟服务。
+// 默认同源部署；显式覆盖仍只允许本机模拟服务。
 export function displayOrigin(location) {
   const selected = new URLSearchParams(location.search).get('display_origin')
   const url = new URL(selected || location.origin)
-  if (!['http:', 'https:'].includes(url.protocol) || !['localhost', '127.0.0.1', '[::1]'].includes(url.hostname) || url.username || url.password || url.pathname !== '/' || url.search || url.hash) throw new Error('展示地址必须是本机 HTTP/HTTPS 服务的 origin')
+  if (!['http:', 'https:'].includes(url.protocol) || (selected && !['localhost', '127.0.0.1', '[::1]'].includes(url.hostname)) || url.username || url.password || url.pathname !== '/' || url.search || url.hash) throw new Error('展示地址须为当前页面同源服务，显式覆盖仅允许本机 HTTP/HTTPS origin')
   return url.origin
 }
 

@@ -13,6 +13,7 @@
 |backend/presentation.py|内存展示快照、异步预览、有界订阅|执行动作、改变推理结果|
 |backend/store.py|PostgreSQL 事务和历史记录|调用模型和决定网页刷新|
 |backend/app.py|组装服务、管理HTTP、展示WS/资源路由|把任意本地路径下发给展示|
+|backend/display_gateway.py|AutoDL6006只读入口，仅代理展示与受控预览|管理、历史、上传、任务控制、模型与数据库|
 |frontend/src/stream|连接、协议验证、配对、解码、历史适配|模型计算与数据库写入|
 |DetectionStage / DisplayApp|画布与只读页面|直接发控制命令或猜引擎格式|
 |AdminApp|参数、控制、历史和导出|机械动作控制|

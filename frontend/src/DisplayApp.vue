@@ -6,6 +6,7 @@ import { errorText } from './stream/contract.js'
 import './display.css'
 
 const { snapshot, prepared, connected, checked, error, lastContact } = useDisplayStream()
+const readOnlyGateway = document.querySelector('meta[name="factory-display-readonly"]')?.content === 'true'
 const stream = computed(() => snapshot.value?.stream)
 const frame = computed(() => prepared.value.frame)
 const filter = ref(''), clock = ref(new Date()), display = ref({ frame: null, selected: null })
@@ -51,7 +52,7 @@ onBeforeUnmount(() => clearInterval(clockTimer))
     <div class="display-statusbar">
       <span class="connection-badge" :class="connected ? 'good' : checked ? 'danger' : 'neutral'"><i></i>{{ connected ? '结果数据已连接' : checked ? '连接中断 · 最后结果' : '正在连接' }}</span>
       <span>最近同步 <b>{{ timeOf(lastContact) }}</b></span><span class="statusbar-task">任务 <b :title="stream?.session_id">{{ stream?.session_id?.slice(0, 8) || '—' }}</b></span>
-      <a class="module-link" href="/admin.html" target="_blank" rel="noopener">后台管理 ↗</a>
+      <a v-if="!readOnlyGateway" class="module-link" href="/admin.html" target="_blank" rel="noopener">后台管理 ↗</a>
     </div>
     <div class="industrial-grid">
       <aside class="industrial-left">

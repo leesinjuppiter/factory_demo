@@ -70,3 +70,7 @@ V1.3 教学运行依赖包含 `websockets==15.0.1`，用于 uvicorn 的 WebSocke
 ## 云端 GPU 补充
 
 参考适配器现在支持显式CPU/CUDA FP32，默认CPU。本轮RTX3080Ti部署经过真实验证，见[CLOUD_DEPLOYMENT.md](CLOUD_DEPLOYMENT.md)及[evidence/cloud-validation-20261028.json](evidence/cloud-validation-20261028.json)。课程仍采用独立教学数据库/端口，不因参考代码同步而修改practice。云端正式项目使用8765/factory_demo，教学练习仍使用8876/factory_demo_test_tutorial；不要直接用正式.env启动练习。GPU测试需要已编译扩展及匹配的数据路径。
+
+## 6006映射展示补充
+
+课程第11课附正式云端部署与6006展示说明。reference网关的上游已适配为教学端口8876，正式项目的上游为8765；不要混用。公网入口仅提供展示与只读WS，不代理管理。已验证的正式地址和证据见CLOUD_DEPLOYMENT.md及evidence/public-display-6006-20261028.json。

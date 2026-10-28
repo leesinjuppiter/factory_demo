@@ -1,0 +1,47 @@
+{
+  "checked_at": "2026-10-28T13:58:57.745257+00:00",
+  "public_origin": "https://u1101749-9dad-6f2edc53.westb.seetacloud.com:8443",
+  "container_protocol": "http",
+  "container_port": 6006,
+  "browser_protocol": "https",
+  "stream_protocol": "wss",
+  "preview_dimensions": [
+    1024,
+    700
+  ],
+  "blocked_paths": {
+    "/admin.html": 404,
+    "/api/status": 404,
+    "/api/runs": 404,
+    "/api/capabilities": 404,
+    "/.env": 404,
+    "/docs": 404
+  },
+  "control_post_status": 404,
+  "frame_key": {
+    "source_id": "camera_inbox",
+    "session_id": "a292044a0817484b838aaad2051d46f8",
+    "frame_id": "1"
+  },
+  "model_device": "cuda:0",
+  "detections": 45,
+  "readonly_close_code": 1008,
+  "passed": true,
+  "python_gateway_tests": 15,
+  "node_tests": 11,
+  "build_modules": 21,
+  "cloud_full_tests_passed": 61,
+  "cloud_subtests_passed": 9,
+  "admin_links": 0,
+  "console_errors": [],
+  "selected_target": 1,
+  "screenshot": "public-display-6006-20261028.png",
+  "official_port_document": "https://www.autodl.com/docs/port/",
+  "source_hashes": {
+    "backend/display_gateway.py": "08bdd913781badae7925980545bb5bff95aa62b6c92e39a35d9309b4733810f8",
+    "frontend/src/DisplayApp.vue": "cc3f5d60d364e3458947b37893fbbe66c4448340a29d750118060aedff83001d",
+    "frontend/src/stream/contract.js": "1b04ca974068df32cf5397833ccded73acf70582fd6d7f6fe0c6d83caef835d1",
+    "tests/test_display_gateway.py": "45717209b67bde131760e0077e8e8322582a06ee21631fd914489f6ca4edb813"
+  },
+  "source_hashes_encoding": "file bytes with CRLF normalized to LF"
+}

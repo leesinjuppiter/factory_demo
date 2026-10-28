@@ -4,8 +4,8 @@
     {
       "section": "cloud",
       "source": "docs\\CLOUD_DEPLOYMENT.md",
-      "sha256": "3d61bd588eccf4ed3ef086b6ebd3bdd75d9a6a2c7369cbe57b5f0515ec7e03ee",
-      "headings": 7
+      "sha256": "65ddc716e009718fc43dc9657f72dd204efea4ec58a7f5ac55b8c81d0639e440",
+      "headings": 8
     },
     {
       "section": "release",
@@ -16,7 +16,7 @@
     {
       "section": "status",
       "source": "docs\\DOCUMENT_STATUS.md",
-      "sha256": "fdfa867ef94aa916356440cdc285d4b6eaf8a4d9e84421663387db3c00679bd4",
+      "sha256": "bf5f356ef66b5de73839e372eb79441c3433d854697e3d1f0cf71f3eada19802",
       "headings": 1
     },
     {
@@ -40,7 +40,7 @@
     {
       "section": "start",
       "source": "README.md",
-      "sha256": "e5b58b7aa88d99e51d52251ffcd5f6f6ccd85238e61437e702d884939d6508b8",
+      "sha256": "bcbee1d77c8e59f5df0a37e4afb374d430ea95b1fe3de271ca6bc3df0c8212d7",
       "headings": 13
     },
     {
@@ -52,19 +52,19 @@
     {
       "section": "product",
       "source": "docs\\PRODUCT.md",
-      "sha256": "74780776b614bef337249cc59ed7d9c979c10c3feccfdb4b617a83b1bf2291b6",
+      "sha256": "504834f914318baaeda1c6f9a6e2cd53430ef94f9b4888d77907266beb4c15a9",
       "headings": 11
     },
     {
       "section": "architecture",
       "source": "docs\\ARCHITECTURE.md",
-      "sha256": "a79badd7317f4d3f100baf1554f97c4f59e5c97184df115fbe782475d589a1ae",
+      "sha256": "ac66ddf1547cb20791903713e3cffc2374d5ad018aeb9ce49c62a19ec859af1d",
       "headings": 8
     },
     {
       "section": "contract",
       "source": "docs\\CONTRACT.md",
-      "sha256": "def35d7cd627d28d2dca66548efc374c9057c16ef870c4d3c89d17d9b94a429f",
+      "sha256": "dabc69893aec01890ea2df35530aab2e8ca852f2794937e5d1d272be1e3b1cc8",
       "headings": 8
     },
     {

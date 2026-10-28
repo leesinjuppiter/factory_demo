@@ -1,6 +1,6 @@
 # V1.3 API 与通用展示协议
 
-本机单进程服务。管理/历史接口保留旧 Run/Frame，通用展示使用独立白名单契约；两个结构不能混为同一接口。真实引擎为PyTorch CPU/CUDA FP32，默认CPU，模型device按实际设备返回；OV/TRT unavailable。云端仍通过本机SSH隧道访问，协议结构不变。
+本机单进程推理服务。管理/历史接口保留旧Run/Frame，通用展示使用独立白名单契约；两个结构不能混为同一接口。真实引擎为PyTorch CPU/CUDA FP32，默认CPU，model.device按实际设备返回；OV/TRT unavailable。管理与历史仍经SSH本机隧道；用户明确要求后，新增6006独立只读展示入口，浏览器HTTPS/WSS经AutoDL映射到实例HTTP/WS。协议结构不变，公开入口不代理私有API，见[CLOUD_DEPLOYMENT.md](CLOUD_DEPLOYMENT.md#7-autodl-6006-只读展示入口)。
 
 ## 1. 展示端点
 

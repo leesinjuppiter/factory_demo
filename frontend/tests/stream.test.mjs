@@ -32,7 +32,8 @@ test('empty successful detection is different from error', () => {
   const error = fixture(); error.frame.status = 'error'; error.frame.detections = []; error.frame.width = 0; error.frame.height = 0; error.frame.preview = null
   assert.equal(validateSnapshot(error).frame.status, 'error')
 })
-test('endpoint configuration is local-only and image URLs stay on selected service', () => {
+test('same-origin public deployment works; explicit overrides stay local and previews stay same-origin', () => {
+  assert.equal(displayOrigin({ origin: 'https://display.example.com:8443', search: '' }), 'https://display.example.com:8443')
   assert.equal(displayOrigin({ origin, search: '?display_origin=http://localhost:8879' }), 'http://localhost:8879')
   for (const query of ['https://example.com', 'http://127.0.0.1:8879/path', 'http://user:secret@localhost:8879']) assert.throws(() => displayOrigin({ origin, search: '?display_origin=' + encodeURIComponent(query) }))
   assert.equal(previewUrl('/image.jpg', origin), origin + '/image.jpg')

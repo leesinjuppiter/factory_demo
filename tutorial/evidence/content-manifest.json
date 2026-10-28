@@ -140,7 +140,7 @@
     {
       "lesson": 13,
       "file": "reference/frontend/src/stream/contract.js",
-      "sha256": "973383f01d1cd9104a3ad5e4a387fe988dcb7e9b5d5d3d927d10da3fb84c2b03"
+      "sha256": "22795f81ffb2cb348738cb9ad973659fc4e79c3e8fa1b6c0ada7c8d974ad51d7"
     },
     {
       "lesson": 13,
@@ -165,7 +165,7 @@
     {
       "lesson": 14,
       "file": "reference/frontend/src/DisplayApp.vue",
-      "sha256": "e7931314d89b8bd438c990d0a701cca3cb516ced44eef3f5e3392764c16e172a"
+      "sha256": "58b7b3043393efc5df70fc438792562a5e76486103ebc67e2e0b1d0236ac4945"
     },
     {
       "lesson": 14,
@@ -235,7 +235,7 @@
     {
       "lesson": 16,
       "file": "reference/frontend/tests/stream.test.mjs",
-      "sha256": "7e70a3743f5b8d3ad1f241d513b7713011a308c03465c59a6ceff6567f8c90bb"
+      "sha256": "51253c8ce36bca94c5aa9adb5dcfc525daeeb07bef2511d68e86aae007b5ed5e"
     },
     {
       "lesson": 18,

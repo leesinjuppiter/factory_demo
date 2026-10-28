@@ -15,6 +15,7 @@
 
 - [V1.3 使用与边界](docs/V1_3_DECOUPLING.md)
 - [模拟拍照与持续目录](docs/CAMERA_INBOX.md)
+- [AutoDL GPU部署及6006只读展示入口](docs/CLOUD_DEPLOYMENT.md)：实例内HTTP，平台HTTPS/WSS映射；管理仍经SSH隧道。
 - [当前协议](docs/CONTRACT.md) / [架构](docs/ARCHITECTURE.md) / [文档状态索引](docs/DOCUMENT_STATUS.md)
 - [离线网页版手册](docs/GUIDE.html)
 
