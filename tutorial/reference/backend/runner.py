@@ -3,6 +3,7 @@ import copy
 import hashlib
 import json
 import logging
+import os
 import threading
 import time
 import uuid
@@ -40,7 +41,7 @@ class Runner:
         self._control_dirty = False
         self.latest_frame = None
         self.model = {"name": settings.weights.stem, "path": str(settings.weights), "sha256": None,
-                      "classes": [], "box_type": "obb", "device": "cpu"}
+                      "classes": [], "box_type": "obb", "device": os.getenv("FACTORY_DEVICE", "cpu")}
         # Recovery is a startup operation. Steady-state status/display reads never
         # query PostgreSQL; cold start still intentionally requires the database.
         self.current = store.latest_run()

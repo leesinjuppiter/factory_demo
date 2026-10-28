@@ -2,9 +2,9 @@
 
 ## 已实现接口与运行方式
 
-模块：`backend/inference/pytorch_obb.py`。`PytorchOBBAdapter(weights)` 只接收可信的本地 `.pt` 权重路径。`load()` 加载一次并返回模型元数据；`predict(image_bgr, image_size=..., confidence=..., iou=..., max_det=...)` 接收 OpenCV `uint8 H×W×3 BGR` 图像，返回标准检测列表和阶段耗时。
+模块：`backend/inference/pytorch_obb.py`。`PytorchOBBAdapter(weights, device="cpu")` 接收可信的本地 `.pt` 权重路径和明确设备。`load()` 加载一次并返回模型元数据；`predict(image_bgr, image_size=..., confidence=..., iou=..., max_det=...)` 接收 OpenCV `uint8 H×W×3 BGR` 图像，返回标准检测列表和阶段耗时。
 
-接口由单个后台推理线程顺序调用。不可在多个线程并发使用同一个适配器。当前固定 CPU/FP32，线程数为 `min(4, os.cpu_count())`。不存在自动 CUDA、OpenVINO、TensorRT 回退。
+接口由单个后台推理线程顺序调用。不可在多个线程并发使用同一个适配器。支持CPU或CUDA FP32，默认CPU；应用通过FACTORY_DEVICE=cuda:N显式选择GPU，设备不可用则失败。CPU线程数为 `min(4, os.cpu_count())`。不存在自动设备或OpenVINO/TensorRT回退。云端配置和编译见[CLOUD_DEPLOYMENT.md](CLOUD_DEPLOYMENT.md)。
 
 调用链按原仓库 `detect.py` 的 PyTorch 分支实现：
 
@@ -50,7 +50,7 @@ SHA-256：`62af01dbc971d332ad4813d5f2811243f555877ffbdb0755fe428159687ef037`。
 - 输出包含非法类别、非有限坐标、非有限前向结果或非法置信度时抛出错误，禁止将损坏输出标记为有效检测。
 - 原 NMS 的候选上限为 30,000；`max_det` 仅限制最终输出数量，不代表前向候选数量或后处理耗时的严格上界。
 - 暂停/停止由任务管理器在帧边界执行；无法中断正在进行的原生算子。用户界面需显示正在暂停/停止。
-- 本版未启用随机增强、半精度、跨帧跟踪、GPU、多 worker 或多模型热切换。
+- 本版未启用随机增强、半精度、跨帧跟踪、多 worker 或多模型热切换。CUDA路径的阶段耗时在边界同步，包含数据传输，不等于完整链路延迟。
 - 旧 checkpoint 需要顶层 `models.*`/`utils.*` 导入名称；如果当前进程已加载其他仓库的同名模块，适配器明确拒绝，要求独立启动。
 
 ## 计时口径

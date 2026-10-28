@@ -90,7 +90,7 @@
     {
       "lesson": 8,
       "file": "reference/backend/runner.py",
-      "sha256": "53896f94ac7ed0fb6e628a78a76df375db82648d5e16eaf3d8f9a7872d60088a"
+      "sha256": "fa3da642dafa1b4a72099e7511048fb630b8d2e14c374a929d0e59c5166c6e3c"
     },
     {
       "lesson": 8,
@@ -125,7 +125,7 @@
     {
       "lesson": 11,
       "file": "reference/backend/inference/pytorch_obb.py",
-      "sha256": "474cd1cc6247d1c98d58f7efbf9dfc3ae25274b5eeefd24579fd935a06a83e2e"
+      "sha256": "9e4c48abd274e42558aa9bbcba2eb0d80a81bc5f1e2edf1a2aa8a30c12d0e099"
     },
     {
       "lesson": 12,
@@ -135,7 +135,7 @@
     {
       "lesson": 12,
       "file": "reference/vendor/README.md",
-      "sha256": "f9e1eee123d613dcad570e106f5b757be2a9cf10540002bdadc88d3c309dbf00"
+      "sha256": "23ca752e0f94fa3dfbf6042f824690752fdf7bb8d78f38b0aa0c289018a7fc22"
     },
     {
       "lesson": 13,
@@ -150,7 +150,7 @@
     {
       "lesson": 13,
       "file": "reference/frontend/src/stream/usePreparedFrame.js",
-      "sha256": "d8b22679032694c8d9519e94ed82fd2b5dfb80c9c368696fe18d3738cb13ff85"
+      "sha256": "5438337e89bd72d9fb736cce6224a22b181bfc102f4d0c314169b85924f6d426"
     },
     {
       "lesson": 13,
@@ -190,7 +190,7 @@
     {
       "lesson": 14,
       "file": "reference/frontend/src/api.js",
-      "sha256": "b859b87205c3ac4e4f9e62d543c6317530d708abca53b11adfaba4d43135cf45"
+      "sha256": "9c7bde694bf43b42d2f96c49a59b27b458d1883e07a9dd742f5054b6952b0bda"
     },
     {
       "lesson": 14,
@@ -220,7 +220,7 @@
     {
       "lesson": 16,
       "file": "reference/tests/test_inference.py",
-      "sha256": "82fe3fdb9b9a643d767be4099c6a3295d267c51d07b60957a75f7758e64d7c74"
+      "sha256": "3f27c00458c2ebb42649e84e05467b9622c9bd27c99414b8cc1bf8f6785eeed2"
     },
     {
       "lesson": 16,
@@ -240,7 +240,7 @@
     {
       "lesson": 18,
       "file": "reference/backend/inference/factory.py",
-      "sha256": "2e32da6e4b833b6c53255566b2726752df189d2e87a017218ae49be75196a5d8"
+      "sha256": "443f9c225d647102f0a2cbd72fb1e9142cb535db33fb72b8003ab0b8298d45c8"
     }
   ],
   "diagrams": 5

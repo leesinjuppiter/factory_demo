@@ -24,4 +24,8 @@ dist/
 *.sqlite3
 *.db
 tutorial/practice/
+*.so
+*.o
+*.egg-info/
+build/
 

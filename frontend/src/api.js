@@ -1,6 +1,6 @@
 // 每个请求都有限时；业务错误和断线统一转为可读消息。
 export async function api(path, options = {}) {
-  const response = await fetch(`/api${path}`, { ...options, signal: AbortSignal.timeout(10000) })
+  const response = await fetch(`/api${path}`, { ...options, signal: AbortSignal.timeout(30000) })
   const contentType = response.headers.get('content-type') || ''
   const data = contentType.includes('json') ? await response.json() : null
   if (!response.ok) {

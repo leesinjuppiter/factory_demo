@@ -2,15 +2,21 @@
   "date": "2026-10-28",
   "documents": [
     {
+      "section": "cloud",
+      "source": "docs\\CLOUD_DEPLOYMENT.md",
+      "sha256": "3d61bd588eccf4ed3ef086b6ebd3bdd75d9a6a2c7369cbe57b5f0515ec7e03ee",
+      "headings": 7
+    },
+    {
       "section": "release",
       "source": "docs\\V1_3_DECOUPLING.md",
-      "sha256": "647566354ef5ad68249f6f1a2410990dbf4f4a49ba0becb9344452b61b1f2f4c",
-      "headings": 8
+      "sha256": "882ec9f9e0270da58398efa18b3c62d9650ef4f0c58b02660f5b05ae06ae397e",
+      "headings": 9
     },
     {
       "section": "status",
       "source": "docs\\DOCUMENT_STATUS.md",
-      "sha256": "6bd863d4fe46f5d9b5454e9093e4b3eb0e66a6f44416852e7f7d4640b8e3ecb4",
+      "sha256": "fdfa867ef94aa916356440cdc285d4b6eaf8a4d9e84421663387db3c00679bd4",
       "headings": 1
     },
     {
@@ -34,7 +40,7 @@
     {
       "section": "start",
       "source": "README.md",
-      "sha256": "cc464517bfac3559563a1c1386811867820a7f14a527684e12cd3bdd9f96c0f2",
+      "sha256": "e5b58b7aa88d99e51d52251ffcd5f6f6ccd85238e61437e702d884939d6508b8",
       "headings": 13
     },
     {
@@ -46,25 +52,25 @@
     {
       "section": "product",
       "source": "docs\\PRODUCT.md",
-      "sha256": "e9bc367d22e418b7977cf49c79827e3c4a8813f28b7676bb0e99306e351bdfd5",
+      "sha256": "74780776b614bef337249cc59ed7d9c979c10c3feccfdb4b617a83b1bf2291b6",
       "headings": 11
     },
     {
       "section": "architecture",
       "source": "docs\\ARCHITECTURE.md",
-      "sha256": "fcca14f3e978bf22b550aa4a4d2fb801fb66856413c30c3580d58512ee2a7c3d",
+      "sha256": "a79badd7317f4d3f100baf1554f97c4f59e5c97184df115fbe782475d589a1ae",
       "headings": 8
     },
     {
       "section": "contract",
       "source": "docs\\CONTRACT.md",
-      "sha256": "6f7757854ba1c5a18055c7e6969390d08345a05ea179a8e1fd6de532ad21aeda",
+      "sha256": "def35d7cd627d28d2dca66548efc374c9057c16ef870c4d3c89d17d9b94a429f",
       "headings": 8
     },
     {
       "section": "inference",
       "source": "docs\\INFERENCE.md",
-      "sha256": "c8dad3121d63eeacce6fca17d62d352bae441ecd1504741c0810d404c3e554ee",
+      "sha256": "29a6a4a241c37dd2f9a746c131b26b97dfe79ad7f152ee039ec968f57db62e30",
       "headings": 6
     },
     {

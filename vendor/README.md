@@ -20,6 +20,8 @@
 
 ## 二进制扩展边界
 
+2026-10-28云端适配补充：setup.py只编译应用使用的旋转OBB CUDA文件，旧poly_nms_cuda.cu保留但不编译；对应C++入口对多边形NMS明确拒绝。CUDA guard/整除改为兼容接口，过滤后索引与输入设备一致，保留原旋转IoU及抑制逻辑。默认构建按CUDA可用性选择，FORCE_CPU=1可只构建CPU。GPU对照测试与编译记录见docs/CLOUD_DEPLOYMENT.md和docs/evidence/cloud-validation-20261028.json。MANIFEST.json保留最初复制时的来源哈希，当前适配后文件哈希以云端证据source_hashes为准；不把它误当未修改的上游副本。
+
 `nms_rotated_ext.cp310-win_amd64.pyd` 是当前 Windows x64 / CPython 3.10 / 本机 PyTorch 环境的 CPU 扩展。它不是跨 Python、操作系统、PyTorch 版本可移植的二进制文件。更换环境后若导入失败，应在目标环境使用保留源码重新编译；不能把“源码存在”解释成新环境已验证。CUDA 源码存在不表示当前已编译或验证 CUDA NMS。
 
 `poly_nms` 的 CPU 实现不可用；本版使用的是 `obb_nms`，已用重复旋转框验证实际抑制行为。

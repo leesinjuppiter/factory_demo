@@ -1,4 +1,4 @@
-"""Local CPU YOLOv5-OBB inference, following the source repository's detect.py.
+"""CPU/CUDA YOLOv5-OBB inference, following the source repository's detect.py.
 
 The checkpoint is a trusted local PyTorch full-model checkpoint, not a user upload.
 Call load/predict from the application's single inference worker, never concurrently.
@@ -21,13 +21,16 @@ COLORS = ("#087f8c", "#c46a20", "#7561b3", "#397a35", "#bb4d63", "#315fb1", "#8b
 
 
 class PytorchOBBAdapter:
-    def __init__(self, weights: Path):
+    def __init__(self, weights: Path, device="cpu"):
         self.weights = Path(weights).resolve()
+        if device != "cpu" and not (device.startswith("cuda:") and device[5:].isdigit()):
+            raise ValueError("device 必须为 cpu 或 cuda:N")
+        self.requested_device = device
         self.model = None
         self.metadata = None
 
     def load(self) -> dict:
-        """Load once on CPU and warm up; neither step contributes to per-frame timing."""
+        """Load once on the explicit device; fail rather than silently fall back."""
         if self.model is not None:
             return deepcopy(self.metadata)
         if self.weights.suffix.lower() != ".pt" or not self.weights.is_file():
@@ -43,12 +46,16 @@ class PytorchOBBAdapter:
             sys.path.insert(0, str(VENDOR))
 
         import torch
+        device = torch.device(self.requested_device)
+        if device.type == "cuda" and (not torch.cuda.is_available() or device.index >= torch.cuda.device_count()):
+            raise RuntimeError(f"指定的推理设备不可用：{device}")
         from models.common import DetectMultiBackend
         from utils.augmentations import letterbox
         from utils.general import non_max_suppression_obb, scale_polys
         from utils.rboxs_utils import rbox2poly
 
         self.torch = torch
+        self.device = device
         self.letterbox = letterbox
         self.nms = non_max_suppression_obb
         self.scale_polys = scale_polys
@@ -56,7 +63,7 @@ class PytorchOBBAdapter:
         threads = min(4, os.cpu_count() or 1)
         torch.set_num_threads(threads)
         start = perf_counter()
-        model = DetectMultiBackend(str(self.weights), device=torch.device("cpu"))
+        model = DetectMultiBackend(str(self.weights), device=device)
         model.model.float().eval()
         raw_names = model.names
         names = [str(raw_names[i]) for i in range(len(raw_names))]
@@ -64,7 +71,8 @@ class PytorchOBBAdapter:
             raise ValueError("权重类别表与检测头类别数量不一致")
         # Fail on HBB weights rather than interpreting ordinary output as CSL angles.
         with torch.inference_mode():
-            probe = model(torch.zeros((1, 3, 640, 640), dtype=torch.float32))
+            probe = model(torch.zeros((1, 3, 640, 640), dtype=torch.float32, device=device))
+        self._synchronize()
         if probe.ndim != 3 or probe.shape[-1] != 5 + len(names) + 180:
             raise ValueError("模型输出不符合 YOLOv5-OBB CSL-180 协议")
         load_ms = (perf_counter() - start) * 1000
@@ -81,7 +89,8 @@ class PytorchOBBAdapter:
                 for i, name in enumerate(names)
             ],
             "box_type": "obb",
-            "device": "cpu",
+            "device": str(device),
+            "device_name": torch.cuda.get_device_name(device) if device.type == "cuda" else "CPU",
             "precision": "float32",
             "cpu_threads": threads,
             "stride": int(model.stride),
@@ -89,6 +98,10 @@ class PytorchOBBAdapter:
         }
         self.model = model
         return deepcopy(self.metadata)
+
+    def _synchronize(self):
+        if self.device.type == "cuda":
+            self.torch.cuda.synchronize(self.device)
 
     def predict(self, image_bgr: np.ndarray, *, image_size: int,
                 confidence: float, iou: float, max_det: int) -> dict:
@@ -112,13 +125,16 @@ class PytorchOBBAdapter:
 
         torch = self.torch
         with torch.inference_mode():
+            self._synchronize()
             t0 = perf_counter()
             im = self.letterbox(image_bgr, (image_size, image_size),
                                 stride=self.metadata["stride"], auto=True)[0]
             im = np.ascontiguousarray(im.transpose((2, 0, 1))[::-1])
-            tensor = torch.from_numpy(im).float().div_(255).unsqueeze(0)
+            tensor = torch.from_numpy(im).to(self.device).float().div_(255).unsqueeze(0)
+            self._synchronize()
             t1 = perf_counter()
             prediction = self.model(tensor, augment=False, visualize=False)
+            self._synchronize()
             t2 = perf_counter()
             if not torch.isfinite(prediction).all():
                 raise ValueError("模型产生非有限数值，当前图片不记录为成功结果")
@@ -139,6 +155,7 @@ class PytorchOBBAdapter:
                     "confidence": score,
                     "polygon": [[polygon[i], polygon[i + 1]] for i in range(0, 8, 2)],
                 })
+            self._synchronize()
             t3 = perf_counter()
         return {
             "detections": detections,

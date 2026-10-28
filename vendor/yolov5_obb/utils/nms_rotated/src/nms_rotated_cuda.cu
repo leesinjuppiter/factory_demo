@@ -4,7 +4,7 @@
 #include <ATen/ATen.h>
 #include <ATen/cuda/CUDAContext.h>
 #include <c10/cuda/CUDAGuard.h>
-#include <ATen/cuda/CUDAApplyUtils.cuh>
+#include <c10/cuda/CUDAException.h>
 #include "box_iou_rotated_utils.h"
 
 int const threadsPerBlock = sizeof(unsigned long long) * 8;
@@ -62,7 +62,7 @@ __global__ void nms_rotated_cuda_kernel(
         t |= 1ULL << i;
       }
     }
-    const int col_blocks = at::cuda::ATenCeilDiv(n_boxes, threadsPerBlock);
+    const int col_blocks = (n_boxes + threadsPerBlock - 1) / threadsPerBlock;
     dev_mask[cur_box_idx * col_blocks + col_start] = t;
   }
 }
@@ -76,7 +76,9 @@ at::Tensor nms_rotated_cuda(
   // using scalar_t = float;
   AT_ASSERTM(dets.is_cuda(), "dets must be a CUDA tensor");
   AT_ASSERTM(scores.is_cuda(), "scores must be a CUDA tensor");
-  at::cuda::CUDAGuard device_guard(dets.device());
+  c10::cuda::CUDAGuard device_guard(dets.device());
+  if (dets.numel() == 0)
+    return at::empty({0}, dets.options().dtype(at::kLong));
 
   auto order_t = std::get<1>(scores.sort(0, /* descending=*/true));
   auto dets_sorted = dets.index_select(0, order_t);
@@ -84,7 +86,7 @@ at::Tensor nms_rotated_cuda(
   auto dets_num = dets.size(0);
 
   const int col_blocks =
-      at::cuda::ATenCeilDiv(static_cast<int>(dets_num), threadsPerBlock);
+      (static_cast<int>(dets_num) + threadsPerBlock - 1) / threadsPerBlock;
 
   at::Tensor mask =
       at::empty({dets_num * col_blocks}, dets.options().dtype(at::kLong));

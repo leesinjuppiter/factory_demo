@@ -11,9 +11,6 @@ at::Tensor nms_rotated_cuda(
     const at::Tensor& scores,
     const float iou_threshold);
 
-at::Tensor poly_nms_cuda(
-    const at::Tensor boxes,
-    float nms_overlap_thresh);
 #endif
 
 at::Tensor nms_rotated_cpu(
@@ -43,13 +40,7 @@ inline at::Tensor nms_poly(
     const at::Tensor& dets,
     const float iou_threshold) {
   if (dets.device().is_cuda()) {
-#ifdef WITH_CUDA
-    if (dets.numel() == 0)
-      return at::empty({0}, dets.options().dtype(at::kLong).device(at::kCPU));
-    return poly_nms_cuda(dets, iou_threshold);
-#else
-    AT_ERROR("POLY_NMS is not compiled with GPU support");
-#endif
+    AT_ERROR("POLY_NMS is not included in factory_demo; use rotated OBB NMS");
   }
   AT_ERROR("POLY_NMS is not implemented on CPU");
 }

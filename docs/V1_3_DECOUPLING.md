@@ -55,3 +55,9 @@ API 依赖新增 `websockets==15.0.1`，仅安装基础 uvicorn 不保证 WebSoc
 按集成执行记录：Python 41项通过并含5个subtests；前端Node 11项通过，Vite构建21模块。模拟落盘来源实际运行PyTorch：4帧、0失败、72框（含成功空检测）；另一次1帧45框用于选中目标坐标核验。相同dist连接独立mock，并验证真实页、历史页和本机展示入口。
 
 详见 [总验证](evidence/v13-validation.json)、[浏览器验证](evidence/v13-browser-validation.json)、[实际落盘与推理](evidence/v13-live-flow.json)、[选中坐标帧](evidence/v13-live-flow-selected.json)。这组数据验证功能链路，不是完整数据集精度或工业连续吞吐指标。
+
+## 8. 云端 CUDA 部署补充
+
+新增显式CPU/CUDA FP32选择和Linux旋转NMS适配，使用FACTORY_DEVICE=cuda:0及configs/cloud.json。AutoDL RTX3080Ti上46项测试通过，含9个subtests；50张真实图片0失败、1224框，另验证连续落盘5张/1张、消费回执、WS同帧预览及历史导出。保持单任务、单进程、数据库提交后发布和本机访问边界。CUDA并不等于TensorRT，未计算精度或证明生产42fps。原V1.3 CPU证据仍代表原测试环境。
+
+复现、计时和数据库持久性边界见[CLOUD_DEPLOYMENT.md](CLOUD_DEPLOYMENT.md)，实际记录见[evidence/cloud-validation-20261028.json](evidence/cloud-validation-20261028.json)。

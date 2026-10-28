@@ -55,6 +55,11 @@ class InferenceTests(unittest.TestCase):
         _, keep = obb_nms(boxes, torch.tensor([.9, .8, .7]), .45)
         self.assertEqual(keep.tolist(), [0, 2])
 
+    def test_device_selection_rejects_ambiguous_values(self):
+        for device in ("auto", "cuda", "cuda:-1", "other"):
+            with self.subTest(device=device), self.assertRaises(ValueError):
+                PytorchOBBAdapter(ROOT / "vendor/weights/factory_now.pt", device=device)
+
 
 if __name__ == "__main__":
     unittest.main()

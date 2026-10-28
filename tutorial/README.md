@@ -66,3 +66,7 @@ Set-Location $course
 V1.3 教学运行依赖包含 `websockets==15.0.1`，用于 uvicorn 的 WebSocket 支持。先检查 reference/requirements-api.txt 与 yolo_v5_obb 环境；HTTP 成功不代表 WS 已可连接。
 
 项目V1.3真实/模拟展示的集成证据已另附 evidence/v13-browser-validation.json、v13-live-flow.json 与 v13-real-desktop.png / v13-mock-desktop.png / v13-history.png。这些是项目运行证据；教学练习尚未自动创建或运行，不代表你的practice已经验收。
+
+## 云端 GPU 补充
+
+参考适配器现在支持显式CPU/CUDA FP32，默认CPU。本轮RTX3080Ti部署经过真实验证，见[CLOUD_DEPLOYMENT.md](CLOUD_DEPLOYMENT.md)及[evidence/cloud-validation-20261028.json](evidence/cloud-validation-20261028.json)。课程仍采用独立教学数据库/端口，不因参考代码同步而修改practice。云端正式项目使用8765/factory_demo，教学练习仍使用8876/factory_demo_test_tutorial；不要直接用正式.env启动练习。GPU测试需要已编译扩展及匹配的数据路径。

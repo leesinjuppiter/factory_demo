@@ -1,5 +1,6 @@
 """Small explicit engine registry; unavailable engines are never silently replaced."""
 from typing import Protocol
+import os
 
 
 class InferenceAdapter(Protocol):
@@ -22,4 +23,4 @@ def create_adapter(engine, weights):
     if engine != "pytorch":
         raise ValueError("此引擎尚未实现或验证")
     from .pytorch_obb import PytorchOBBAdapter
-    return PytorchOBBAdapter(weights)
+    return PytorchOBBAdapter(weights, device=os.getenv("FACTORY_DEVICE", "cpu"))

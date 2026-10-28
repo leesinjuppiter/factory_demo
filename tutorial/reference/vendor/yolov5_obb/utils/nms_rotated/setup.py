@@ -12,7 +12,7 @@ def make_cuda_ext(name, module, sources, sources_cuda=[]):
     define_macros = []
     extra_compile_args = {'cxx': []}
 
-    if torch.cuda.is_available() or os.getenv('FORCE_CUDA', '0') == '1':
+    if os.getenv('FORCE_CPU', '0') != '1' and (torch.cuda.is_available() or os.getenv('FORCE_CUDA', '0') == '1'):
         define_macros += [('WITH_CUDA', None)]
         extension = CUDAExtension
         extra_compile_args['nvcc'] = [
@@ -47,7 +47,6 @@ if __name__ == '__main__':
                 ],
                 sources_cuda=[
                     'src/nms_rotated_cuda.cu',
-                    'src/poly_nms_cuda.cu',
                 ]),
         ],
         cmdclass={'build_ext': BuildExtension},

@@ -50,7 +50,7 @@
 
 ## 5. 推理引擎
 
-真实后端使用 YOLOv5-OBB PyTorch CPU FP32，权重为独立 factory_now.pt。引擎通过统一输出契约与展示隔离。
+真实后端使用YOLOv5-OBB PyTorch CPU/CUDA FP32，默认CPU，云端显式选择cuda:N，权重为独立factory_now.pt。设备不可用明确失败，CUDA需先编译对应扩展。引擎通过统一输出契约与展示隔离；CUDA阶段同步计时不能代替完整端到端时限，详见[CLOUD_DEPLOYMENT.md](CLOUD_DEPLOYMENT.md)。
 
 边界约束：OpenVINO/TensorRT 未完成真实适配，必须显示 unavailable/reason。模型一次加载复用，换权重需明确重启/新会话，不默认热替换。权重 8 类与 smoke 数据集 7 类顺序不同，本版不计算 AP/准确率。置信度不等于检测正确率。
 

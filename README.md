@@ -4,7 +4,7 @@
 
 本项目把单图/图片目录、YOLOv5-OBB 真实推理、检测画面、运行控制、PostgreSQL 历史和结果导出连成一个本机流程。前端通过统一协议显示 HBB/OBB 四点框，不绑定特定类别或推理引擎。
 
-**本版实际实现 PyTorch YOLOv5-OBB CPU。OpenVINO、TensorRT 显示为未实现；无 CVAT、标注、训练、视频或真实相机 SDK 接入。**
+**本版实际实现 PyTorch YOLOv5-OBB CPU/CUDA FP32。默认CPU，云端通过 `FACTORY_DEVICE=cuda:0` 显式选择GPU；部署与验证见 [AutoDL 云端说明](docs/CLOUD_DEPLOYMENT.md)。OpenVINO、TensorRT 显示为未实现；无 CVAT、标注、训练、视频或真实相机 SDK 接入。**
 
 默认权重为用户指定 `factory_now.pt` 的独立副本。实际权重 **8 类**，而 smoke 数据集 **7 类且顺序不同**；本版显示与统计采用权重顺序，不计算精度。请先阅读下方类别说明。
 

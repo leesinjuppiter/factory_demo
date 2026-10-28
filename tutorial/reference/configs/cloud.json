@@ -1,0 +1,11 @@
+{
+  "weights": "vendor/weights/factory_now.pt",
+  "runtime_dir": "runtime",
+  "sources": [
+    {"id": "smoke_test", "label": "Smoke 50 · 测试集（10 张）", "path": "../dataset/dataset4911_obb_smoke_50/test/images"},
+    {"id": "smoke_val", "label": "Smoke 50 · 验证集（10 张）", "path": "../dataset/dataset4911_obb_smoke_50/val/images"},
+    {"id": "smoke_train", "label": "Smoke 50 · 训练集（30 张）", "path": "../dataset/dataset4911_obb_smoke_50/train/images"},
+    {"id": "camera_inbox", "label": "模拟工业相机 · 持续落盘接收", "path": "runtime/camera_inbox", "mode": "inbox"}
+  ],
+  "defaults": {"engine": "pytorch", "confidence": 0.25, "iou": 0.45, "image_size": 640, "max_det": 300, "replay_fps": 1}
+}
