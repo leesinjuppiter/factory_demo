@@ -1,0 +1,273 @@
+{
+  "revision": "V1.2",
+  "date": "2026-10-28",
+  "build": "Vite 6.4.3 production build passed; two HTML entries, 17 modules",
+  "environment": "Windows; Chrome headless; Python yolo_v5_obb",
+  "display_browser": {
+    "writesBeforeAdmin": [],
+    "display": {
+      "title": "工业视觉检测展示系统",
+      "hasForm": false,
+      "hasHistory": false,
+      "loaded": true
+    },
+    "first": "原图指针：x=100.0, y=100.0 px点击检测框或聚焦后回车查看四点坐标",
+    "zoom": "原图指针：x=150.0, y=120.0 px点击检测框或聚焦后回车查看四点坐标",
+    "selection": "原图指针：x=150.0, y=120.0 px目标 1：P1(563.9, 984.4) · P2(391.5, 1043.7) · P3(288.6, 744.9) · P4(461.0, 685.5)",
+    "fullscreen": {
+      "active": true,
+      "coordinates": "原图指针：x=100.0, y=100.0 px目标 1：P1(563.9, 984.4) · P2(391.5, 1043.7) · P3(288.6, 744.9) · P4(461.0, 685.5)"
+    },
+    "defaults": {
+      "coordinateLabels": false,
+      "selected": true,
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    "laptop": {
+      "overflow": false,
+      "height": 1069
+    },
+    "offline": {
+      "retained": true,
+      "marked": true
+    },
+    "recovered": true,
+    "mobile": {
+      "overflow": false
+    },
+    "admin": {
+      "hasForm": true,
+      "hasLiveCanvas": false,
+      "navigation": [
+        "▣任务管理",
+        "≡历史记录",
+        "⚙运行配置"
+      ]
+    },
+    "history": true,
+    "historyViewer": {
+      "loaded": true,
+      "background": "rgb(255, 255, 255)",
+      "download": true,
+      "darkCSS": false
+    },
+    "config": true,
+    "errors": []
+  },
+  "browser_only_scenarios": {
+    "scope": "Browser-only fetch fixtures; no API mutations, no inference or database writes",
+    "filterCleared": true,
+    "loading": {
+      "noCanvas": true,
+      "noCoordinates": true
+    },
+    "loaded": true,
+    "race": {
+      "latest": true,
+      "newClasses": true,
+      "selectionCleared": true,
+      "tableBound": true
+    },
+    "failed": {
+      "noCanvas": true,
+      "noCoordinates": true,
+      "marked": true
+    },
+    "zero": {
+      "boxes": 0,
+      "marked": true
+    },
+    "empty": {
+      "noCanvas": true,
+      "noCoordinates": true
+    },
+    "errors": []
+  },
+  "manual_browser": {
+    "documentCheck": {
+      "title": "Factory Demo · 完整阅读手册与数据流图解",
+      "chapters": 11,
+      "diagrams": 5,
+      "duplicateIds": [],
+      "brokenAnchors": [],
+      "bodyOverflow": false,
+      "copyButtons": 11,
+      "font": "\"Segoe UI\", \"Microsoft YaHei\", sans-serif"
+    },
+    "searchCheck": {
+      "count": 27,
+      "visible": true,
+      "first": "工业展示 V1.2 / 1. 展示与管理入口检测结果，后台入口 /admin.html 负责上传、任务参数、开始/暂停/继续/停止、历史查询与导出。深色主题只作用于展示页；后台历史仍复用同一个 DetectionStage。 边界约束 展示筛选、缩放、全屏、框选择和坐标开关仅改变当前浏览器视图；不写数据库、不修改推理参数。 页面刷新不创建任务，关闭页面不停止工作线程。后台管理链接打开独立页面。 两个入口是职责划分，不是身"
+    },
+    "emptyCheck": true,
+    "expanded": 11,
+    "collapsed": 0,
+    "mobile": {
+      "pageWidth": 375,
+      "viewport": 390,
+      "overflow": false,
+      "diagrams": [
+        {
+          "client": 319,
+          "scroll": 1280,
+          "overflow": "auto",
+          "minWidth": "1280px"
+        },
+        {
+          "client": 319,
+          "scroll": 1280,
+          "overflow": "auto",
+          "minWidth": "1280px"
+        },
+        {
+          "client": 319,
+          "scroll": 1280,
+          "overflow": "auto",
+          "minWidth": "1280px"
+        },
+        {
+          "client": 319,
+          "scroll": 1280,
+          "overflow": "auto",
+          "minWidth": "1280px"
+        },
+        {
+          "client": 319,
+          "scroll": 1280,
+          "overflow": "auto",
+          "minWidth": "1280px"
+        }
+      ]
+    },
+    "diagrams": [
+      {
+        "name": "01-architecture.html",
+        "outside": [],
+        "clipped": [],
+        "overlaps": [],
+        "font": "Consolas, \"Microsoft YaHei\", monospace"
+      },
+      {
+        "name": "02-frame-pipeline.html",
+        "outside": [],
+        "clipped": [],
+        "overlaps": [],
+        "font": "\"Segoe UI\", \"Microsoft YaHei\", sans-serif"
+      },
+      {
+        "name": "03-inference-transform.html",
+        "outside": [],
+        "clipped": [],
+        "overlaps": [],
+        "font": "\"Segoe UI\", \"Microsoft YaHei\", sans-serif"
+      },
+      {
+        "name": "04-display-sequence.html",
+        "outside": [],
+        "clipped": [],
+        "overlaps": [],
+        "font": "Consolas, \"Microsoft YaHei\", monospace"
+      },
+      {
+        "name": "05-history-export.html",
+        "outside": [],
+        "clipped": [],
+        "overlaps": [],
+        "font": "Consolas, \"Microsoft YaHei\", monospace"
+      }
+    ],
+    "print": {
+      "sidebarHidden": true,
+      "diagramMinWidth": "0px",
+      "diagramOverflow": "visible"
+    },
+    "errors": [],
+    "remoteRequests": [],
+    "actualFileNavigation": true
+  },
+  "tutorial_browser": {
+    "initial": {
+      "lessons": 20,
+      "visible": 1,
+      "sourceBlocks": 37,
+      "diagrams": 5,
+      "overflow": false
+    },
+    "wrongFeedback": true,
+    "correctFeedback": true,
+    "progress": "1 / 20 节手动完成",
+    "persisted": true,
+    "searchCount": 5,
+    "emptyFeedback": true,
+    "navigation": "lesson-08",
+    "all20Lessons": true,
+    "mobile": {
+      "overflow": false,
+      "diagrams": [
+        {
+          "width": 319,
+          "scroll": 1280,
+          "overflow": "auto"
+        }
+      ]
+    },
+    "canvas": {
+      "width": "50%",
+      "hidden": true,
+      "points": "120,80 240,100 220,200 100,180"
+    },
+    "coordinateUnchanged": true,
+    "errors": [],
+    "remoteRequests": [],
+    "actualFileNavigation": true
+  },
+  "documentation": {
+    "revision": "V1.2",
+    "links": [
+      {
+        "file": "C:\\Users\\13480\\Desktop\\codex_\\factory_demo\\docs\\GUIDE.html",
+        "links": 203,
+        "broken": [],
+        "duplicate_ids": 0
+      },
+      {
+        "file": "C:\\Users\\13480\\Desktop\\codex_\\factory_demo\\docs\\web_manual\\index.html",
+        "links": 203,
+        "broken": [],
+        "duplicate_ids": 0
+      },
+      {
+        "file": "C:\\Users\\13480\\Desktop\\codex_\\tmp\\deliverables\\factory_demo_tutorial\\index.html",
+        "links": 99,
+        "broken": [],
+        "duplicate_ids": 0
+      }
+    ],
+    "lessons": 20,
+    "source_blocks": 37,
+    "diagram_self_check": "5 passed --offline",
+    "course_prose_and_generator_syntax": "passed",
+    "scope": "Static documentation checks only. Browser QA recorded separately by main agent."
+  },
+  "backend_and_admin_source_unchanged": true,
+  "tutorial_source_hashes_match": 9,
+  "tutorial_isolation": "Ports 5176/8876 preserved, practice contains only README; no DB or weights initialized",
+  "examples": "41 Python source syntax checks, protocol valid/invalid, minimal API 200/201/422 passed",
+  "limits": [
+    "UI verified against an existing real saved result; no new inference task was started.",
+    "Slow image, unavailable image, cross-run race, zero detections and empty state were injected only in the QA browser.",
+    "No model throughput or full-dataset accuracy benchmark rerun; prior metrics remain historical.",
+    "1366x768 and mobile allow vertical scrolling; only unintended horizontal page overflow is rejected."
+  ],
+  "sources": {
+    "frontend/index.html": "f7bf68516ef60e4ed6cdd5a9b8fe87a57a2b9ebd72840a78ca8d7e58927e53be",
+    "frontend/admin.html": "37884b64789e430a2543934dfc3ab436d14403997ebd1dbedc23f47965f05bf8",
+    "frontend/src/App.vue": "6322ce05ca1a48d53b85a7a43a3b61c8ea9e76ae8023345775dee98005c4434b",
+    "frontend/src/DisplayApp.vue": "81eb23b94511f3006ea75a2a5429617396b0a99f37ab98aef6aa9b36e5914a1b",
+    "frontend/src/AdminApp.vue": "f91b1f0035bb0f4d10b559d8b6e1e065067d40f0e2483996fc291b58b5bd7b49",
+    "frontend/src/admin.js": "4fb6de90375ac75941639a03ec0216e4a3c4663fdcf0a87c0dee43d0ca68b6e3",
+    "frontend/src/components/DetectionStage.vue": "8974f94468d985cffe3e1fe4f68c3742b37626387f627afd4635243bf61c8625",
+    "frontend/src/style.css": "d22cd727a7b003f038d04431bf407ab8a063a8dca0b0fe05f5a8d8ea84ab82d5",
+    "frontend/src/display.css": "24afe34fe1e8a046cfcc1075429c51c29e34101963b92e509fdef42bf5fb9519"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-28",
+  "environment": "yolo_v5_obb Python -B + local headless Chrome",
+  "lessons": 20,
+  "source_blocks": 48,
+  "python_syntax_files": 50,
+  "minimal_api": "passed 200/201/422",
+  "protocol_examples": "valid and invalid passed",
+  "runner_lab": {
+    "mode": "fake adapter and in-memory store",
+    "processed": 3,
+    "succeeded": 2,
+    "failed": 1,
+    "snapshots_survive_source_change": true
+  },
+  "diagram_self_check_offline": 5,
+  "practice_untouched": true,
+  "db_initialized": false,
+  "performance_claim": false,
+  "runtime_test_owner": "root integration evidence"
+}

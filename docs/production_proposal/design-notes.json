@@ -1,0 +1,37 @@
+{
+  "status": "proposal_not_implemented",
+  "type": "architecture",
+  "semantic_pattern": "No matching primary pattern; topology and independent consumers are the focus",
+  "style": "../web_manual/STYLE.md",
+  "canvas": [
+    1280,
+    720
+  ],
+  "nodes": 8,
+  "edges": 7,
+  "known": {
+    "camera": [
+      "acA4096-40um",
+      "acA4096-40uc"
+    ],
+    "resolution": [
+      4096,
+      2168
+    ],
+    "requested_fps": 42,
+    "belt_speed_m_s": 0.45,
+    "belt_length_m": 9
+  },
+  "unresolved": [
+    "GPU",
+    "OS",
+    "pixel format",
+    "exposure",
+    "field of view",
+    "camera-to-actuator distance",
+    "encoder",
+    "actuator protocol",
+    "inspection frame drop policy",
+    "retention"
+  ]
+}

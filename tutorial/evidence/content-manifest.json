@@ -1,0 +1,247 @@
+{
+  "lessons": 20,
+  "source_blocks": 48,
+  "files": [
+    {
+      "lesson": 1,
+      "file": "tools/env_probe.py",
+      "sha256": "8ee41b304a848a7774506985a9470f96d3a46a9278ea0c1369eb06a8fed80d96"
+    },
+    {
+      "lesson": 1,
+      "file": "reference/requirements-api.txt",
+      "sha256": "be4547596e19b6faf0d18920e2a7d3412120af654fc0d4d1cb99c6e85944d0bb"
+    },
+    {
+      "lesson": 2,
+      "file": "examples/protocol.py",
+      "sha256": "b93c0dfe81402a7bf6d1a4c4222379db29cc78d35461fb49e0b8ef7a9852d498"
+    },
+    {
+      "lesson": 2,
+      "file": "reference/backend/contracts.py",
+      "sha256": "091d3dcddb9b6c2bba00f5fa6bb78464f3cd12bf000bbd7dc6edaebc1060cc2b"
+    },
+    {
+      "lesson": 3,
+      "file": "examples/canvas.html",
+      "sha256": "2f00faaada418bc4fb98f730a803b82c8ccfce2593ad5ea11a8419a5c2a8c298"
+    },
+    {
+      "lesson": 4,
+      "file": "reference/frontend/package.json",
+      "sha256": "7b8e950d1fcaa36bd8278f679919ecdf9e327908b1e6d5be6c9ac8cc9330c6f7"
+    },
+    {
+      "lesson": 4,
+      "file": "reference/frontend/vite.config.js",
+      "sha256": "86832915c8c831ca0eb9a059d2fb2096f82fb9f21c585b3396ee3a928015ed74"
+    },
+    {
+      "lesson": 4,
+      "file": "reference/frontend/index.html",
+      "sha256": "f7bf68516ef60e4ed6cdd5a9b8fe87a57a2b9ebd72840a78ca8d7e58927e53be"
+    },
+    {
+      "lesson": 5,
+      "file": "examples/api_minimal.py",
+      "sha256": "743ee3150b7c6a1d6848fef1716fe60d7b29758a7ff7905effaf20e0793897f1"
+    },
+    {
+      "lesson": 6,
+      "file": "reference/backend/settings.py",
+      "sha256": "332cbe5f0b9b9dc8e2174208c1a32bcb270b61f7da08c620dcdb58fc6a9670a3"
+    },
+    {
+      "lesson": 6,
+      "file": "reference/backend/images.py",
+      "sha256": "f8c48ce18c7f1cc20dac0c3f31325309fcacf7773e9cc16d5e0a41d93707155d"
+    },
+    {
+      "lesson": 6,
+      "file": "reference/backend/acquisition.py",
+      "sha256": "6ed3e962f4f88920734c1e18dfab30dddc21a4e91dc448df571ee5bf4d2f560f"
+    },
+    {
+      "lesson": 6,
+      "file": "reference/scripts/simulate_camera.py",
+      "sha256": "eef119f8fbd28fdd83a84450e456e327ec015b0bc411d7e187b04eb03ac8c75f"
+    },
+    {
+      "lesson": 6,
+      "file": "reference/configs/local.json",
+      "sha256": "1ecfbdfd5da35cd38a86c61f14057f480cd04ee6ffee4dff5d4666dbea72997a"
+    },
+    {
+      "lesson": 7,
+      "file": "reference/backend/store.py",
+      "sha256": "7ce3cf220cca6b84acc36240672e05b20ae0c9a996a0a2ce32169921e052e08f"
+    },
+    {
+      "lesson": 7,
+      "file": "reference/scripts/setup_db.py",
+      "sha256": "c8d768ee00d485bbdf6c2157e94a65f8e145ec5537f2253c3757b8890a8354e3"
+    },
+    {
+      "lesson": 7,
+      "file": "reference/.env.example",
+      "sha256": "368fc21607533417ee79b3d31aef76cf8104344a622d5761c41107ac855af3db"
+    },
+    {
+      "lesson": 8,
+      "file": "reference/backend/runner.py",
+      "sha256": "53896f94ac7ed0fb6e628a78a76df375db82648d5e16eaf3d8f9a7872d60088a"
+    },
+    {
+      "lesson": 8,
+      "file": "reference/backend/presentation.py",
+      "sha256": "6e01909b24b6c5fd61b3a901ff46cb01a2414a462f6210acd979b66bff159838"
+    },
+    {
+      "lesson": 8,
+      "file": "examples/fake_adapter.py",
+      "sha256": "b3bf49d7c76fa546160e1c845996882f4236ce3e3a92cc94bc415ab416bcf0e1"
+    },
+    {
+      "lesson": 8,
+      "file": "examples/runner_lab.py",
+      "sha256": "2719f2b28d4340053e2a9a659317e89aa24a6063cadb178c73ceaf16b14723c3"
+    },
+    {
+      "lesson": 9,
+      "file": "reference/backend/app.py",
+      "sha256": "b37a17936fbdc58fca0ab7369c29b9817c186a5ac5d2b2d45636f5bcd2d4bac8"
+    },
+    {
+      "lesson": 9,
+      "file": "tools/serve_demo.py",
+      "sha256": "425e1f28479a3a2d4662b4b8ad6e98e8a3e80f082f2a6be9c61f4bf4745ce494"
+    },
+    {
+      "lesson": 9,
+      "file": "reference/start.py",
+      "sha256": "0fff66f1e3100b0a09bb1b18846005dd9019b3259517527dc7e9ade0f88ec1fe"
+    },
+    {
+      "lesson": 11,
+      "file": "reference/backend/inference/pytorch_obb.py",
+      "sha256": "474cd1cc6247d1c98d58f7efbf9dfc3ae25274b5eeefd24579fd935a06a83e2e"
+    },
+    {
+      "lesson": 12,
+      "file": "tools/import_weights.py",
+      "sha256": "e66c05070077c68e78495705db769ca7bded5e920485f7cb1f6de9f3254de2e5"
+    },
+    {
+      "lesson": 12,
+      "file": "reference/vendor/README.md",
+      "sha256": "f9e1eee123d613dcad570e106f5b757be2a9cf10540002bdadc88d3c309dbf00"
+    },
+    {
+      "lesson": 13,
+      "file": "reference/frontend/src/stream/contract.js",
+      "sha256": "973383f01d1cd9104a3ad5e4a387fe988dcb7e9b5d5d3d927d10da3fb84c2b03"
+    },
+    {
+      "lesson": 13,
+      "file": "reference/frontend/src/stream/frameLoader.js",
+      "sha256": "b4dbb6167dce3d8fb488e9504e050800fa8334f59f8e8833be1881c74a9e80e4"
+    },
+    {
+      "lesson": 13,
+      "file": "reference/frontend/src/stream/usePreparedFrame.js",
+      "sha256": "d8b22679032694c8d9519e94ed82fd2b5dfb80c9c368696fe18d3738cb13ff85"
+    },
+    {
+      "lesson": 13,
+      "file": "reference/frontend/src/components/DetectionStage.vue",
+      "sha256": "f38d234c409517a39344dc3800181f70d50d0ca1ed473c5d0cfacef6c8fecedf"
+    },
+    {
+      "lesson": 14,
+      "file": "reference/frontend/src/stream/useDisplayStream.js",
+      "sha256": "866c980d2c919890dd5509f8835a16586dd23b3f6abc22f2c83371c62d04f8fb"
+    },
+    {
+      "lesson": 14,
+      "file": "reference/frontend/src/DisplayApp.vue",
+      "sha256": "e7931314d89b8bd438c990d0a701cca3cb516ced44eef3f5e3392764c16e172a"
+    },
+    {
+      "lesson": 14,
+      "file": "reference/frontend/src/AdminApp.vue",
+      "sha256": "5f3ad9bdf4103afdf8092cc595e048226443a8517238414ce35b7005ae680fa2"
+    },
+    {
+      "lesson": 14,
+      "file": "reference/frontend/src/admin.js",
+      "sha256": "4b1d9935516c2200bb68aabc4e69496e12e4c9a781d947b38fd2e290179eed4a"
+    },
+    {
+      "lesson": 14,
+      "file": "reference/frontend/admin.html",
+      "sha256": "37884b64789e430a2543934dfc3ab436d14403997ebd1dbedc23f47965f05bf8"
+    },
+    {
+      "lesson": 14,
+      "file": "reference/frontend/src/main.js",
+      "sha256": "a95e1fa692b69edc3c9bb1d4a684f6fbe30617d56bc1f4ad221394cafa92ac23"
+    },
+    {
+      "lesson": 14,
+      "file": "reference/frontend/src/api.js",
+      "sha256": "b859b87205c3ac4e4f9e62d543c6317530d708abca53b11adfaba4d43135cf45"
+    },
+    {
+      "lesson": 14,
+      "file": "reference/frontend/src/App.vue",
+      "sha256": "6322ce05ca1a48d53b85a7a43a3b61c8ea9e76ae8023345775dee98005c4434b"
+    },
+    {
+      "lesson": 14,
+      "file": "reference/frontend/src/style.css",
+      "sha256": "d22cd727a7b003f038d04431bf407ab8a063a8dca0b0fe05f5a8d8ea84ab82d5"
+    },
+    {
+      "lesson": 14,
+      "file": "reference/frontend/src/display.css",
+      "sha256": "26fc6bfc159ec6e7311334552c01be01ce9267a5dc038ed83fbd3a534b89d365"
+    },
+    {
+      "lesson": 16,
+      "file": "tools/check_examples.py",
+      "sha256": "5532d9c4f3234f93124c6bdfbe3ab4afdb081a495defe0c1d0ae5e28962d9892"
+    },
+    {
+      "lesson": 16,
+      "file": "reference/tests/test_api.py",
+      "sha256": "a3db532385fba6e984bf943a100b50012b029f310b286e692f9567fdc6421f93"
+    },
+    {
+      "lesson": 16,
+      "file": "reference/tests/test_inference.py",
+      "sha256": "82fe3fdb9b9a643d767be4099c6a3295d267c51d07b60957a75f7758e64d7c74"
+    },
+    {
+      "lesson": 16,
+      "file": "reference/scripts/smoke.py",
+      "sha256": "53523e03fa5111cece14342726c96d1bbda07a282b95ec597a17cfa4d923802c"
+    },
+    {
+      "lesson": 16,
+      "file": "reference/scripts/mock_display.py",
+      "sha256": "69db9bd15c48678d3f32eecd6765099da2fa6cc5e402dd4590a618586727a402"
+    },
+    {
+      "lesson": 16,
+      "file": "reference/frontend/tests/stream.test.mjs",
+      "sha256": "7e70a3743f5b8d3ad1f241d513b7713011a308c03465c59a6ceff6567f8c90bb"
+    },
+    {
+      "lesson": 18,
+      "file": "reference/backend/inference/factory.py",
+      "sha256": "2e32da6e4b833b6c53255566b2726752df189d2e87a017218ae49be75196a5d8"
+    }
+  ],
+  "diagrams": 5
+}

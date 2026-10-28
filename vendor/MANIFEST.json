@@ -1,0 +1,215 @@
+{
+  "copied_at": "2026-10-28",
+  "source": "C:\\Users\\13480\\Desktop\\codex_\\yolov5_obb-master",
+  "scope": "inference import closure, NMS extension and user-selected weight",
+  "files": [
+    {
+      "path": "yolov5_obb/LICENSE",
+      "source_path": "LICENSE",
+      "source_sha256": "7fa7e56c0db71105f4b59a6a0ac40225eb059876f85cd380383f7d7a066e68be",
+      "sha256": "7fa7e56c0db71105f4b59a6a0ac40225eb059876f85cd380383f7d7a066e68be",
+      "modified": false,
+      "bytes": 35127
+    },
+    {
+      "path": "yolov5_obb/models/__init__.py",
+      "source_path": "models/__init__.py",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "modified": false,
+      "bytes": 0
+    },
+    {
+      "path": "yolov5_obb/models/common.py",
+      "source_path": "models/common.py",
+      "source_sha256": "3ebb444c61214671f5856803f748b1291751e8ce2fd20634d0dc675ddac83074",
+      "sha256": "3ebb444c61214671f5856803f748b1291751e8ce2fd20634d0dc675ddac83074",
+      "modified": false,
+      "bytes": 30530
+    },
+    {
+      "path": "yolov5_obb/models/experimental.py",
+      "source_path": "models/experimental.py",
+      "source_sha256": "c42db0677854fb4a43d8a764d0145ad92142b538323b047038efcb6bd0b5d8c6",
+      "sha256": "c42db0677854fb4a43d8a764d0145ad92142b538323b047038efcb6bd0b5d8c6",
+      "modified": false,
+      "bytes": 4626
+    },
+    {
+      "path": "yolov5_obb/models/yolo.py",
+      "source_path": "models/yolo.py",
+      "source_sha256": "0939a96f409f75c97e77c1d0c70f22cb487e2c4a91b349ac1bc2bbc00e83a892",
+      "sha256": "0939a96f409f75c97e77c1d0c70f22cb487e2c4a91b349ac1bc2bbc00e83a892",
+      "modified": false,
+      "bytes": 16113
+    },
+    {
+      "path": "yolov5_obb/utils/__init__.py",
+      "source_path": "utils/__init__.py",
+      "source_sha256": "946761297801413a031e541dc46b5ae712658245a425c66ed11da077d462e205",
+      "sha256": "946761297801413a031e541dc46b5ae712658245a425c66ed11da077d462e205",
+      "modified": false,
+      "bytes": 1140
+    },
+    {
+      "path": "yolov5_obb/utils/augmentations.py",
+      "source_path": "utils/augmentations.py",
+      "source_sha256": "5bcbcd27b88b700f1e60cdfd81261b7c80f407a95982420aa79e8235e9dd6093",
+      "sha256": "5bcbcd27b88b700f1e60cdfd81261b7c80f407a95982420aa79e8235e9dd6093",
+      "modified": false,
+      "bytes": 12264
+    },
+    {
+      "path": "yolov5_obb/utils/autoanchor.py",
+      "source_path": "utils/autoanchor.py",
+      "source_sha256": "793e14511581a3840fabc859ebe9a3097860b0aa178783dda7ffa4a11753e118",
+      "sha256": "793e14511581a3840fabc859ebe9a3097860b0aa178783dda7ffa4a11753e118",
+      "modified": false,
+      "bytes": 8893
+    },
+    {
+      "path": "yolov5_obb/utils/datasets.py",
+      "source_path": "utils/datasets.py",
+      "source_sha256": "b176b21165612e074b2797bb12b7bdc974c82a83750ce18855b3fbc73bc234cc",
+      "sha256": "b176b21165612e074b2797bb12b7bdc974c82a83750ce18855b3fbc73bc234cc",
+      "modified": false,
+      "bytes": 49616
+    },
+    {
+      "path": "yolov5_obb/utils/downloads.py",
+      "source_path": "utils/downloads.py",
+      "source_sha256": "d932331d50ec75194c437605639dd3f1f50a7b7f72c5b2beae3cc2ceb9d3c06a",
+      "sha256": "eb0a5bad9441a216094ee3f433fb4c25cb3fb0f729af1f37c02c0446bee3a0b1",
+      "modified": true,
+      "bytes": 6483
+    },
+    {
+      "path": "yolov5_obb/utils/general.py",
+      "source_path": "utils/general.py",
+      "source_sha256": "2dff4fbf3dd0bfe7a886e15df6f3eee785a0b0cc689af8bf5384b312a41e32c6",
+      "sha256": "dbb3d4095bac555bd858c504e2efbd2e0eb3fab0ebcbb7203b97ac18bca5b79d",
+      "modified": true,
+      "bytes": 40784
+    },
+    {
+      "path": "yolov5_obb/utils/metrics.py",
+      "source_path": "utils/metrics.py",
+      "source_sha256": "a3315c75721f26faad9200bc977d400fae670d2be9c368301026b375fbd84063",
+      "sha256": "a3315c75721f26faad9200bc977d400fae670d2be9c368301026b375fbd84063",
+      "modified": false,
+      "bytes": 14080
+    },
+    {
+      "path": "yolov5_obb/utils/nms_rotated/__init__.py",
+      "source_path": "utils/nms_rotated/__init__.py",
+      "source_sha256": "1fa35d2b93f4378d686b4363bb0bc1894b6463411ae36b1ed393f5981a83df1c",
+      "sha256": "1fa35d2b93f4378d686b4363bb0bc1894b6463411ae36b1ed393f5981a83df1c",
+      "modified": false,
+      "bytes": 86
+    },
+    {
+      "path": "yolov5_obb/utils/nms_rotated/nms_rotated_ext.cp310-win_amd64.pyd",
+      "source_path": "utils/nms_rotated/nms_rotated_ext.cp310-win_amd64.pyd",
+      "source_sha256": "0623b8510a3a2364746ef550c8ecd2e8e4229441d7dc2ee7765affaf84412285",
+      "sha256": "0623b8510a3a2364746ef550c8ecd2e8e4229441d7dc2ee7765affaf84412285",
+      "modified": false,
+      "bytes": 254976
+    },
+    {
+      "path": "yolov5_obb/utils/nms_rotated/nms_rotated_wrapper.py",
+      "source_path": "utils/nms_rotated/nms_rotated_wrapper.py",
+      "source_sha256": "ee09b52350f9f1dcf5e3c505495b73302ff57dca03f930a3856bb2f3ef95c68b",
+      "sha256": "ee09b52350f9f1dcf5e3c505495b73302ff57dca03f930a3856bb2f3ef95c68b",
+      "modified": false,
+      "bytes": 2858
+    },
+    {
+      "path": "yolov5_obb/utils/nms_rotated/setup.py",
+      "source_path": "utils/nms_rotated/setup.py",
+      "source_sha256": "003bc0576c22d186440890d2369f54bd3a2d43ee624f66f006efd49e222111ab",
+      "sha256": "003bc0576c22d186440890d2369f54bd3a2d43ee624f66f006efd49e222111ab",
+      "modified": false,
+      "bytes": 1709
+    },
+    {
+      "path": "yolov5_obb/utils/nms_rotated/src/box_iou_rotated_utils.h",
+      "source_path": "utils/nms_rotated/src/box_iou_rotated_utils.h",
+      "source_sha256": "9e10462b46dc78d9a79ad1591f1d90171e94aaa88ae533a353a6f24a25d734af",
+      "sha256": "9e10462b46dc78d9a79ad1591f1d90171e94aaa88ae533a353a6f24a25d734af",
+      "modified": false,
+      "bytes": 10590
+    },
+    {
+      "path": "yolov5_obb/utils/nms_rotated/src/nms_rotated_cpu.cpp",
+      "source_path": "utils/nms_rotated/src/nms_rotated_cpu.cpp",
+      "source_sha256": "2032c93fe071b6871b4b8869be3d58500e02485df68d661c8a9550e705979fe1",
+      "sha256": "2032c93fe071b6871b4b8869be3d58500e02485df68d661c8a9550e705979fe1",
+      "modified": false,
+      "bytes": 2370
+    },
+    {
+      "path": "yolov5_obb/utils/nms_rotated/src/nms_rotated_cuda.cu",
+      "source_path": "utils/nms_rotated/src/nms_rotated_cuda.cu",
+      "source_sha256": "b1db93b839421cc159ca5403f9e59ea271967cb655e534ef2caa296331921414",
+      "sha256": "b1db93b839421cc159ca5403f9e59ea271967cb655e534ef2caa296331921414",
+      "modified": false,
+      "bytes": 4710
+    },
+    {
+      "path": "yolov5_obb/utils/nms_rotated/src/nms_rotated_ext.cpp",
+      "source_path": "utils/nms_rotated/src/nms_rotated_ext.cpp",
+      "source_sha256": "0fb3f85fa30611174ae53dde771c5b639bcb930186fc66a0dc069c2e31704407",
+      "sha256": "0fb3f85fa30611174ae53dde771c5b639bcb930186fc66a0dc069c2e31704407",
+      "modified": false,
+      "bytes": 1653
+    },
+    {
+      "path": "yolov5_obb/utils/nms_rotated/src/poly_nms_cpu.cpp",
+      "source_path": "utils/nms_rotated/src/poly_nms_cpu.cpp",
+      "source_sha256": "62423a733589172a034a2930a0344136adeeb990dc4a832fe9f02e1952d0114f",
+      "sha256": "62423a733589172a034a2930a0344136adeeb990dc4a832fe9f02e1952d0114f",
+      "modified": false,
+      "bytes": 140
+    },
+    {
+      "path": "yolov5_obb/utils/nms_rotated/src/poly_nms_cuda.cu",
+      "source_path": "utils/nms_rotated/src/poly_nms_cuda.cu",
+      "source_sha256": "3aa6d685a384e3adccb6a71e27dee994df66991819640138743d492687776353",
+      "sha256": "3aa6d685a384e3adccb6a71e27dee994df66991819640138743d492687776353",
+      "modified": false,
+      "bytes": 8661
+    },
+    {
+      "path": "yolov5_obb/utils/plots.py",
+      "source_path": "utils/plots.py",
+      "source_sha256": "3717dafd8d23ed88dc01f4f4c1d207c5338164acbedcdb8a12ef2dc68de5b1b0",
+      "sha256": "e692089aee05ed7f30543a0cccdc1fc95cf3d806c38e3f9a7b09673b7fd8b3ee",
+      "modified": true,
+      "bytes": 24502
+    },
+    {
+      "path": "yolov5_obb/utils/rboxs_utils.py",
+      "source_path": "utils/rboxs_utils.py",
+      "source_sha256": "c715a9a127d2bd352fdf15707384c1fd839eedc36e86f048aa979858dbd00224",
+      "sha256": "c715a9a127d2bd352fdf15707384c1fd839eedc36e86f048aa979858dbd00224",
+      "modified": false,
+      "bytes": 7143
+    },
+    {
+      "path": "yolov5_obb/utils/torch_utils.py",
+      "source_path": "utils/torch_utils.py",
+      "source_sha256": "7b0b18cf4d013df9560e8a3afe4d2d6c17b32bb3d39cfb7a87ca2e592749e974",
+      "sha256": "7b0b18cf4d013df9560e8a3afe4d2d6c17b32bb3d39cfb7a87ca2e592749e974",
+      "modified": false,
+      "bytes": 13456
+    },
+    {
+      "path": "weights/factory_now.pt",
+      "source_path": "weights/factory_now.pt",
+      "source_sha256": "62af01dbc971d332ad4813d5f2811243f555877ffbdb0755fe428159687ef037",
+      "sha256": "62af01dbc971d332ad4813d5f2811243f555877ffbdb0755fe428159687ef037",
+      "modified": false,
+      "bytes": 175615389
+    }
+  ]
+}

@@ -1,0 +1,1664 @@
+{
+  "scope": "one real PyTorch frame from simulator inbox; not performance benchmark",
+  "run_id": "e7885b21-29b2-4cac-be75-33d008f38346",
+  "simulator": {
+    "session_id": "b502b6e64b47413bafbead210a640d7c",
+    "published": 1,
+    "requested_fps": 42.0,
+    "elapsed_seconds": 0.013070800341665745,
+    "work_rate_fps": 76.50640923741322,
+    "late_frames": 0,
+    "capture_time": null,
+    "note": "文件落盘模拟；真实拍摄时间未知；此速率不是推理吞吐或生产相机验收"
+  },
+  "run": {
+    "id": "e7885b21-29b2-4cac-be75-33d008f38346",
+    "status": "stopped",
+    "source_id": "camera_inbox",
+    "source_label": "V1.3 相机落盘模拟验收",
+    "created_at": "2026-10-28T11:28:34.683250+00:00",
+    "started_at": "2026-10-28T11:28:35.169620+00:00",
+    "finished_at": "2026-10-28T11:28:36.027413+00:00",
+    "total": null,
+    "processed": 1,
+    "succeeded": 1,
+    "failed": 0,
+    "detection_count": 45,
+    "class_counts": {
+      "0": 44,
+      "1": 1
+    },
+    "timings": {
+      "mean_ms": 527.9851998202503,
+      "p50_ms": 527.9851998202503,
+      "p95_ms": 527.9851998202503,
+      "fps": 1.8939924837674325,
+      "quantile_window": 1
+    },
+    "error": null,
+    "latest_frame_id": 1
+  },
+  "display": {
+    "schema_version": "1.0",
+    "type": "snapshot",
+    "revision": 19,
+    "stream": {
+      "session_id": "e7885b21-29b2-4cac-be75-33d008f38346",
+      "source_id": "camera_inbox",
+      "source_label": "V1.3 相机落盘模拟验收",
+      "mode": "continuous",
+      "status": "stopped",
+      "model": {
+        "id": "factory_now",
+        "version": "62af01dbc971d332ad4813d5f2811243f555877ffbdb0755fe428159687ef037",
+        "name": "factory_now",
+        "device": "cpu"
+      },
+      "engine_label": "PyTorch · YOLOv5-OBB",
+      "classes": [
+        {
+          "id": 0,
+          "name": "coal",
+          "label": "coal",
+          "color": "#087f8c"
+        },
+        {
+          "id": 1,
+          "name": "rockbolt",
+          "label": "rockbolt",
+          "color": "#c46a20"
+        },
+        {
+          "id": 2,
+          "name": "mesh",
+          "label": "mesh",
+          "color": "#7561b3"
+        },
+        {
+          "id": 3,
+          "name": "bottle",
+          "label": "bottle",
+          "color": "#397a35"
+        },
+        {
+          "id": 4,
+          "name": "stick",
+          "label": "stick",
+          "color": "#bb4d63"
+        },
+        {
+          "id": 5,
+          "name": "board",
+          "label": "board",
+          "color": "#315fb1"
+        },
+        {
+          "id": 6,
+          "name": "cap",
+          "label": "cap",
+          "color": "#8b6c36"
+        },
+        {
+          "id": 7,
+          "name": "plate",
+          "label": "plate",
+          "color": "#087f8c"
+        }
+      ],
+      "class_catalog_version": "62af01dbc971d332ad4813d5f2811243f555877ffbdb0755fe428159687ef037",
+      "class_counts": {
+        "0": 44,
+        "1": 1
+      },
+      "processed": 1,
+      "total": null,
+      "succeeded": 1,
+      "failed": 0,
+      "timings": {
+        "mean_ms": 527.9851998202503,
+        "p50_ms": 527.9851998202503,
+        "p95_ms": 527.9851998202503,
+        "fps": 1.8939924837674325,
+        "quantile_window": 1
+      },
+      "error": null
+    },
+    "frame": {
+      "frame_key": {
+        "source_id": "camera_inbox",
+        "session_id": "b502b6e64b47413bafbead210a640d7c",
+        "frame_id": "1"
+      },
+      "stream_session_id": "e7885b21-29b2-4cac-be75-33d008f38346",
+      "id": "1",
+      "name": "20261028T112835272380Z_b502b6e64b47413bafbead210a640d7c_000000001.jpg",
+      "status": "ok",
+      "width": 1580,
+      "height": 1080,
+      "coordinate_space": "source_pixels",
+      "detections": [
+        {
+          "id": 1,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.9288010001182556,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              563.8958740234375,
+              984.3565673828125
+            ],
+            [
+              391.4743347167969,
+              1043.72607421875
+            ],
+            [
+              288.58453369140625,
+              744.9126586914062
+            ],
+            [
+              461.006103515625,
+              685.543212890625
+            ]
+          ],
+          "center_px": [
+            426.2402114868164,
+            864.6346282958984
+          ],
+          "angle_deg": 70.99998442852161,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 2,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.9061927199363708,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              1293.650634765625,
+              179.9684600830078
+            ],
+            [
+              1393.1988525390625,
+              186.9296112060547
+            ],
+            [
+              1381.467529296875,
+              354.6962585449219
+            ],
+            [
+              1281.919189453125,
+              347.735107421875
+            ]
+          ],
+          "center_px": [
+            1337.5590515136719,
+            267.33235931396484
+          ],
+          "angle_deg": 94.00001988637867,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 3,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.9042648077011108,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              768.8948364257812,
+              563.2213134765625
+            ],
+            [
+              887.0573120117188,
+              618.3214111328125
+            ],
+            [
+              801.0670776367188,
+              802.7279052734375
+            ],
+            [
+              682.9046020507812,
+              747.6278076171875
+            ]
+          ],
+          "center_px": [
+            784.98095703125,
+            682.974609375
+          ],
+          "angle_deg": 115.00001887117857,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 4,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.9035402536392212,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              1242.1788330078125,
+              914.546630859375
+            ],
+            [
+              1149.816650390625,
+              917.77197265625
+            ],
+            [
+              1145.887451171875,
+              805.256103515625
+            ],
+            [
+              1238.2496337890625,
+              802.03076171875
+            ]
+          ],
+          "center_px": [
+            1194.0331420898438,
+            859.9013671875
+          ],
+          "angle_deg": 87.99997025261742,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 5,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.9018775820732117,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              933.6028442382812,
+              837.5302124023438
+            ],
+            [
+              923.5126342773438,
+              981.826416015625
+            ],
+            [
+              740.2566528320312,
+              969.0119018554688
+            ],
+            [
+              750.3468017578125,
+              824.7156982421875
+            ]
+          ],
+          "center_px": [
+            836.9297332763672,
+            903.2710571289062
+          ],
+          "angle_deg": 4.000001039218837,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 6,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.9017959833145142,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              1081.9573974609375,
+              511.6338806152344
+            ],
+            [
+              1159.7772216796875,
+              584.2020874023438
+            ],
+            [
+              1037.615234375,
+              715.2047119140625
+            ],
+            [
+              959.79541015625,
+              642.6365356445312
+            ]
+          ],
+          "center_px": [
+            1059.7863159179688,
+            613.419303894043
+          ],
+          "angle_deg": 133.00000822654852,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 7,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.8998071551322937,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              18.187427520751953,
+              272.2580261230469
+            ],
+            [
+              103.66427612304688,
+              279.7362976074219
+            ],
+            [
+              93.81379699707031,
+              392.3275146484375
+            ],
+            [
+              8.336942672729492,
+              384.8492431640625
+            ]
+          ],
+          "center_px": [
+            56.00061082839966,
+            332.2927703857422
+          ],
+          "angle_deg": 95.00001502142025,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 8,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.8975273370742798,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              328.2100524902344,
+              400.9450378417969
+            ],
+            [
+              463.4001159667969,
+              609.1195678710938
+            ],
+            [
+              105.10796356201172,
+              841.7971801757812
+            ],
+            [
+              -30.082120895385742,
+              633.6226806640625
+            ]
+          ],
+          "center_px": [
+            216.6590027809143,
+            621.3711166381836
+          ],
+          "angle_deg": 147.0000017048981,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 9,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.8889646530151367,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              1080.459716796875,
+              238.8105926513672
+            ],
+            [
+              1071.145751953125,
+              327.42718505859375
+            ],
+            [
+              942.7606811523438,
+              313.9333801269531
+            ],
+            [
+              952.07470703125,
+              225.3167724609375
+            ]
+          ],
+          "center_px": [
+            1011.6102142333984,
+            276.3719825744629
+          ],
+          "angle_deg": 5.999995694361104,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 10,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.8880590200424194,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              1354.2213134765625,
+              812.2578125
+            ],
+            [
+              1275.205078125,
+              821.9598388671875
+            ],
+            [
+              1261.029052734375,
+              706.505859375
+            ],
+            [
+              1340.0452880859375,
+              696.8038330078125
+            ]
+          ],
+          "center_px": [
+            1307.6251831054688,
+            759.3818359375
+          ],
+          "angle_deg": 82.99997105051344,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 11,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.8848775625228882,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              786.9658813476562,
+              934.2079467773438
+            ],
+            [
+              786.9658813476562,
+              1075.9415283203125
+            ],
+            [
+              567.0158081054688,
+              1075.9415283203125
+            ],
+            [
+              567.0158081054688,
+              934.2079467773438
+            ]
+          ],
+          "center_px": [
+            676.9908447265625,
+            1005.0747375488281
+          ],
+          "angle_deg": 0.0,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 12,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.8823001980781555,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              1172.0845947265625,
+              659.9904174804688
+            ],
+            [
+              1242.0987548828125,
+              667.3491821289062
+            ],
+            [
+              1227.40673828125,
+              807.1329345703125
+            ],
+            [
+              1157.392578125,
+              799.774169921875
+            ]
+          ],
+          "center_px": [
+            1199.7456665039062,
+            733.5616760253906
+          ],
+          "angle_deg": 96.0000617028698,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 13,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.8815247416496277,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              977.2095947265625,
+              685.8551635742188
+            ],
+            [
+              1075.718994140625,
+              689.2952270507812
+            ],
+            [
+              1068.353515625,
+              900.2088012695312
+            ],
+            [
+              969.84423828125,
+              896.7687377929688
+            ]
+          ],
+          "center_px": [
+            1022.7815856933594,
+            793.031982421875
+          ],
+          "angle_deg": 92.00005811975609,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 14,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.8786934614181519,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              1231.696044921875,
+              79.02796936035156
+            ],
+            [
+              1215.579833984375,
+              210.2838592529297
+            ],
+            [
+              1057.8544921875,
+              190.91763305664062
+            ],
+            [
+              1073.970703125,
+              59.66172790527344
+            ]
+          ],
+          "center_px": [
+            1144.7752685546875,
+            134.97279739379883
+          ],
+          "angle_deg": 7.000001653094345,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 15,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.8786497712135315,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              294.0351867675781,
+              706.5689086914062
+            ],
+            [
+              338.3131103515625,
+              752.4201049804688
+            ],
+            [
+              214.3482208251953,
+              872.131591796875
+            ],
+            [
+              170.07029724121094,
+              826.2803955078125
+            ]
+          ],
+          "center_px": [
+            254.19170379638672,
+            789.3502502441406
+          ],
+          "angle_deg": 136.00000369969368,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 16,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.8751320242881775,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              971.0169067382812,
+              980.5496826171875
+            ],
+            [
+              972.6171264648438,
+              1072.229736328125
+            ],
+            [
+              819.9298095703125,
+              1074.89501953125
+            ],
+            [
+              818.32958984375,
+              983.2149047851562
+            ]
+          ],
+          "center_px": [
+            895.4733581542969,
+            1027.7223358154297
+          ],
+          "angle_deg": 178.99995641945816,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 17,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.8704044222831726,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              1147.8719482421875,
+              503.7184753417969
+            ],
+            [
+              1068.324951171875,
+              509.281005859375
+            ],
+            [
+              1062.2945556640625,
+              423.0436096191406
+            ],
+            [
+              1141.841552734375,
+              417.4810791015625
+            ]
+          ],
+          "center_px": [
+            1105.083251953125,
+            463.38104248046875
+          ],
+          "angle_deg": 85.99994094596256,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 18,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.8543137311935425,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              872.0408325195312,
+              314.88848876953125
+            ],
+            [
+              814.9026489257812,
+              322.9187927246094
+            ],
+            [
+              802.797119140625,
+              236.78378295898438
+            ],
+            [
+              859.9353637695312,
+              228.75352478027344
+            ]
+          ],
+          "center_px": [
+            837.4189910888672,
+            275.8361473083496
+          ],
+          "angle_deg": 81.99997154947638,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 19,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.8489141464233398,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              435.327880859375,
+              473.2957458496094
+            ],
+            [
+              503.9266052246094,
+              476.8908996582031
+            ],
+            [
+              499.92694091796875,
+              553.2088012695312
+            ],
+            [
+              431.3282165527344,
+              549.6136474609375
+            ]
+          ],
+          "center_px": [
+            467.6274108886719,
+            513.2522735595703
+          ],
+          "angle_deg": 93.00000940634331,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 20,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.8399413824081421,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              1492.77490234375,
+              971.619140625
+            ],
+            [
+              1497.8685302734375,
+              1068.8087158203125
+            ],
+            [
+              1375.1368408203125,
+              1075.2408447265625
+            ],
+            [
+              1370.043212890625,
+              978.05126953125
+            ]
+          ],
+          "center_px": [
+            1433.9558715820312,
+            1023.4299926757812
+          ],
+          "angle_deg": 176.9999843505341,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 21,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.8353949785232544,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              1324.0120849609375,
+              673.6925659179688
+            ],
+            [
+              1259.41552734375,
+              697.2037963867188
+            ],
+            [
+              1225.161376953125,
+              603.0912475585938
+            ],
+            [
+              1289.7579345703125,
+              579.5799560546875
+            ]
+          ],
+          "center_px": [
+            1274.5867309570312,
+            638.3918914794922
+          ],
+          "angle_deg": 70.00002057265813,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 22,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.8325114846229553,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              1262.4705810546875,
+              363.6214904785156
+            ],
+            [
+              1235.1771240234375,
+              419.58135986328125
+            ],
+            [
+              1127.041259765625,
+              366.84002685546875
+            ],
+            [
+              1154.334716796875,
+              310.880126953125
+            ]
+          ],
+          "center_px": [
+            1194.7559204101562,
+            365.23075103759766
+          ],
+          "angle_deg": 25.999990811979426,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 23,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.8279839754104614,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              810.3721923828125,
+              393.10333251953125
+            ],
+            [
+              755.5879516601562,
+              407.78277587890625
+            ],
+            [
+              732.2241821289062,
+              320.5881042480469
+            ],
+            [
+              787.0084228515625,
+              305.9086608886719
+            ]
+          ],
+          "center_px": [
+            771.2981872558594,
+            356.84571838378906
+          ],
+          "angle_deg": 74.99998302770216,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 24,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.8267258405685425,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              1164.7081298828125,
+              1044.39892578125
+            ],
+            [
+              1083.45458984375,
+              1047.2364501953125
+            ],
+            [
+              1080.2515869140625,
+              955.5155639648438
+            ],
+            [
+              1161.505126953125,
+              952.6781005859375
+            ]
+          ],
+          "center_px": [
+            1122.4798583984375,
+            999.9572601318359
+          ],
+          "angle_deg": 87.99997566480359,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 25,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.8240569233894348,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              521.48291015625,
+              3.8348398208618164
+            ],
+            [
+              521.48291015625,
+              298.9827880859375
+            ],
+            [
+              144.95960998535156,
+              298.9827880859375
+            ],
+            [
+              144.95960998535156,
+              3.8348398208618164
+            ]
+          ],
+          "center_px": [
+            333.2212600708008,
+            151.40881395339966
+          ],
+          "angle_deg": 0.0,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 26,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.8235005140304565,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              1290.6387939453125,
+              1.5702619552612305
+            ],
+            [
+              1290.6387939453125,
+              84.13090515136719
+            ],
+            [
+              1087.5615234375,
+              84.13090515136719
+            ],
+            [
+              1087.5615234375,
+              1.5702619552612305
+            ]
+          ],
+          "center_px": [
+            1189.1001586914062,
+            42.85058355331421
+          ],
+          "angle_deg": 0.0,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 27,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.7893239855766296,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              492.9228515625,
+              606.9049072265625
+            ],
+            [
+              552.14990234375,
+              613.1300048828125
+            ],
+            [
+              544.2915649414062,
+              687.896484375
+            ],
+            [
+              485.0645751953125,
+              681.6714477539062
+            ]
+          ],
+          "center_px": [
+            518.6072235107422,
+            647.4007110595703
+          ],
+          "angle_deg": 95.99999719677582,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 28,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.7459489107131958,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              187.9695587158203,
+              1025.6282958984375
+            ],
+            [
+              124.18415069580078,
+              1031.208740234375
+            ],
+            [
+              116.20661163330078,
+              940.0255126953125
+            ],
+            [
+              179.99203491210938,
+              934.445068359375
+            ]
+          ],
+          "center_px": [
+            152.0880889892578,
+            982.826904296875
+          ],
+          "angle_deg": 84.99997483886361,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 29,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.7144278287887573,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              147.4623565673828,
+              117.71784973144531
+            ],
+            [
+              132.51063537597656,
+              182.48095703125
+            ],
+            [
+              59.6994743347168,
+              165.67117309570312
+            ],
+            [
+              74.65121459960938,
+              100.90807342529297
+            ]
+          ],
+          "center_px": [
+            103.58092021942139,
+            141.69451332092285
+          ],
+          "angle_deg": 13.000002160731157,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 30,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.7107255458831787,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              300.5146179199219,
+              960.1527099609375
+            ],
+            [
+              380.92755126953125,
+              962.9608154296875
+            ],
+            [
+              377.3313293457031,
+              1065.942626953125
+            ],
+            [
+              296.9184265136719,
+              1063.1346435546875
+            ]
+          ],
+          "center_px": [
+            338.92298126220703,
+            1013.0476989746094
+          ],
+          "angle_deg": 91.99999057628598,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 31,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.6856852769851685,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              1308.14013671875,
+              76.30191040039062
+            ],
+            [
+              1310.0848388671875,
+              131.9933319091797
+            ],
+            [
+              1232.6968994140625,
+              134.69578552246094
+            ],
+            [
+              1230.7520751953125,
+              79.00436401367188
+            ]
+          ],
+          "center_px": [
+            1270.4184875488281,
+            105.49884796142578
+          ],
+          "angle_deg": 177.9999978145703,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 32,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.652680516242981,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              2.8348400592803955,
+              78.66036224365234
+            ],
+            [
+              71.156005859375,
+              82.24095153808594
+            ],
+            [
+              66.94416809082031,
+              162.60699462890625
+            ],
+            [
+              -1.376996397972107,
+              159.0264129638672
+            ]
+          ],
+          "center_px": [
+            34.8895044028759,
+            120.63368034362793
+          ],
+          "angle_deg": 93.00002147824858,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 33,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.6385974884033203,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              1496.39453125,
+              650.8782958984375
+            ],
+            [
+              1436.7247314453125,
+              656.0987548828125
+            ],
+            [
+              1430.1221923828125,
+              580.6301879882812
+            ],
+            [
+              1489.7919921875,
+              575.4097290039062
+            ]
+          ],
+          "center_px": [
+            1463.2583618164062,
+            615.7542419433594
+          ],
+          "angle_deg": 85.00007910550363,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 34,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.6342073678970337,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              726.5640258789062,
+              0.6470845937728882
+            ],
+            [
+              726.5640258789062,
+              50.46405792236328
+            ],
+            [
+              638.9508056640625,
+              50.46405792236328
+            ],
+            [
+              638.9508056640625,
+              0.6470845937728882
+            ]
+          ],
+          "center_px": [
+            682.7574157714844,
+            25.555571258068085
+          ],
+          "angle_deg": 0.0,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 35,
+          "class_id": 1,
+          "class_name": "rockbolt",
+          "confidence": 0.5753049254417419,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              1445.9945068359375,
+              484.54046630859375
+            ],
+            [
+              1430.119140625,
+              507.2129821777344
+            ],
+            [
+              1116.3060302734375,
+              287.4789123535156
+            ],
+            [
+              1132.181640625,
+              264.80633544921875
+            ]
+          ],
+          "center_px": [
+            1281.1503295898438,
+            386.0096740722656
+          ],
+          "angle_deg": 34.99997113199191,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 36,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.5749585628509521,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              1052.4461669921875,
+              140.86874389648438
+            ],
+            [
+              1004.098388671875,
+              145.09864807128906
+            ],
+            [
+              996.803955078125,
+              61.72376251220703
+            ],
+            [
+              1045.1517333984375,
+              57.493858337402344
+            ]
+          ],
+          "center_px": [
+            1024.6250610351562,
+            101.2962532043457
+          ],
+          "angle_deg": 84.999947974958,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 37,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.5685039758682251,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              1106.71533203125,
+              1008.8118286132812
+            ],
+            [
+              1106.71533203125,
+              1072.552978515625
+            ],
+            [
+              1001.9573974609375,
+              1072.552978515625
+            ],
+            [
+              1001.9573974609375,
+              1008.8118286132812
+            ]
+          ],
+          "center_px": [
+            1054.3363647460938,
+            1040.6824035644531
+          ],
+          "angle_deg": 0.0,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 38,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.5613031983375549,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              1258.01416015625,
+              554.487060546875
+            ],
+            [
+              1204.913818359375,
+              574.8704223632812
+            ],
+            [
+              1180.038818359375,
+              510.0688781738281
+            ],
+            [
+              1233.1392822265625,
+              489.6855773925781
+            ]
+          ],
+          "center_px": [
+            1219.0265197753906,
+            532.2779846191406
+          ],
+          "angle_deg": 68.999986305367,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 39,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.5314207077026367,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              1021.3336791992188,
+              939.6784057617188
+            ],
+            [
+              990.6419067382812,
+              999.9144897460938
+            ],
+            [
+              909.3081665039062,
+              958.4729614257812
+            ],
+            [
+              940.0,
+              898.2368774414062
+            ]
+          ],
+          "center_px": [
+            965.3209381103516,
+            949.07568359375
+          ],
+          "angle_deg": 26.999954011107945,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 40,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.4387686848640442,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              914.539794921875,
+              -0.18962086737155914
+            ],
+            [
+              915.5164794921875,
+              55.762489318847656
+            ],
+            [
+              847.5919799804688,
+              56.948116302490234
+            ],
+            [
+              846.615234375,
+              0.9960089325904846
+            ]
+          ],
+          "center_px": [
+            881.0658721923828,
+            28.379248421639204
+          ],
+          "angle_deg": 178.99999815713477,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 41,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.40767574310302734,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              676.75927734375,
+              751.598876953125
+            ],
+            [
+              672.119384765625,
+              804.6324462890625
+            ],
+            [
+              607.7696533203125,
+              799.0025634765625
+            ],
+            [
+              612.4094848632812,
+              745.968994140625
+            ]
+          ],
+          "center_px": [
+            642.2644500732422,
+            775.3007202148438
+          ],
+          "angle_deg": 5.000004833571937,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 42,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.38967111706733704,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              1281.48046875,
+              1064.6365966796875
+            ],
+            [
+              1218.9510498046875,
+              1071.2086181640625
+            ],
+            [
+              1209.4964599609375,
+              981.2543334960938
+            ],
+            [
+              1272.0257568359375,
+              974.6822509765625
+            ]
+          ],
+          "center_px": [
+            1245.4884338378906,
+            1022.9454498291016
+          ],
+          "angle_deg": 83.99991860607265,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 43,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.3641298711299896,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              1043.019775390625,
+              523.1515502929688
+            ],
+            [
+              1044.9764404296875,
+              579.1790161132812
+            ],
+            [
+              971.976318359375,
+              581.728271484375
+            ],
+            [
+              970.019775390625,
+              525.7008056640625
+            ]
+          ],
+          "center_px": [
+            1007.4980773925781,
+            552.4399108886719
+          ],
+          "angle_deg": 177.99997261356117,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 44,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.3039611876010895,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              107.17483520507812,
+              206.44699096679688
+            ],
+            [
+              37.87174606323242,
+              207.6566925048828
+            ],
+            [
+              35.381649017333984,
+              65.00167083740234
+            ],
+            [
+              104.68473815917969,
+              63.79195785522461
+            ]
+          ],
+          "center_px": [
+            71.27824211120605,
+            135.72432804107666
+          ],
+          "angle_deg": 88.99998226076734,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        },
+        {
+          "id": 45,
+          "class_id": 0,
+          "class_name": "coal",
+          "confidence": 0.2865859270095825,
+          "geometry_type": "obb",
+          "polygon_px": [
+            [
+              948.539794921875,
+              692.27587890625
+            ],
+            [
+              902.175537109375,
+              713.89599609375
+            ],
+            [
+              876.8402709960938,
+              659.5645141601562
+            ],
+            [
+              923.2045288085938,
+              637.9443969726562
+            ]
+          ],
+          "center_px": [
+            912.6900329589844,
+            675.9201965332031
+          ],
+          "angle_deg": 64.9999306957813,
+          "angle_convention": "long_axis_clockwise_from_positive_x_mod_180",
+          "orientation_valid": true,
+          "track_id": null
+        }
+      ],
+      "timing_ms": {
+        "read": 10.704800020903349,
+        "preprocess": 2.5357999838888645,
+        "inference": 499.8731999658048,
+        "postprocess": 14.871399849653244,
+        "total": 527.9851998202503
+      },
+      "created_at": "2026-10-28T11:28:35.395871+00:00",
+      "capture_time": null,
+      "capture_clock_domain": null,
+      "published_at": "2026-10-28T11:28:35.278314+00:00",
+      "preview": {
+        "id": "0ebba79b4a83454088b93ec284c6f9c6",
+        "url": "/api/display/previews/0ebba79b4a83454088b93ec284c6f9c6.jpg",
+        "mime": "image/jpeg",
+        "width": 1024,
+        "height": 700,
+        "sx": 0.6481012658227848,
+        "sy": 0.6481481481481481,
+        "ox": 0,
+        "oy": 0
+      },
+      "preview_status": "ready",
+      "error": null
+    },
+    "service": {
+      "preview_skipped": 0,
+      "preview_errors": 0,
+      "preview_cache_bytes": 260825,
+      "preview_cache_limit_bytes": 33554432,
+      "subscribers": 0,
+      "latest_result_key": {
+        "source_id": "camera_inbox",
+        "session_id": "b502b6e64b47413bafbead210a640d7c",
+        "frame_id": "1"
+      }
+    }
+  }
+}

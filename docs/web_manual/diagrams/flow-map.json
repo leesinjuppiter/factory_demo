@@ -1,0 +1,320 @@
+[
+  {
+    "id": "01-architecture",
+    "title": "01 · V1.3 系统职责与展示支路",
+    "description": "单机模块化：数据库提交后发布结果，预览编码与浏览器发送独立于推理线程。",
+    "nodes": [
+      "Display",
+      "FastAPI",
+      "Presentation",
+      "PreviewWorker",
+      "Admin",
+      "PostgreSQL",
+      "Runner",
+      "Inference"
+    ],
+    "edges": [
+      {
+        "from": "Display",
+        "to": "FastAPI",
+        "payload": "display WS / preview HTTP"
+      },
+      {
+        "from": "FastAPI",
+        "to": "Presentation",
+        "payload": "subscribe/snapshot"
+      },
+      {
+        "from": "Presentation",
+        "to": "PreviewWorker",
+        "payload": "bounded latest pending"
+      },
+      {
+        "from": "PreviewWorker",
+        "to": "Presentation",
+        "payload": "JPEG cache / immutable URL"
+      },
+      {
+        "from": "Runner",
+        "to": "Presentation",
+        "payload": "committed frame"
+      },
+      {
+        "from": "Runner",
+        "to": "PostgreSQL",
+        "payload": "Frame + Run transaction"
+      },
+      {
+        "from": "Runner",
+        "to": "Inference",
+        "payload": "BGR"
+      },
+      {
+        "from": "Inference",
+        "to": "Runner",
+        "payload": "detections"
+      },
+      {
+        "from": "Admin",
+        "to": "FastAPI",
+        "payload": "management HTTP"
+      }
+    ]
+  },
+  {
+    "id": "02-frame-pipeline",
+    "title": "02 · 单帧处理与提交",
+    "description": "展示单张合法图片的主路径；读图错误、模型失败与暂停停止的分支见图下说明。",
+    "nodes": [
+      {
+        "id": 1,
+        "name": "F1 · 读取、校验、解码",
+        "operation": "runner._frame / images.decode",
+        "output": "BGR [H,W,3] + 原始字节"
+      },
+      {
+        "id": 2,
+        "name": "F2 · 固化原图并计算哈希",
+        "operation": "write_bytes / SHA-256",
+        "output": "image_path + sha256"
+      },
+      {
+        "id": 3,
+        "name": "F3 · 调用 OBB 适配器",
+        "operation": "adapter.predict(image, params)",
+        "output": "detections + timing_ms"
+      },
+      {
+        "id": 4,
+        "name": "F4 · 组装帧与运行汇总",
+        "operation": "Frame / updated Run",
+        "output": "Frame + Run + image_path"
+      },
+      {
+        "id": 5,
+        "name": "F5 · 同一数据库事务提交",
+        "operation": "Store.save_frame",
+        "output": "INSERT Frame + UPSERT Run"
+      },
+      {
+        "id": 6,
+        "name": "F6 · 发布内存结果与预览任务",
+        "operation": "内存快照 / Presentation.update",
+        "output": "状态可读 → 异步预览 → WS"
+      }
+    ],
+    "edges": [
+      {
+        "from": 1,
+        "to": 2,
+        "payload": "BGR [H,W,3] + 原始字节"
+      },
+      {
+        "from": 2,
+        "to": 3,
+        "payload": "image_path + sha256"
+      },
+      {
+        "from": 3,
+        "to": 4,
+        "payload": "detections + timing_ms"
+      },
+      {
+        "from": 4,
+        "to": 5,
+        "payload": "Frame + Run + image_path"
+      },
+      {
+        "from": 5,
+        "to": 6,
+        "payload": "INSERT Frame + UPSERT Run"
+      }
+    ]
+  },
+  {
+    "id": "03-inference-transform",
+    "title": "03 · 推理数据形态转换",
+    "description": "输入层交付 BGR 原图；适配器返回原图像素四点框；前端不接触模型候选张量。",
+    "nodes": [
+      {
+        "id": 1,
+        "name": "I1 · 接收解码原图",
+        "operation": "uint8 / BGR",
+        "output": "[H,W,3]"
+      },
+      {
+        "id": 2,
+        "name": "I2 · letterbox 与张量化",
+        "operation": "BGR→RGB / HWC→CHW / ÷255",
+        "output": "FP32 [1,3,H′,W′]"
+      },
+      {
+        "id": 3,
+        "name": "I3 · PyTorch 模型前向",
+        "operation": "CPU / inference_mode",
+        "output": "[1,N,193] = [1,N,5+8+180]"
+      },
+      {
+        "id": 4,
+        "name": "I4 · 旋转候选筛选",
+        "operation": "CSL-180 / multi-label rotated NMS",
+        "output": "旋转框 + 置信度 + 类别"
+      },
+      {
+        "id": 5,
+        "name": "I5 · 四点与原图坐标恢复",
+        "operation": "rbox2poly / scale_polys",
+        "output": "每目标四点，原图像素坐标"
+      },
+      {
+        "id": 6,
+        "name": "I6 · 输出公共检测协议",
+        "operation": "class_id / confidence / polygon",
+        "output": "detections + 三阶段 timing_ms"
+      }
+    ],
+    "edges": [
+      {
+        "from": 1,
+        "to": 2,
+        "payload": "[H,W,3]"
+      },
+      {
+        "from": 2,
+        "to": 3,
+        "payload": "FP32 [1,3,H′,W′]"
+      },
+      {
+        "from": 3,
+        "to": 4,
+        "payload": "[1,N,193] = [1,N,5+8+180]"
+      },
+      {
+        "from": 4,
+        "to": 5,
+        "payload": "旋转框 + 置信度 + 类别"
+      },
+      {
+        "from": 5,
+        "to": 6,
+        "payload": "每目标四点，原图像素坐标"
+      }
+    ]
+  },
+  {
+    "id": "04-display-sequence",
+    "title": "04 · WS快照、预览与同帧显示",
+    "description": "先有结果再生成预览；浏览器读取不可变图片引用。时序表示逻辑先后，不是实测耗时比例。",
+    "nodes": [
+      "Browser stream",
+      "Presentation",
+      "PreviewWorker",
+      "HTTP cache"
+    ],
+    "edges": [
+      {
+        "from": "Browser stream",
+        "to": "Presentation",
+        "message": "1 WS订阅",
+        "return": false
+      },
+      {
+        "from": "Presentation",
+        "to": "Browser stream",
+        "message": "2 结果待预览",
+        "return": true
+      },
+      {
+        "from": "Presentation",
+        "to": "PreviewWorker",
+        "message": "3 预览任务",
+        "return": false
+      },
+      {
+        "from": "PreviewWorker",
+        "to": "HTTP cache",
+        "message": "4 缓存JPEG",
+        "return": false
+      },
+      {
+        "from": "PreviewWorker",
+        "to": "Presentation",
+        "message": "5 预览引用",
+        "return": true
+      },
+      {
+        "from": "Presentation",
+        "to": "Browser stream",
+        "message": "6 完整快照",
+        "return": true
+      },
+      {
+        "from": "Browser stream",
+        "to": "HTTP cache",
+        "message": "7 GET预览URL",
+        "return": false
+      },
+      {
+        "from": "HTTP cache",
+        "to": "Browser stream",
+        "message": "8 JPEG字节",
+        "return": true
+      }
+    ]
+  },
+  {
+    "id": "05-history-export",
+    "title": "05 · 历史读取与导出",
+    "description": "历史记录从数据库读取，图片从原始快照读取；导出预测结果与标注功能是不同的职责。",
+    "nodes": [
+      "History UI",
+      "History API",
+      "PostgreSQL",
+      "image_path",
+      "format/render",
+      "HTTP response"
+    ],
+    "edges": [
+      {
+        "from": "History UI",
+        "to": "History API",
+        "payload": "run_id/frame_id"
+      },
+      {
+        "from": "History API",
+        "to": "PostgreSQL",
+        "payload": "queries"
+      },
+      {
+        "from": "PostgreSQL",
+        "to": "History API",
+        "payload": "Run/Frames including image_path"
+      },
+      {
+        "from": "PostgreSQL",
+        "to": "image_path",
+        "payload": "field in saved Frame"
+      },
+      {
+        "from": "History API",
+        "to": "format/render",
+        "payload": "records and route choice"
+      },
+      {
+        "from": "image_path",
+        "to": "format/render",
+        "payload": "path used to read snapshot file bytes"
+      },
+      {
+        "from": "format/render",
+        "to": "HTTP response",
+        "payload": "JSON/CSV/image/PNG"
+      },
+      {
+        "from": "HTTP response",
+        "to": "History UI",
+        "payload": "download/display"
+      }
+    ]
+  }
+]

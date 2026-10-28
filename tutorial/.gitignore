@@ -1,0 +1,8 @@
+practice/factory_demo/.env
+practice/factory_demo/runtime/
+practice/factory_demo/vendor/weights/
+practice/factory_demo/frontend/node_modules/
+practice/factory_demo/frontend/dist/
+practice/lab-output/
+__pycache__/
+*.pyc

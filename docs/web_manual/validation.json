@@ -1,0 +1,131 @@
+{
+  "document_links": [
+    {
+      "file": "docs\\web_manual\\index.html",
+      "broken_links": [],
+      "link_count": 170,
+      "local_file_links": 24,
+      "duplicate_ids": 0
+    },
+    {
+      "file": "docs\\GUIDE.html",
+      "broken_links": [],
+      "link_count": 170,
+      "local_file_links": 24,
+      "duplicate_ids": 0
+    }
+  ],
+  "flow_map_invalid_edges": [],
+  "registered_business_files": 25,
+  "business_files_changed": [],
+  "browser": {
+    "documentCheck": {
+      "title": "Factory Demo · 完整阅读手册与数据流图解",
+      "chapters": 9,
+      "diagrams": 5,
+      "duplicateIds": [],
+      "brokenAnchors": [],
+      "bodyOverflow": false,
+      "copyButtons": 11,
+      "font": "\"Segoe UI\", \"Microsoft YaHei\", sans-serif"
+    },
+    "searchCheck": {
+      "count": 23,
+      "visible": true,
+      "first": "开始使用 / 2. 第一次操作转框、类别、置信度和统计。可以隐藏框/标签、按类别筛选、缩放或全屏。 暂停会在当前帧结束后生效；继续处理剩余图片。停止保存已经完成的部分，不强行打断 PyTorch 原生算子。 一次遍历结束后进入 completed。到“历史”查看配置与逐图结果，下载 JSON/CSV 或单图绘框 PNG。 浏览器关闭不会停止后台任务；刷新和切页不创建新任务。多个本机浏览器共享同一活动任务和控"
+    },
+    "emptyCheck": true,
+    "expanded": 9,
+    "collapsed": 0,
+    "mobile": {
+      "pageWidth": 375,
+      "viewport": 390,
+      "overflow": false,
+      "diagrams": [
+        {
+          "client": 319,
+          "scroll": 1280,
+          "overflow": "auto",
+          "minWidth": "1280px"
+        },
+        {
+          "client": 319,
+          "scroll": 1280,
+          "overflow": "auto",
+          "minWidth": "1280px"
+        },
+        {
+          "client": 319,
+          "scroll": 1280,
+          "overflow": "auto",
+          "minWidth": "1280px"
+        },
+        {
+          "client": 319,
+          "scroll": 1280,
+          "overflow": "auto",
+          "minWidth": "1280px"
+        },
+        {
+          "client": 319,
+          "scroll": 1280,
+          "overflow": "auto",
+          "minWidth": "1280px"
+        }
+      ]
+    },
+    "diagrams": [
+      {
+        "name": "01-architecture.html",
+        "outside": [],
+        "clipped": [],
+        "overlaps": [],
+        "font": "Consolas, \"Microsoft YaHei\", monospace"
+      },
+      {
+        "name": "02-frame-pipeline.html",
+        "outside": [],
+        "clipped": [],
+        "overlaps": [],
+        "font": "\"Segoe UI\", \"Microsoft YaHei\", sans-serif"
+      },
+      {
+        "name": "03-inference-transform.html",
+        "outside": [],
+        "clipped": [],
+        "overlaps": [],
+        "font": "\"Segoe UI\", \"Microsoft YaHei\", sans-serif"
+      },
+      {
+        "name": "04-display-sequence.html",
+        "outside": [],
+        "clipped": [],
+        "overlaps": [],
+        "font": "Consolas, \"Microsoft YaHei\", monospace"
+      },
+      {
+        "name": "05-history-export.html",
+        "outside": [],
+        "clipped": [],
+        "overlaps": [],
+        "font": "Consolas, \"Microsoft YaHei\", monospace"
+      }
+    ],
+    "print": {
+      "sidebarHidden": true,
+      "diagramMinWidth": "0px",
+      "diagramOverflow": "visible"
+    },
+    "errors": [],
+    "remoteRequests": [],
+    "actualFileNavigation": true
+  },
+  "diagram_skill_self_check": "5/5 passed --offline",
+  "visual_review": "Desktop, narrow screen and all five diagram screenshots inspected",
+  "not_tested": [
+    "clipboard payload permissions",
+    "actual exported PDF pagination"
+  ],
+  "scope": "Documents only; no new inference or performance benchmark; no business service operation.",
+  "historical_notice": "This file records the previous V1 baseline; V1.1 frontend source and document counts changed. See module-split-validation.json for current verification."
+}

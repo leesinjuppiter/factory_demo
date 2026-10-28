@@ -1,0 +1,180 @@
+{
+  "scope": "four real PyTorch frames from simulator inbox; not performance benchmark",
+  "run_id": "a300a9d0-8bb9-48ba-8b3b-bbad76bd8b41",
+  "simulator": {
+    "session_id": "6850419229e942e481ab97d35efed33d",
+    "published": 4,
+    "requested_fps": 42.0,
+    "elapsed_seconds": 0.10908120032399893,
+    "work_rate_fps": 36.66993018154349,
+    "late_frames": 0,
+    "capture_time": null,
+    "note": "文件落盘模拟；真实拍摄时间未知；此速率不是推理吞吐或生产相机验收"
+  },
+  "run": {
+    "id": "a300a9d0-8bb9-48ba-8b3b-bbad76bd8b41",
+    "status": "stopped",
+    "source_id": "camera_inbox",
+    "source_label": "V1.3 相机落盘模拟验收",
+    "created_at": "2026-10-28T11:27:09.070860+00:00",
+    "started_at": "2026-10-28T11:27:15.996196+00:00",
+    "finished_at": "2026-10-28T11:27:18.126898+00:00",
+    "total": null,
+    "processed": 4,
+    "succeeded": 4,
+    "failed": 0,
+    "detection_count": 72,
+    "class_counts": {
+      "0": 70,
+      "1": 1,
+      "6": 1
+    },
+    "timings": {
+      "mean_ms": 468.0415499024093,
+      "p50_ms": 443.43299977481365,
+      "p95_ms": 541.6244400199503,
+      "fps": 2.1365624488007713,
+      "quantile_window": 4
+    },
+    "error": null,
+    "latest_frame_id": 4
+  },
+  "display": {
+    "schema_version": "1.0",
+    "type": "snapshot",
+    "revision": 13,
+    "stream": {
+      "session_id": "a300a9d0-8bb9-48ba-8b3b-bbad76bd8b41",
+      "source_id": "camera_inbox",
+      "source_label": "V1.3 相机落盘模拟验收",
+      "mode": "continuous",
+      "status": "stopped",
+      "model": {
+        "id": "factory_now",
+        "version": "62af01dbc971d332ad4813d5f2811243f555877ffbdb0755fe428159687ef037",
+        "name": "factory_now",
+        "device": "cpu"
+      },
+      "engine_label": "PyTorch · YOLOv5-OBB",
+      "classes": [
+        {
+          "id": 0,
+          "name": "coal",
+          "label": "coal",
+          "color": "#087f8c"
+        },
+        {
+          "id": 1,
+          "name": "rockbolt",
+          "label": "rockbolt",
+          "color": "#c46a20"
+        },
+        {
+          "id": 2,
+          "name": "mesh",
+          "label": "mesh",
+          "color": "#7561b3"
+        },
+        {
+          "id": 3,
+          "name": "bottle",
+          "label": "bottle",
+          "color": "#397a35"
+        },
+        {
+          "id": 4,
+          "name": "stick",
+          "label": "stick",
+          "color": "#bb4d63"
+        },
+        {
+          "id": 5,
+          "name": "board",
+          "label": "board",
+          "color": "#315fb1"
+        },
+        {
+          "id": 6,
+          "name": "cap",
+          "label": "cap",
+          "color": "#8b6c36"
+        },
+        {
+          "id": 7,
+          "name": "plate",
+          "label": "plate",
+          "color": "#087f8c"
+        }
+      ],
+      "class_catalog_version": "62af01dbc971d332ad4813d5f2811243f555877ffbdb0755fe428159687ef037",
+      "class_counts": {
+        "0": 70,
+        "1": 1,
+        "6": 1
+      },
+      "processed": 4,
+      "total": null,
+      "succeeded": 4,
+      "failed": 0,
+      "timings": {
+        "mean_ms": 468.0415499024093,
+        "p50_ms": 443.43299977481365,
+        "p95_ms": 541.6244400199503,
+        "fps": 2.1365624488007713,
+        "quantile_window": 4
+      },
+      "error": null
+    },
+    "frame": {
+      "frame_key": {
+        "source_id": "camera_inbox",
+        "session_id": "6850419229e942e481ab97d35efed33d",
+        "frame_id": "4"
+      },
+      "stream_session_id": "a300a9d0-8bb9-48ba-8b3b-bbad76bd8b41",
+      "id": "4",
+      "name": "20261028T112716180939Z_6850419229e942e481ab97d35efed33d_000000004.jpg",
+      "status": "ok",
+      "width": 1580,
+      "height": 1080,
+      "coordinate_space": "source_pixels",
+      "detections": [],
+      "timing_ms": {
+        "read": 10.368299670517445,
+        "preprocess": 1.1475002393126488,
+        "inference": 417.0293998904526,
+        "postprocess": 3.0839000828564167,
+        "total": 431.62909988313913
+      },
+      "created_at": "2026-10-28T11:27:17.623492+00:00",
+      "capture_time": null,
+      "capture_clock_domain": null,
+      "published_at": "2026-10-28T11:27:16.185940+00:00",
+      "preview": {
+        "id": "fecad501c3684a2484b6b245c9ffdd8c",
+        "url": "/api/display/previews/fecad501c3684a2484b6b245c9ffdd8c.jpg",
+        "mime": "image/jpeg",
+        "width": 1024,
+        "height": 700,
+        "sx": 0.6481012658227848,
+        "sy": 0.6481481481481481,
+        "ox": 0,
+        "oy": 0
+      },
+      "preview_status": "ready",
+      "error": null
+    },
+    "service": {
+      "preview_skipped": 0,
+      "preview_errors": 0,
+      "preview_cache_bytes": 202323,
+      "preview_cache_limit_bytes": 33554432,
+      "subscribers": 0,
+      "latest_result_key": {
+        "source_id": "camera_inbox",
+        "session_id": "6850419229e942e481ab97d35efed33d",
+        "frame_id": "4"
+      }
+    }
+  }
+}

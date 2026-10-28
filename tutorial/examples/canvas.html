@@ -1,0 +1,13 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第03课 · 原图坐标与SVG画布</title><style>body{max-width:900px;margin:30px auto;padding:20px;font:17px/1.8 'Microsoft YaHei',sans-serif;color:#203039;background:#f2f4f3}svg{display:block;width:100%;background:#e0e7e3;border:1px solid #52676b}.viewport{overflow:auto;max-width:100%}button,input{font:inherit}pre{white-space:pre-wrap;background:white;padding:16px}label{display:block;margin:16px 0}</style><body>
+<h1>原图像素坐标为什么能跟随画布缩放？</h1><p>本页是教学示意图，没有上传图片，也没有调用模型。灰色背景代表一张 640×360 的输入。</p>
+<label>显示宽度：<input id="scale" type="range" min="40" max="150" value="100"> <span id="value">100%</span></label>
+<label><input id="visible" type="checkbox" checked> 显示示例四点框</label>
+<div class="viewport"><svg id="stage" viewBox="0 0 640 360" role="img" aria-label="教学四点框"><rect x="0" y="0" width="640" height="360" fill="#e0e7e3"/><text x="16" y="30" fill="#52676b">教学输入 · 640 × 360</text><g id="boxes"><polygon id="box" fill="none" stroke="#177b68" stroke-width="3" vector-effect="non-scaling-stroke"/><text x="120" y="70" fill="#126a59">example 0.90</text></g></svg></div>
+<pre id="data"></pre><p>拖动后只改变 SVG 显示宽度。polygon 中的原图像素坐标保持不变，因为 viewBox 同时缩放背景和框。</p>
+<script>
+const polygon=[[120,80],[240,100],[220,200],[100,180]];
+document.querySelector('#box').setAttribute('points',polygon.map(p=>p.join(',')).join(' '));
+document.querySelector('#data').textContent=JSON.stringify({width:640,height:360,polygon},null,2);
+document.querySelector('#scale').addEventListener('input',e=>{document.querySelector('#stage').style.width=e.target.value+'%';document.querySelector('#value').textContent=e.target.value+'%'});
+document.querySelector('#visible').addEventListener('change',e=>document.querySelector('#boxes').style.display=e.target.checked?'':'none');
+</script></body></html>

@@ -1,0 +1,13 @@
+{
+  "revision": "V1.1",
+  "source_hashes": {
+    "frontend/src/App.vue": "6322ce05ca1a48d53b85a7a43a3b61c8ea9e76ae8023345775dee98005c4434b",
+    "frontend/src/DisplayApp.vue": "5e5b904284dc4b637e65a88d3f8e45c6814b5f93cb4c734c118ba15e89ee40ef",
+    "frontend/src/AdminApp.vue": "f91b1f0035bb0f4d10b559d8b6e1e065067d40f0e2483996fc291b58b5bd7b49",
+    "frontend/src/admin.js": "4fb6de90375ac75941639a03ec0216e4a3c4663fdcf0a87c0dee43d0ca68b6e3",
+    "frontend/src/components/DetectionStage.vue": "d22058ef268a2837732f0e6460b65073d81d3ac36844fc162d36a08fd037bf42",
+    "frontend/src/style.css": "d22cd727a7b003f038d04431bf407ab8a063a8dca0b0fe05f5a8d8ea84ab82d5",
+    "frontend/admin.html": "37884b64789e430a2543934dfc3ab436d14403997ebd1dbedc23f47965f05bf8"
+  },
+  "adapted_config": "Teaching ports 8876/5176 and database guard retained"
+}

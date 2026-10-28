@@ -1,0 +1,37 @@
+{
+  "version": "1.3",
+  "checked_at": "2026-10-28T11:39:45.611750+00:00",
+  "python_environment": "yolo_v5_obb",
+  "pytest": {
+    "passed": 41,
+    "subtests_passed": 5,
+    "warnings": 6
+  },
+  "frontend_node_tests": {
+    "passed": 11
+  },
+  "vite_build": {
+    "passed": true,
+    "modules": 21
+  },
+  "websocket_live_checks": [
+    {
+      "port": 8765,
+      "handshake_and_snapshot": true
+    },
+    {
+      "port": 5183,
+      "handshake_and_snapshot": true
+    }
+  ],
+  "real_model_flow": "v13-live-flow.json",
+  "real_model_selection": "v13-live-flow-selected.json",
+  "browser": "v13-browser-validation.json",
+  "limits": [
+    "Functional validation only, not 42fps or industrial deadline qualification",
+    "No real camera or actuator used",
+    "Database failure still stops task",
+    "OpenVINO and TensorRT are not implemented"
+  ],
+  "dependency_added": "websockets==15.0.1"
+}

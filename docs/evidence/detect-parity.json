@@ -1,0 +1,8 @@
+{
+  "matched": true,
+  "detections": 45,
+  "max_coordinate_error_px": 0.0049804687500909495,
+  "max_confidence_error": 4.884033203422788e-07,
+  "reference": "C:\\Users\\13480\\Desktop\\codex_\\tmp\\20261028-factory-demo-01a180ab\\inference\\original_detect\\2026-10-28_12-15-53_parity\\labels\\20250523_193046299_000174.txt",
+  "note": "Six significant digits in original detect TXT explain rounding error."
+}

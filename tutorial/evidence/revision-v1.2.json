@@ -1,0 +1,15 @@
+{
+  "revision": "V1.2",
+  "source_hashes": {
+    "frontend/index.html": "f7bf68516ef60e4ed6cdd5a9b8fe87a57a2b9ebd72840a78ca8d7e58927e53be",
+    "frontend/admin.html": "37884b64789e430a2543934dfc3ab436d14403997ebd1dbedc23f47965f05bf8",
+    "frontend/src/App.vue": "6322ce05ca1a48d53b85a7a43a3b61c8ea9e76ae8023345775dee98005c4434b",
+    "frontend/src/DisplayApp.vue": "81eb23b94511f3006ea75a2a5429617396b0a99f37ab98aef6aa9b36e5914a1b",
+    "frontend/src/AdminApp.vue": "f91b1f0035bb0f4d10b559d8b6e1e065067d40f0e2483996fc291b58b5bd7b49",
+    "frontend/src/admin.js": "4fb6de90375ac75941639a03ec0216e4a3c4663fdcf0a87c0dee43d0ca68b6e3",
+    "frontend/src/components/DetectionStage.vue": "8974f94468d985cffe3e1fe4f68c3742b37626387f627afd4635243bf61c8625",
+    "frontend/src/style.css": "d22cd727a7b003f038d04431bf407ab8a063a8dca0b0fe05f5a8d8ea84ab82d5",
+    "frontend/src/display.css": "24afe34fe1e8a046cfcc1075429c51c29e34101963b92e509fdef42bf5fb9519"
+  },
+  "scope": "Frontend source snapshot only. Teaching ports 8876/5176/8877 and factory_demo_test_tutorial guard retained. Practice untouched. No runtime or credentials copied."
+}

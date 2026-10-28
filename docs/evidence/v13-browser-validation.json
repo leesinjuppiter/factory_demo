@@ -1,0 +1,44 @@
+{
+  "real": {
+    "title": "工业视觉检测展示系统",
+    "loaded": true,
+    "classes": 8,
+    "continuous": true,
+    "overflow": false,
+    "ws": [
+      "ws://127.0.0.1:8878/api/display/ws"
+    ]
+  },
+  "selected": "选中目标坐标\nTARGET DETAIL\ncoal\n#1 · 92.9%\nP1\n563.9, 984.4\nP2\n391.5, 1043.7\nP3\n288.6, 744.9\nP4\n461.0, 685.5\n\n中心 426.2, 864.6 px · 角度 71.0°\n长轴方向不等于机械臂姿态；顶点为原图像素坐标。",
+  "coordinates": "DETECTION VIEW\n检测画面\nFRAME 0001\n#1 coal 92.9%\n#2 coal 90.6%\n#3 coal 90.4%\n#4 coal 90.4%\n#5 coal 90.2%\n#6 coal 90.2%\n#7 coal 90.0%\n#8 coal 89.8%\n#9 coal 88.9%\n#10 coal 88.8%\n#11 coal 88.5%\n#12 coal 88.2%\n#13 coal 88.2%\n#14 coal 87.9%\n#15 coal 87.9%\n#16 coal 87.5%\n#17 coal 87.0%\n#18 coal 85.4%\n#19 coal 84.9%\n#20 coal 84.0%\n#21 coal 83.5%\n#22 coal 83.3%\n#23 coal 82.8%\n#24 coal 82.7%\n#25 coal 82.4%\n#26 coal 82.4%\n#27 coal 78.9%\n#28 coal 74.6%\n#29 coal 71.4%\n#30 coal 71.1%\n#31 coal 68.6%\n#32 coal 65.3%\n#33 coal 63.9%\n#34 coal 63.4%\n#35 rockbolt 57.5%\n#36 coal 57.5%\n#37 coal 56.9%\n#38 coal 56.1%\n#39 coal 53.1%\n#40 coal 43.9%\n#41 coal 40.8%\n#42 coal 39.0%\n#43 coal 36.4%\n#44 coal 30.4%\n#45 coal 28.7%\n检测框\n类别 / 置信度\n坐标标签\n−\n100%\n＋\n适应\n全屏\n原图指针：x=100.0, y=100.0 px\n目标 1：P1(563.9, 984.4) · P2(391.5, 1043.7) · P3(288.6, 744.9) · P4(461.0, 685.5)\n中心 426.2, 864.6 px · 角度 71.0°\n20261028T112835272380Z_b502b6e64b47413bafbead210a640d7c_000000001.jpg\n1580 × 1080 px",
+  "disconnected": {
+    "retained": true,
+    "marked": true
+  },
+  "mobile": {
+    "overflow": false,
+    "loaded": true
+  },
+  "mockHbb": {
+    "classes": 3,
+    "dimensions": "mock-hbb-506\n640 × 360 px",
+    "text": "推理引擎\n独立 Mock 后端\n模型\n模拟 HBB · 无真实推理\n图片来源\n独立协议模拟（不是性能/准确率数据）",
+    "ws": [
+      "ws://127.0.0.1:8879/api/display/ws"
+    ]
+  },
+  "mockObb": {
+    "classes": 8,
+    "selected": "选中目标坐标\nTARGET DETAIL\n⌖\n\n点击检测框查看四点坐标\n\n也可用 Tab 聚焦检测框，按回车选择"
+  },
+  "sameBuild": true,
+  "history": {
+    "loaded": true,
+    "background": "rgb(255, 255, 255)",
+    "download": true
+  },
+  "displayRequests": [
+    "http://127.0.0.1:8878/api/display/previews/0ebba79b4a83454088b93ec284c6f9c6.jpg"
+  ],
+  "errors": []
+}

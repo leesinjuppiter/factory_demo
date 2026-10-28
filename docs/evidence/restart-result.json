@@ -1,0 +1,96 @@
+{
+  "id": "a8a119cd-ba81-4f8a-a3f6-0db225c8667f",
+  "error": "上次服务中断，未自动恢复；重新运行将创建新任务",
+  "model": {
+    "name": "factory_now",
+    "path": "C:\\Users\\13480\\Desktop\\codex_\\factory_demo\\vendor\\weights\\factory_now.pt",
+    "device": "cpu",
+    "sha256": "62af01dbc971d332ad4813d5f2811243f555877ffbdb0755fe428159687ef037",
+    "stride": 32,
+    "classes": [
+      {
+        "id": 0,
+        "name": "coal",
+        "color": "#087f8c",
+        "label": "coal"
+      },
+      {
+        "id": 1,
+        "name": "rockbolt",
+        "color": "#c46a20",
+        "label": "rockbolt"
+      },
+      {
+        "id": 2,
+        "name": "mesh",
+        "color": "#7561b3",
+        "label": "mesh"
+      },
+      {
+        "id": 3,
+        "name": "bottle",
+        "color": "#397a35",
+        "label": "bottle"
+      },
+      {
+        "id": 4,
+        "name": "stick",
+        "color": "#bb4d63",
+        "label": "stick"
+      },
+      {
+        "id": 5,
+        "name": "board",
+        "color": "#315fb1",
+        "label": "board"
+      },
+      {
+        "id": 6,
+        "name": "cap",
+        "color": "#8b6c36",
+        "label": "cap"
+      },
+      {
+        "id": 7,
+        "name": "plate",
+        "color": "#087f8c",
+        "label": "plate"
+      }
+    ],
+    "box_type": "obb",
+    "precision": "float32",
+    "cpu_threads": 4,
+    "load_warmup_ms": 1705.698
+  },
+  "total": 10,
+  "config": {
+    "iou": 0.45,
+    "engine": "pytorch",
+    "max_det": 300,
+    "source_id": "smoke_test",
+    "confidence": 0.25,
+    "image_size": 640,
+    "replay_fps": 0.1
+  },
+  "failed": 0,
+  "status": "interrupted",
+  "timings": {
+    "fps": 1.7272651733868445,
+    "p50_ms": 578.9499003440142,
+    "p95_ms": 578.9499003440142,
+    "mean_ms": 578.9499003440142
+  },
+  "processed": 1,
+  "source_id": "smoke_test",
+  "succeeded": 1,
+  "created_at": "2026-10-28T04:31:09.663467+00:00",
+  "started_at": "2026-10-28T04:31:09.665082+00:00",
+  "finished_at": "2026-10-28T04:31:34.392760+00:00",
+  "class_counts": {
+    "0": 44,
+    "1": 1
+  },
+  "source_label": "Smoke 50 · 测试集（10 张）",
+  "detection_count": 45,
+  "latest_frame_id": 1
+}

@@ -1,0 +1,21 @@
+{
+  "status": "analysis_only",
+  "user_decisions": {
+    "source": "camera_to_disk_to_reader",
+    "scope": "display_contract_first",
+    "deployment": "localhost",
+    "production_database_failure_policy": "undecided"
+  },
+  "source_hashes": {
+    "C:\\Users\\13480\\Desktop\\codex_\\factory_demo\\backend\\runner.py": "df571a45abefc528568c2d07b8ab72af808177624d7242a4af78133d016f0e59",
+    "C:\\Users\\13480\\Desktop\\codex_\\factory_demo\\backend\\app.py": "301bca9c329426e8fa8f81c2cb87d36989bf5bec3753bf519096a8eb3342232d",
+    "C:\\Users\\13480\\Desktop\\codex_\\factory_demo\\backend\\store.py": "3e4257c23ff51a25918d3d09f984428deaefbdf8e64751cf41e087918b8fb24b",
+    "C:\\Users\\13480\\Desktop\\codex_\\factory_demo\\backend\\settings.py": "bdf45d5b3a8613e071490be77b1d91792553e2730fe5d63c8f682a84b54f1089",
+    "C:\\Users\\13480\\Desktop\\codex_\\test_demo\\platform_api\\main.py": "781740041cc869bdd1c332c198bc19b1aa51a353b0838ef106a4cd26bc786921",
+    "C:\\Users\\13480\\Desktop\\codex_\\test_demo\\backend\\inference.py": "4be7e7d284a799ae7e624b76db391143df75792de696d6dbadf61f98b960d327",
+    "C:\\Users\\13480\\Desktop\\codex_\\test_demo\\fastapi\\main.py": "132b222e0b7826bcca2eeb0218cefb125add63bb9b91bc63788c2965160d8979",
+    "C:\\Users\\13480\\Desktop\\codex_\\test_demo\\tests\\test_async_pipeline.py": "ad3a214c47fae337d879ed224d229ca970a1bf14ab84bab5f74da53125681853",
+    "C:\\Users\\13480\\Desktop\\codex_\\factory_demo\\tests\\test_api.py": "823b26a167e3a9c3d898d2ded0bf26a666075c4eeb1f913b9bfd2057b19fcb27",
+    "C:\\Users\\13480\\Desktop\\课题组学习资料及记录\\汇报记录\\2026-10-24\\factory_demo_decoupling_review_20261028.md": "660920eea25746f65c9207d7dd7f63f4a26294a834e8fe2bc1b7077080a5667a"
+  }
+}

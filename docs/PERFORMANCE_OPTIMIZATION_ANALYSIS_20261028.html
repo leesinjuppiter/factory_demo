@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>factory_demo · 性能优化分析报告</title>
+<style>
+:root{color-scheme:light;--ink:#172d35;--muted:#51666d;--line:#dbe5e8;--accent:#087a71}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;background:#f4f7f8;color:var(--ink);font:16px/1.85 "Microsoft YaHei","Segoe UI",sans-serif}
+.layout{max-width:1560px;margin:auto;display:grid;grid-template-columns:285px minmax(0,1fr);gap:30px;padding:28px}
+aside{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow:auto;font-size:13px;padding:18px;background:#fff;border:1px solid var(--line);border-radius:12px}
+.brand{font-weight:750;font-size:17px;color:var(--accent);margin-bottom:14px}.tag{font-size:12px;color:var(--muted);margin:0 0 15px}
+aside ul{list-style:none;margin:0;padding:0}aside li{margin:7px 0}aside ul ul{padding-left:12px;border-left:2px solid #edf1f2;font-size:12px}
+main{background:#fff;border:1px solid var(--line);border-radius:14px;padding:36px 44px;min-width:0;overflow-wrap:anywhere}
+h1{font-size:30px;line-height:1.4;margin:0 0 22px;letter-spacing:-.4px}h2{font-size:23px;margin:42px 0 15px;padding-top:16px;border-top:1px solid var(--line)}h3{font-size:18px;margin:28px 0 12px}
+p{margin:13px 0}li{margin:7px 0}a{color:var(--accent);text-underline-offset:3px}aside a{text-decoration:none}aside a:hover{text-decoration:underline}
+code{font:13px/1.6 Consolas,monospace;background:#edf4f5;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}pre{padding:18px;background:#edf4f5;overflow:auto}
+table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse;font-size:14px;line-height:1.7;margin:20px 0}th,td{border:1px solid var(--line);padding:10px 12px;min-width:105px;vertical-align:top}th{background:#edf5f4;text-align:left}tbody tr:nth-child(even){background:#f8fafb}strong{font-weight:700}
+footer{margin-top:38px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+@media(max-width:950px){.layout{display:block;padding:12px}aside{position:static;max-height:300px;margin-bottom:16px}main{padding:25px 20px}h1{font-size:25px}h2{font-size:21px}}
+@media print{body{background:#fff;font-size:11pt}.layout{display:block;padding:0}aside{display:none}main{border:0;padding:0}h2,h3{break-after:avoid}table{display:table;font-size:9pt}th,td{min-width:0;padding:5px}a{color:inherit}footer{display:none}}
+</style></head><body><div class="layout"><aside><div class="brand">factory_demo</div><p class="tag">性能优化分析 · 2026-10-28<br>仅分析，未实施优化</p><div class="toc">
+<ul>
+<li><a href="#1">1. 结论与建议顺序</a></li>
+<li><a href="#2">2. 证据来源与可信边界</a></li>
+<li><a href="#3-50">3. 已有 50 张记录的性能拆分</a><ul>
+<li><a href="#31">3.1 全部样本的加权均值</a></li>
+<li><a href="#32">3.2 各子集的历史结果</a></li>
+<li><a href="#33">3.3 现有指标遗漏的范围</a></li>
+</ul>
+</li>
+<li><a href="#4">4. 理论优化空间：先确定值得优化的部分</a></li>
+<li><a href="#5">5. 推理侧优化机会</a><ul>
+<li><a href="#51-cpu">5.1 CPU 线程配置：建议优先做小规模控制变量实验</a></li>
+<li><a href="#52-openvinointel-cpu">5.2 OpenVINO：Intel CPU 的主要适配候选</a></li>
+<li><a href="#53-tensorrt">5.3 TensorRT：由部署硬件决定，当前不作为本机收益承诺</a></li>
+<li><a href="#54">5.4 量化、缩小输入与更轻模型：明确属于精度—速度权衡</a></li>
+</ul>
+</li>
+<li><a href="#6">6. 前端与显示链路优化机会</a><ul>
+<li><a href="#61">6.1 降低无变化状态的轮询频率</a></li>
+<li><a href="#62">6.2 保留上一张完整帧，原子切换图像与检测结果</a></li>
+<li><a href="#63">6.3 原图与预览图分离，按真实场景决定缓存</a></li>
+<li><a href="#64-svg">6.4 密集目标时减少表格与 SVG 的无效工作</a></li>
+</ul>
+</li>
+<li><a href="#7">7. 调度、统计与数据库优化机会</a><ul>
+<li><a href="#71">7.1 逐帧汇总改为增量均值与低频分位数</a></li>
+<li><a href="#72">7.2 缩短任务锁占用，保留提交与可见性的一致性</a></li>
+<li><a href="#73">7.3 数据库批量写入不是当前首要动作</a></li>
+<li><a href="#74">7.4 上传、历史导出与大结果集读取</a></li>
+</ul>
+</li>
+<li><a href="#8">8. 读取、快照与有界流水线</a><ul>
+<li><a href="#81">8.1 快照写入和内容哈希先单独计时</a></li>
+<li><a href="#82">8.2 流水线可重叠工作，但不能隐藏主要计算本身</a></li>
+<li><a href="#83-nms">8.3 旋转 NMS 的语义与长尾限制</a></li>
+</ul>
+</li>
+<li><a href="#9">9. 旧项目经验：哪些适用，哪些不能直接搬用</a></li>
+<li><a href="#10">10. 后续实验设计与接受条件</a><ul>
+<li><a href="#101">10.1 固定实验条件</a></li>
+<li><a href="#102">10.2 建议补齐的计时与资源指标</a></li>
+<li><a href="#103">10.3 分三轮实施，逐轮决定是否继续</a></li>
+</ul>
+</li>
+<li><a href="#11">11. 分析边界与交付说明</a></li>
+</ul>
+</div>
+</aside><main><p><strong>版本说明：</strong>本报告为V1历史分析。V1.1已拆分展示与后台，新增坐标显示；见 <a href="MODULE_SPLIT.md">模块分离说明</a>。本文耗时不是V1.1新测试。</p><h1 id="factory_demo">factory_demo 性能优化分析报告</h1>
+<p>日期：2026-10-28。分析对象：当前独立项目 <code>factory_demo</code>。本轮范围：<strong>只分析并形成报告，不修改业务代码、配置和依赖，不新增推理、压力测试或性能实验。</strong></p>
+<h2 id="1">1. 结论与建议顺序</h2>
+<p>现有 50 张图片的历史记录表明，CPU 模型前向平均耗时 <strong>438.01 ms/张，占已计时处理耗时的 95.22%</strong>。读取、预处理和后处理合计约 <strong>22.00 ms/张</strong>。因此，如果目标是显著提高检测吞吐，应该优先评估 CPU 线程配置和 OpenVINO，而不是先重写前端或扩大数据库架构。</p>
+<p>前端和服务层也有明确的改进机会：暂停、完成后仍以约 500 ms 间隔获取完整状态，后端重复查询最后一帧；长任务逐帧重复计算全部历史耗时的分位数。这些调整主要改善空闲资源占用、交互响应和长任务扩展性，应与模型推理加速分别验收。</p>
+<table>
+<thead>
+<tr>
+<th>顺序</th>
+<th>建议</th>
+<th>主要目标</th>
+<th>当前判断</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P0</td>
+<td>明确计时边界，补齐后续测量方案</td>
+<td>避免把模型速度、处理速度和显示速度混为一谈</td>
+<td>开始任何优化实验前先做；本轮仅设计</td>
+</tr>
+<tr>
+<td>P1</td>
+<td>状态轮询按任务状态降频；减少重复完整快照查询</td>
+<td>降低暂停、完成和后台页面的资源开销</td>
+<td>静态代码依据充分，改动可保持较小</td>
+</tr>
+<tr>
+<td>P1</td>
+<td>在本机比较 CPU 线程配置</td>
+<td>寻找当前 PyTorch 路径的合适配置</td>
+<td>当前固定 4 线程，尚未证明最优</td>
+</tr>
+<tr>
+<td>P1，条件项</td>
+<td>目标为 Intel CPU 时，验证 OpenVINO 适配与数值一致性</td>
+<td>改善占比最高的模型前向</td>
+<td>方向合理，但本项目没有转换、执行或加速比证据</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>统计增量更新，减少长时间持有任务锁</td>
+<td>避免长任务和慢数据库影响控制响应</td>
+<td>当前 50 张记录不足以证明已形成瓶颈</td>
+</tr>
+<tr>
+<td>P2，条件项</td>
+<td>最新完整帧显示、预览图、历史图像缓存和大结果列表优化</td>
+<td>降低高帧率、大图、多浏览器的显示成本</td>
+<td>应由浏览器和传输测量决定是否实施</td>
+</tr>
+<tr>
+<td>P2，条件项</td>
+<td>有界流水线、读取和写入重叠</td>
+<td>隐藏部分外围耗时</td>
+<td>当前理论空间有限；模型加速后重新评估</td>
+</tr>
+<tr>
+<td>P3，条件项</td>
+<td>TensorRT、量化、更轻模型或分辨率调整</td>
+<td>更大幅度的推理加速</td>
+<td>分别依赖 NVIDIA 硬件、精度验证或重新训练，不属于纯前端优化</td>
+</tr>
+</tbody>
+</table>
+<p>不建议现在直接引入 Redis、消息队列服务、多进程 API 集群，或把 SVG 全面改为 Canvas。现有证据尚未支持这些复杂度；项目的单任务、单推理实例约束也需要保持。</p>
+<h2 id="2">2. 证据来源与可信边界</h2>
+<p>本报告区分四种证据：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>本报告中的内容</th>
+<th>可以说明什么</th>
+<th>不能说明什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>已有实测记录</td>
+<td>已完成的 3 个任务、50 帧逐帧计时</td>
+<td>当时这组输入、参数和环境下的处理耗时</td>
+<td>稳态吞吐、并发能力、完整数据集指标</td>
+</tr>
+<tr>
+<td>当前代码静态分析</td>
+<td>轮询、锁、SQL、计时范围、图像显示代码</td>
+<td>某项工作确实存在、重复发生或具有扩展性风险</td>
+<td>未测量的耗时占比、CPU/RSS 峰值</td>
+</tr>
+<tr>
+<td>理论推算</td>
+<td>阶段占比、Amdahl 上限、轮询频率推算</td>
+<td>在明确假设下估计优化空间</td>
+<td>某个后端必然达到的加速比</td>
+</tr>
+<tr>
+<td>待验证建议</td>
+<td>OpenVINO、线程调优、预览、流水线等</td>
+<td>下一步实验的方向和验收方式</td>
+<td>已实现或已通过验证</td>
+</tr>
+</tbody>
+</table>
+<p>本轮只读取源码、已有文档和历史结果。数据库连接显式设置只读事务，并检查 <code>transaction_read_only=on</code>；查询没有启动新任务。分析时数据库快照为 8 个任务、65 帧，其中本报告计时统计只使用下列已完成的 50 帧。<code>factory_frames</code> 关系及其附属存储约 352 KiB，是小规模存储快照，不是数据库容量或查询性能测试。</p>
+<p>基础证据：</p>
+<ul>
+<li><a href="evidence/smoke50.json">已有 50 张烟雾测试记录</a>、<a href="evidence/environment.json">环境记录</a>、<a href="VERIFICATION.md">既有验证说明</a>。</li>
+<li><a href="evidence/performance-analysis-20261028.json">本轮聚合数据</a>：包含逐任务均值、50 帧加权均值、分位数和理论场景。</li>
+<li>当前代码：<code>backend/runner.py</code>、<code>backend/store.py</code>、<code>backend/app.py</code>、<code>backend/images.py</code>、<code>backend/inference/pytorch_obb.py</code>、<code>frontend/src/App.vue</code>、<code>frontend/src/components/DetectionStage.vue</code>、<code>frontend/src/api.js</code>。</li>
+<li>旧项目相关优化文档仅用于识别可借鉴的方法，不能作为当前项目的性能结果。</li>
+</ul>
+<p>本机 CPU 名称读取为 <strong>Intel(R) Core(TM) Ultra 5 225H</strong>。既有运行环境是 Conda <code>yolo_v5_obb</code>，PyTorch CPU 路径、FP32、batch=1，代码设置 CPU 线程数最多为 4。未测量本轮 CPU 负载、核心拓扑、功耗、温度、RSS 或硬盘时延，因此不据此判断是否已经跑满硬件。</p>
+<p>当前模型约 <strong>8743 万参数</strong>。仅按 FP32 参数计算，理论参数存储约 333.5 MiB；这不是进程内存实测值，也不包含激活、工作区和其他对象。模型规模支持优先研究前向加速，但不能单凭参数量预测实际耗时。</p>
+<h2 id="3-50">3. 已有 50 张记录的性能拆分</h2>
+<h3 id="31">3.1 全部样本的加权均值</h3>
+<p>以下先合并 50 个逐帧样本再计算，未对 10/10/30 张的三个任务均值做等权平均。</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th style="text-align: right;">平均耗时（ms/张）</th>
+<th style="text-align: right;">占已计时总量</th>
+<th>当前代码口径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>读取与解码</td>
+<td style="text-align: right;">12.157</td>
+<td style="text-align: right;">2.643%</td>
+<td>源文件检查、读取、图像校验和解码等读取区间</td>
+</tr>
+<tr>
+<td>预处理</td>
+<td style="text-align: right;">1.267</td>
+<td style="text-align: right;">0.275%</td>
+<td>letterbox、颜色/布局转换、张量转换及归一化</td>
+</tr>
+<tr>
+<td>模型前向</td>
+<td style="text-align: right;">438.006</td>
+<td style="text-align: right;">95.217%</td>
+<td>当前 CPU 模型调用区间</td>
+</tr>
+<tr>
+<td>后处理</td>
+<td style="text-align: right;">8.577</td>
+<td style="text-align: right;">1.865%</td>
+<td>有限值检查、角度解码、旋转 NMS、坐标恢复和结果组装等</td>
+</tr>
+<tr>
+<td>合计</td>
+<td style="text-align: right;"><strong>460.007</strong></td>
+<td style="text-align: right;"><strong>100%</strong></td>
+<td>上述四项之和</td>
+</tr>
+</tbody>
+</table>
+<p>全部 50 帧合计耗时的 P50 为 <strong>435.822 ms</strong>，P95 为 <strong>547.118 ms</strong>。这不是请求响应时延或浏览器显示时延；50 张样本也不足以稳定估计复杂输入的尾部延迟。</p>
+<h3 id="32">3.2 各子集的历史结果</h3>
+<table>
+<thead>
+<tr>
+<th>子集</th>
+<th style="text-align: right;">图片数</th>
+<th style="text-align: right;">检测框总数</th>
+<th style="text-align: right;">平均处理耗时（ms）</th>
+<th style="text-align: right;">P50（ms）</th>
+<th style="text-align: right;">P95（ms）</th>
+<th style="text-align: right;">处理 FPS：1000/均值</th>
+<th style="text-align: right;">历史工作区间 FPS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>test</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">196</td>
+<td style="text-align: right;">434.772</td>
+<td style="text-align: right;">427.441</td>
+<td style="text-align: right;">466.434</td>
+<td style="text-align: right;">2.300</td>
+<td style="text-align: right;">2.258</td>
+</tr>
+<tr>
+<td>val</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">209</td>
+<td style="text-align: right;">528.127</td>
+<td style="text-align: right;">529.543</td>
+<td style="text-align: right;">561.438</td>
+<td style="text-align: right;">1.893</td>
+<td style="text-align: right;">1.873</td>
+</tr>
+<tr>
+<td>train</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">819</td>
+<td style="text-align: right;">445.712</td>
+<td style="text-align: right;">432.555</td>
+<td style="text-align: right;">531.407</td>
+<td style="text-align: right;">2.244</td>
+<td style="text-align: right;">2.208</td>
+</tr>
+</tbody>
+</table>
+<p>对应任务 ID：</p>
+<ul>
+<li>test：<code>67daf076-2771-45d9-9129-e419aa4269dd</code></li>
+<li>val：<code>da629d3b-e6cd-447e-9dbe-fe4a793007d2</code></li>
+<li>train：<code>432ad4e5-51ef-41ee-9a26-44106c631a10</code></li>
+</ul>
+<p>“历史工作区间 FPS”由 <code>finished_at - started_at</code> 与帧数计算。代码在模型加载后设置 <code>started_at</code>，在最终数据库提交前设置完成时间；该值也不是完整端到端吞吐。三次任务的区间合计约 23.357 秒，区间与各帧四阶段之和的差值折合约 <strong>7.13 ms/张</strong>。差值可能包含快照写入、哈希、数据库、统计、调度等工作，不能把它全部归因于 PostgreSQL。历史时间戳不是专门的单调时钟性能埋点。</p>
+<p>val 比其他子集慢这一现象，可能涉及图片实际输入形状、执行顺序、系统负载等因素；当前没有控制变量证据，不将其解释为数据类别导致的性能差异。</p>
+<h3 id="33">3.3 现有指标遗漏的范围</h3>
+<p><code>backend/runner.py::_frame</code> 的 <code>total</code> 是四阶段相加，以下工作没有全部进入它：</p>
+<ol>
+<li>首次模型导入、加载、预热及权重哈希；适配器记录的加载预热值也不能覆盖所有首次使用准备工作。</li>
+<li>原图快照写入、源内容 SHA-256 计算。</li>
+<li>结果事务提交、汇总统计、锁等待、磁盘空间检查和部分调度。</li>
+<li>状态轮询等待、网络传输、浏览器图片解码、SVG/表格更新和实际呈现。</li>
+</ol>
+<p>现有回放设置为 10 FPS，对应 100 ms 的帧间隔；当前单帧处理已经超过该间隔，所以不能把设置值当作实际吞吐。以后模型变快时，回放限速会影响任务吞吐，需要把“无限速处理能力”与“指定速度回放”分开测量。</p>
+<h2 id="4">4. 理论优化空间：先确定值得优化的部分</h2>
+<p>用已有平均值近似表示：</p>
+<p><code>已计时处理耗时 = 模型前向 438.006 ms + 其余 22.001 ms</code></p>
+<table>
+<thead>
+<tr>
+<th>假设场景</th>
+<th style="text-align: right;">推算已计时耗时</th>
+<th style="text-align: right;">相对当前的处理加速比</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>所有非前向阶段完全消失</td>
+<td style="text-align: right;">438.006 ms</td>
+<td style="text-align: right;">1.050×</td>
+<td>外围阶段即便零成本，处理吞吐提升上限约 5.0%</td>
+</tr>
+<tr>
+<td>只有模型前向快 2 倍</td>
+<td style="text-align: right;">241.004 ms</td>
+<td style="text-align: right;">1.909×</td>
+<td>仅用于理解主要耗时的影响</td>
+</tr>
+<tr>
+<td>只有模型前向快 4 倍</td>
+<td style="text-align: right;">131.502 ms</td>
+<td style="text-align: right;">3.498×</td>
+<td>外围成本的相对占比随之前移</td>
+</tr>
+<tr>
+<td>模型前向耗时趋近零</td>
+<td style="text-align: right;">22.001 ms</td>
+<td style="text-align: right;">理想极限场景</td>
+<td>此时现有未计时成本和显示链路会更加重要</td>
+</tr>
+</tbody>
+</table>
+<p>这些是数学场景，<strong>不是 OpenVINO、TensorRT 或某种线程配置的性能承诺</strong>。数据库、显示和其他遗漏成本加入后，完整链路的收益会不同。</p>
+<p>读取加预处理合计约 13.42 ms，占比约 2.92%。只缓存这两项、假设命中后成本为零，已计时处理速度上限约提升 3.0%；首次遍历不同图片还会产生缓存建设成本。不能用重复读取同一批输入的缓存命中结果代表完整数据集的一次遍历性能，更不能把缓存预测结果算成新的真实推理。</p>
+<h2 id="5">5. 推理侧优化机会</h2>
+<h3 id="51-cpu">5.1 CPU 线程配置：建议优先做小规模控制变量实验</h3>
+<p><strong>位置与现状：</strong> <code>backend/inference/pytorch_obb.py::load</code> 设置最多 4 个 CPU 线程。当前没有比较不同线程数的记录。PyTorch 官方说明，<code>torch.set_num_threads</code> 控制 CPU 算子内部并行线程，并应在相关执行开始前设置。<a href="https://docs.pytorch.org/docs/2.14/generated/torch.set_num_threads.html">PyTorch 线程设置说明</a></p>
+<p><strong>建议：</strong> 后续在同一模型、输入顺序、batch、实际输入形状和 FP32 条件下比较 1、2、4、8 等候选值；是否继续扩大由可用硬件与前几组结果决定。记录前向、完整处理、API 控制响应及资源占用，而不是仅比较一次均值。</p>
+<p><strong>预期收益：</strong> 有机会改善占比最高的前向；当前不能给出百分比。线程更多也可能加大调度和带宽竞争，降低前端服务的响应稳定性。</p>
+<p><strong>边界与约束：</strong> 不把“全部逻辑核”自动设为最优；不通过启动多份模型竞争 CPU 来替代线程调优。不同线程条件应独立启动和预热，避免进程状态造成比较偏差。记录供电模式、后台负载和温度条件；线程调优不改变检测阈值、输入尺寸或数值精度。</p>
+<p><strong>后续验收：</strong> 在独立重复运行中观察中位数和尾部变化，并检查结果一致性、CPU 使用和控制请求时延。只有改善可重复且没有交互回退时，才建议更改默认值。</p>
+<h3 id="52-openvinointel-cpu">5.2 OpenVINO：Intel CPU 的主要适配候选</h3>
+<p><strong>位置与现状：</strong> 当前只运行 PyTorch 适配器，OpenVINO 为后续接口方向，没有本项目的可运行 IR、精度对齐或性能证据。旧项目的 YOLO11 HBB 模型不是此处 YOLOv5-OBB 模型。</p>
+<p><strong>建议路径：</strong> 先导出并对齐模型原始输出，初期继续复用当前已验证的 OBB 后处理；在相同输入下验证完成后，再比较 OpenVINO 的适当性能设置。单路逐帧显示首先关注单请求延迟；离线批量处理再单独考察吞吐。官方文档明确区分延迟与吞吐目标，增加并发可能提高单请求延迟。<a href="https://docs.openvino.ai/2025/openvino-workflow/running-inference/optimize-inference/optimizing-latency.html">OpenVINO 延迟优化说明</a></p>
+<p><strong>预期收益：</strong> 直接作用于当前占比最高的阶段，是值得验证的方向；不得套用旧项目或其他处理器的加速比。</p>
+<p><strong>边界与约束：</strong></p>
+<ul>
+<li>此模型包含 180 个角度分类值，8 类时每个候选的输出维度涉及 <code>5 + 8 + 180 = 193</code>，不能按普通 HBB 输出格式处理。</li>
+<li>当前 letterbox 使用 <code>auto=True</code>，配置的 640 不等于所有实际输入都是 640×640。固定形状导出、动态形状支持和预处理策略必须一起验证。</li>
+<li>保持 BGR/RGB、归一化、候选筛选、多标签语义、角度解码、旋转 NMS 和坐标还原一致。初期把后处理留在 CPU 有利于定位差异，但需要测量转换和复制成本。</li>
+<li>不默认启用低精度或宣称本机一定具备某种加速能力。FP32、可用的低精度路径分别形成结果证据；模型转换失败不能悄悄退回 PyTorch 后仍显示 OpenVINO 成绩。</li>
+<li>导出与运行依赖应另列清楚，后续实施时评估与 <code>yolo_v5_obb</code> 的兼容性；本轮不安装或改包。</li>
+<li>冷启动、编译与稳态推理分别统计。模型缓存只解决相应准备成本，不能把它当作每帧加速。</li>
+</ul>
+<p><strong>后续验收：</strong> 原始输出、最终框、类别、置信度和角度逐层对齐；设定并解释数值容差，再检查完整数据集的准确率与实际处理速度。50 张样本只用于路径打通和初步差异检查。</p>
+<h3 id="53-tensorrt">5.3 TensorRT：由部署硬件决定，当前不作为本机收益承诺</h3>
+<p><strong>现状与建议：</strong> 当前执行环境是 CPU 版 PyTorch，没有 TensorRT 的实测链路。如果最终部署目标明确为 NVIDIA GPU，再为该目标制作、验证和测量 engine。</p>
+<p><strong>边界与约束：</strong> engine 的版本和硬件兼容需要明确管理；启用兼容选项也可能限制可选策略并影响性能，不能把任意机器生成的 engine 视为通用文件。<a href="https://docs.nvidia.com/deeplearning/tensorrt/latest/inference-library/engine-compatibility.html">TensorRT engine 兼容说明</a></p>
+<p>还需计入主机到设备传输、设备到主机传输、同步和 OBB 后处理。GPU 异步执行条件下，普通函数返回时间不能直接视为 GPU 完成时间；应采用正确的同步或设备事件，并同时记录用户可感知的链路耗时。<a href="https://docs.nvidia.com/deeplearning/tensorrt/latest/performance/best-practices.html">TensorRT 性能测量建议</a></p>
+<p><strong>后续验收：</strong> batch=1 的实时路径先与相同语义的基线比较，再独立研究批量吞吐。FP16/INT8 分别进行准确率验证；不得将数据传输和后处理时间从产品吞吐指标中删去。</p>
+<h3 id="54">5.4 量化、缩小输入与更轻模型：明确属于精度—速度权衡</h3>
+<p>前向占比高意味着这些方向可能有价值，但它们可能影响小目标、长条物体、密集目标和旋转角度，不属于保持算法行为不变的简单工程优化。</p>
+<p><strong>约束：</strong> 当前权重有 8 类，而数据集有 7 类且类别编号顺序不同，例如 bottle 的编号不同，plate 没有对应 GT。先建立按名称审核过的映射和缺失类别说明，再谈 mAP、召回和量化损失。未经映射直接计算出的精度不能用于接受优化。</p>
+<p><strong>后续验收：</strong> 完整数据集的每类指标、漏检类型、角度/框偏差、处理耗时和资源占用一起报告；校准集与评估集分工清楚。不能以 50 张“看起来正确”代替完整精度验证，也不在本轮提前选定低精度默认方案。</p>
+<h2 id="6">6. 前端与显示链路优化机会</h2>
+<h3 id="61">6.1 降低无变化状态的轮询频率</h3>
+<p><strong>位置与现状：</strong> <code>frontend/src/App.vue::poll</code> 在一次请求完成后再等待约 500 ms；暂停、完成或查看其他页面时仍继续获取完整状态。实际频率为“请求耗时 + 500 ms”的倒数，通常低于每秒 2 次。<code>backend/runner.py::snapshot</code> 会重复查询最后一帧；重启后无内存任务对象时，还可能先查询最近任务。</p>
+<p><strong>建议：</strong> 运行时保留必要刷新频率，暂停/终态和后台页面采用更低频率；在用户控制操作和页面重新可见时立即刷新。进一步可让状态携带版本标识，只在任务版本或帧键变化时读取完整帧。数据库提交成功后缓存不可变的最新帧，可减少重复 SELECT。</p>
+<p><strong>量级推算：</strong> 忽略请求耗时，每 500 ms 一次约为单标签页每天 172,800 次请求；改为 5 秒一次时，对适用状态理论上减少约 90%。已有结果按代表性任务对象重序列化，快照 JSON 平均约 7.9 KB，持续完整轮询对应约 1.37 GB/天的模型化数据量。它不是抓包结果，不包含 HTTP 头，终态快照大小也可能不同；本机回环传输不代表公网费用。</p>
+<p><strong>边界与约束：</strong> 不能把页面不可见解释为停止后端任务；必须支持其他标签页发起任务后的状态发现。保留现有请求版本和控制操作的防竞态逻辑。新任务、重启和失败时正确刷新缓存；不得用缓存掩盖数据库不可用。5 秒仅为比较方案，不是已经确认的产品 SLA。</p>
+<p><strong>后续验收：</strong> 运行、暂停、完成、失败、切页、后台恢复和双标签页分别统计请求数、SQL 数、数据量与操作到显示的延迟。确认不会回滚到旧帧，所有控制操作仍能得到明确反馈。</p>
+<h3 id="62">6.2 保留上一张完整帧，原子切换图像与检测结果</h3>
+<p><strong>位置与现状：</strong> <code>DetectionStage.vue::loadFrame</code> 已有取消旧请求、按帧键加载和释放 Blob URL 的逻辑；不是每次状态轮询都重新下载图片，也没有证据表明存在 Blob 泄漏。不过，新帧开始下载时会清空当前已加载状态，慢网络下可能短暂空白；如果未来新帧到达速度持续超过下载速度，反复取消可能妨碍完整帧显示。</p>
+<p><strong>建议：</strong> 保留上一张已完整加载的图像及其对应检测结果，下一张加载完成后整体切换。高吞吐情况下，显示只追赶最新完整帧，不要求每个推理结果都在屏幕停留。</p>
+<p><strong>边界与约束：</strong> 图像、框、表格、帧号必须属于同一帧；等待时明确标识当前显示帧，不能把旧图和新框叠在一起。允许跳过显示帧，不允许因此丢失需要持久化的推理结果。当前约 2 FPS 的小样本没有证明显示饥饿已经发生。</p>
+<p><strong>后续验收：</strong> 模拟高更新率和慢图像响应，观察空白时间、显示滞后与最新帧可达性，并检查取消、切任务、卸载组件后的资源释放。</p>
+<h3 id="63">6.3 原图与预览图分离，按真实场景决定缓存</h3>
+<p><strong>位置与现状：</strong> <code>/api</code> 响应统一设置 <code>Cache-Control: no-store</code>，图像接口返回原图快照。50 张已有快照合计约 14.79 MiB，平均约 0.296 MiB/张；如果每张都以 2 FPS 显示，图像传输约为每个浏览器 0.59 MiB/s，这仍只是按文件大小推算。</p>
+<p><strong>建议：</strong> 针对远程访问或大尺寸输入，再评估服务端有限尺寸预览；历史不可变图像可采用与任务/帧/内容哈希绑定的私有缓存策略。原图继续作为追溯和下载依据。</p>
+<p><strong>边界与约束：</strong> 预览生成会新增编码成本，不能假设必然更快。坐标必须严格按原图尺寸映射；缩略图只影响显示，不得偷偷替换模型输入。缓存应有容量上限和失效规则，不包含状态接口；后续若增加认证或删除策略，必须同时审核私有图像缓存行为。</p>
+<p><strong>后续验收：</strong> 比较网络字节、首次打开时间、重复历史访问时间、编码 CPU 和缓存容量，验证图片纵横比、旋转框对齐、放大查看与原图下载。</p>
+<h3 id="64-svg">6.4 密集目标时减少表格与 SVG 的无效工作</h3>
+<p><strong>位置与现状：</strong> <code>App.vue</code> 接收完整快照对象，相关计算属性可能再次求值；<code>DetectionStage.vue</code> 为目标绘制 SVG 多边形和文本，结果表展示全部目标，最大检测数可达 1000。Vue 的更新机制可能避免一部分实际 DOM 操作，不能仅凭对象重新赋值就断言“每次全部重绘”。</p>
+<p><strong>建议：</strong> 先避免对同一帧重复替换数据；如果真实浏览器 profile 证明 DOM 成本明显，再考虑只显示选中目标标签、表格虚拟列表和分级显示。只有 SVG 本身确实构成瓶颈时才评估 Canvas。</p>
+<p><strong>边界与约束：</strong> 筛选数量、显示数量和总检测数需要分清；隐藏标签不能被理解成删除检测。保留缩放、选择和类别颜色语义，控制交互与渲染改造范围。</p>
+<p><strong>后续验收：</strong> 在代表性密集结果下记录长任务、更新耗时、内存和滚动响应，逐一确认框选择和表格筛选仍正确。8 个类别的简单查找目前不值得先做复杂索引优化。</p>
+<h2 id="7">7. 调度、统计与数据库优化机会</h2>
+<h3 id="71">7.1 逐帧汇总改为增量均值与低频分位数</h3>
+<p><strong>位置与现状：</strong> <code>runner.py::_work</code> 每处理一帧，把总耗时加入列表，再对完整列表计算均值和 P50/P95。N 帧期间重复扫描的数据规模累计随 N² 增长；10,000 帧时，单项全历史扫描的累计样本访问数量约为 50,005,000。这里没有把 NumPy 分位数实现假定为每次完整排序。</p>
+<p><strong>建议：</strong> 均值使用累计和与计数；P50/P95 每隔一个短时间窗口更新一次，并在任务终止时精确计算。10,000 帧上限下，保留耗时列表后定期计算通常足够，不必立刻引入近似分位数系统。</p>
+<p><strong>边界与约束：</strong> 明确运行中的统计可能稍有滞后，最终结果仍保持准确口径；失败帧是否计入与当前规则一致。统计不得在每个客户端请求时重新扫描整段历史。</p>
+<p><strong>后续验收：</strong> 最终均值/分位数与相同原始序列的离线结果一致，长任务统计成本不再随每帧重复增长，停止和暂停响应没有回退。</p>
+<h3 id="72">7.2 缩短任务锁占用，保留提交与可见性的一致性</h3>
+<p><strong>位置与现状：</strong> 工作线程更新任务时，在条件锁内执行统计和 <code>save_frame</code>；开始任务的目录清单与部分数据库操作也在控制锁内。<code>Store</code> 使用一个持久连接与一个读写共用锁。数据库慢时，状态读取和控制请求可能等待；当前没有锁等待实测。</p>
+<p><strong>建议：</strong> 先测量锁等待和事务耗时，再判断是否把纯计算移出临界区、分离读取连接，或设计提交后发布的内存快照。保持一个明确的写入者。</p>
+<p><strong>边界与约束：</strong> 不能在持久化之前宣布完成或发布未提交帧；控制操作、错误状态和帧提交顺序必须可解释。若使用连接池，数据库会话级 advisory lock 需要独立管理，不能随连接归还而丢失单实例保护。当前不应直接增加 Uvicorn worker 数来绕过锁。</p>
+<p><strong>后续验收：</strong> 对慢数据库、提交失败、暂停、停止和重启分别验证状态一致性；记录控制响应与锁等待。优化不得引入重复推理、丢帧或两个进程同时占用同一任务。</p>
+<h3 id="73">7.3 数据库批量写入不是当前首要动作</h3>
+<p><strong>现状：</strong> <code>Store.save_frame</code> 每帧一次事务，包含一条帧 INSERT 和一条任务 UPSERT；检测框已经包含在帧 JSON 中，没有逐框插入的 N+1 写入模式。两条 DML 不等于全部协议往返只有两次，但也不能按旧系统逐框 SQL 估算收益。现有帧主键和任务时间索引已经服务于主要访问路径。</p>
+<p><strong>建议：</strong> 先减少轮询导致的重复读、识别重复写入的元数据，再按实测决定是否批量提交。若使用小批次写入，必须显式接受相应的持久化延迟和异常丢失窗口。</p>
+<p><strong>边界与约束：</strong> 停止或完成前排空待写队列；进程突然退出时哪些帧可能丢失，需要在产品文档中说明。不要为了减少 SQL 把数据库提交推迟到全部任务结束。不要重复添加已有索引，或在没有 JSON 查询需求时增加通用 JSON 索引。</p>
+<p><strong>后续验收：</strong> 事务耗时、SQL 数、提交时延、失败恢复和最终帧数一起比较。当前未计时差值只有约 7.13 ms/张且包含多种工作，不支持宣称数据库优化可以使当前处理速度翻倍。</p>
+<h3 id="74">7.4 上传、历史导出与大结果集读取</h3>
+<p><strong>位置与现状：</strong> 上传路由已经把图像解码放到线程执行，但后续写文件仍在异步路由中同步进行；较大的写入可能占用事件循环。历史导出按页读取，每页重复计数并使用 OFFSET；图像接口获取路径时也读取完整帧 JSON。前端下载使用 <code>response.blob()</code>，所以服务端逐段生成并不意味着浏览器内存零占用。</p>
+<p><strong>建议：</strong> 后续把上传的校验与落盘过程放入受控工作线程；大导出采用不重复 COUNT 的读取路径和按帧号继续分页；图像接口按需要只读取路径。浏览器导出可评估原生附件下载或兼容的文件流写入方案。</p>
+<p><strong>边界与约束：</strong> 保持当前请求体、单文件大小、像素数、格式、路径和磁盘检查；线程任务也需并发上限。导出不得改变顺序、漏帧、重复帧或隐藏失败，认证和错误反馈要保留。当前 50 帧不足以证明导出内存已经构成问题。</p>
+<p><strong>后续验收：</strong> 大任务导出期间的 API 响应、浏览器内存与内容完整性，上传失败后的临时文件清理，历史分页的前后边界。</p>
+<h2 id="8">8. 读取、快照与有界流水线</h2>
+<h3 id="81">8.1 快照写入和内容哈希先单独计时</h3>
+<p><code>runner.py::_frame</code> 保存原图快照并计算 SHA-256，这些工作在当前四阶段合计之外。它们是追溯链的一部分，不能仅为提高数字而删除。</p>
+<p>重复运行同一数据集时，内容寻址存储可能减少重复快照；但需要保留每个任务的引用、原文件信息和哈希验证，并采用可证明安全的引用管理。对于当前约 15 MiB 的 50 张样本，直接引入完整去重存储系统收益不明确，建议先计时和观察磁盘增长。</p>
+<p><code>images.py</code> 使用 Pillow 做格式/像素校验，再用 OpenCV 解码。不能据此断言“执行了两遍完整 JPEG 解码”；校验成本应单独测量，也不能移除已有大图和损坏图片防护来获得表面收益。</p>
+<h3 id="82">8.2 流水线可重叠工作，但不能隐藏主要计算本身</h3>
+<p><strong>建议：</strong> 如果后续前向已显著缩短、读取或写入占比增加，可研究读取/预处理、推理、持久化与显示之间的有界队列。保持单模型执行者，优先从少量预取开始。</p>
+<p><strong>预期收益：</strong> 在资源允许时隐藏部分阶段等待。当前模型前向占比约 95.2%，因此仅重叠其余阶段，不能据此预期数倍提升；多个 CPU 重任务同时运行还可能相互竞争。</p>
+<p><strong>边界与约束：</strong></p>
+<ul>
+<li>队列必须有长度上限和背压，不能无限积累大图、张量或结果。</li>
+<li>显示队列可以取最新帧，持久化队列不能静默丢弃结果。</li>
+<li>每个数据对象携带任务与帧标识；图像和框一起发布。</li>
+<li>暂停、停止、失败和完成都需要定义队列边界；最终完成状态发布前，所需结果必须提交。</li>
+<li>当前单帧推理不是随时可强制中断的操作，不能通过增加队列宣称停止立即生效。</li>
+</ul>
+<p><strong>后续验收：</strong> 有限队列峰值、峰值 RSS、处理吞吐、显示滞后、故障后的帧数和最终状态同时验证。先使用最小流水线，不沿用旧项目的整套服务拆分。</p>
+<h3 id="83-nms">8.3 旋转 NMS 的语义与长尾限制</h3>
+<p>当前 <code>non_max_suppression_obb</code> 会先进行置信度筛选，再进行多标签展开、角度处理和旋转 NMS。<code>max_det</code> 的最终截断在旋转 NMS 之后，因此降低 <code>max_det</code> 不一定减少昂贵的 NMS 计算，更多时候减少返回结果和显示成本。后处理 8.58 ms 是复合阶段，不是纯 NMS 的独立计时。</p>
+<p>低阈值和密集候选可能增加尾部耗时；代码的时间检查在相应 NMS 调用之后，并不是能强制打断计算的硬超时。当前未做这类压力测试。</p>
+<p>提高置信度阈值、改成单标签或换成水平框 NMS 都会改变检测语义，必须作为算法策略变化验证，不能计入无损性能优化。后续应先记录候选数量、筛选数量和 NMS 独立耗时，再考虑等价实现或明确的候选上限策略。</p>
+<h2 id="9">9. 旧项目经验：哪些适用，哪些不能直接搬用</h2>
+<table>
+<thead>
+<tr>
+<th>旧项目经验</th>
+<th>当前差异</th>
+<th>本项目结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OpenVINO 在旧 Intel CPU / YOLO11 HBB 上改善性能</td>
+<td>当前 CPU、模型规模、OBB 输出和后处理不同</td>
+<td>借鉴对齐和分阶段测量方法，不引用旧加速比作为预期</td>
+</tr>
+<tr>
+<td>逐目标 SQL 改为批量写入，收益明显</td>
+<td>当前已经按帧存储 JSON，一帧两个主要 DML</td>
+<td>不重复解决不存在的逐框插入问题</td>
+</tr>
+<tr>
+<td>大图预览缓存和缩放策略优化</td>
+<td>当前直接传原图，没有相同的每帧预览编码链</td>
+<td>先确认网络/解码瓶颈，再权衡新增预览编码成本</td>
+</tr>
+<tr>
+<td>固定图片重复回放时输入缓存收益大</td>
+<td>当前读取+预处理仅占约 2.92%，完整遍历常为未命中</td>
+<td>缓存结果必须注明冷热条件，不能代表通用推理能力</td>
+</tr>
+<tr>
+<td>异步流水线和最新帧显示</td>
+<td>当前主要计算仍在单个 CPU 前向，模型已复用</td>
+<td>借鉴有界队列与图框同步原则，按需要渐进引入</td>
+</tr>
+</tbody>
+</table>
+<p>参考旧项目文件：<code>test_demo_new/docs/CPU_OPTIMIZATION_20261025.md</code>、<code>DISPLAY_CACHE_OPTIMIZATION_20261025.md</code>、<code>DB_INPUT_OPTIMIZATION_20261025.md</code>、<code>ASYNC_PIPELINE_20261025.md</code>。这些记录属于不同系统和实验条件。</p>
+<p>当前已经实现模型缓存复用、eval/inference_mode、相应模型融合路径、按帧 JSON 持久化、持久数据库连接、按帧键加载图像及 Blob URL 释放。它们应作为基线保留，不再次列为尚未获得的新收益。</p>
+<h2 id="10">10. 后续实验设计与接受条件</h2>
+<p>以下是实施下一轮优化时的计划，<strong>本轮没有执行</strong>。</p>
+<h3 id="101">10.1 固定实验条件</h3>
+<ul>
+<li>固定权重 SHA-256、代码版本、后端、设备、线程数、数值精度和 batch；记录依赖版本。</li>
+<li>固定输入清单与顺序，记录原图尺寸和实际入模张量形状；配置图像大小相同不代表实际输入形状相同。</li>
+<li>固定置信度、IoU、多标签行为、最大检测数和 OBB 后处理规则。</li>
+<li>冷启动与预热后重复运行分开；说明文件缓存、模型缓存、预览缓存的冷热条件。</li>
+<li>区分没有浏览器、单浏览器、多个浏览器及后台标签页；保持相同供电和后台负载条件。</li>
+<li>50 张仅作路径和回归检查；完整数据集准确率与正式性能指标由用户后续执行，报告不提前代填。</li>
+</ul>
+<h3 id="102">10.2 建议补齐的计时与资源指标</h3>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>指标</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>模型</td>
+<td>前向、实际形状、首次与稳态</td>
+<td>判断后端与线程配置收益</td>
+</tr>
+<tr>
+<td>处理</td>
+<td>读取、校验、解码、预处理、NMS/其余后处理</td>
+<td>识别阶段变化和长尾</td>
+</tr>
+<tr>
+<td>持久化</td>
+<td>哈希、快照写入、事务、统计、锁等待</td>
+<td>解释当前合计未覆盖的成本</td>
+</tr>
+<tr>
+<td>任务</td>
+<td>从开始请求到可用、首帧、处理完成、最终提交</td>
+<td>区分启动与持续处理能力</td>
+</tr>
+<tr>
+<td>显示</td>
+<td>结果产生到状态到达、图片加载、实际显示</td>
+<td>验证用户看到的延迟，而非只看推理 FPS</td>
+</tr>
+<tr>
+<td>资源</td>
+<td>CPU、RSS、磁盘读写、HTTP/SQL 次数、网络字节</td>
+<td>判断资源占用、并发和长时间运行趋势</td>
+</tr>
+</tbody>
+</table>
+<p>本机时延宜使用单调时钟；前后端或多机器时钟不能不经处理直接相减。GPU 路径额外区分异步提交与实际完成。日志与埋点本身也需要控制开销。</p>
+<h3 id="103">10.3 分三轮实施，逐轮决定是否继续</h3>
+<p><strong>第一轮：低复杂度、保持算法行为。</strong> 补齐测量、轮询降频和去重、统计更新策略，再独立比较 CPU 线程配置。验证所有任务状态、暂停/停止、历史查询、重启恢复与图框一致性。</p>
+<p><strong>第二轮：根据部署目标适配后端。</strong> Intel CPU 验证 OpenVINO；只有明确 NVIDIA GPU 目标时再推进 TensorRT。每个后端单独交付模型转换、数值对齐、运行依赖和性能证据。</p>
+<p><strong>第三轮：由第二轮结果决定外围优化。</strong> 前向缩短后再检查预览、流水线、数据库和密集渲染；只有准确率边界允许，才研究低精度、尺寸或模型变化。</p>
+<p>建议接受原则是“收益可重复、结果语义可解释、尾部和控制响应无明显回退、复杂度与收益相称”。具体 FPS、首帧时间和停止响应 SLA 尚未由用户确定，本报告不把建议值写成既定需求。</p>
+<h2 id="11">11. 分析边界与交付说明</h2>
+<p>本轮新增的是分析文档及其派生证据，没有实施上述优化；没有重启服务、安装依赖、转换模型、调整配置或跑新的推理/性能测试。历史数据只能支持当前 50 张样本的结论，无法证明完整数据集性能、长期内存稳定性、多浏览器容量，或 OpenVINO/TensorRT 的加速效果。</p>
+<p>业务源码、配置与启动相关文件的前后 SHA-256 清单核对结果附在 <a href="evidence/performance-analysis-scope-20261028.json">分析范围核对记录</a>。该核对覆盖本轮登记的文件，不等同于对整个工作区所有文件进行审计。</p>
+<p>报告 Markdown 为可编辑正文；配套 HTML 为便于本地阅读的单文件版本；JSON 保存精确聚合数值，便于后续实验复用。原有产品文档与性能测试说明保持原有内容。</p><footer>由同名 Markdown 正文生成。本报告无外部字体、脚本或样式依赖；证据链接指向同目录 evidence 文件。</footer></main></div></body></html>

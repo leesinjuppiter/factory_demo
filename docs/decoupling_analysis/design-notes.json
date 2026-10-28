@@ -1,0 +1,9 @@
+{
+  "type": "architecture",
+  "size": "1280x720",
+  "style_source": "../web_manual/STYLE.md",
+  "nodes": 8,
+  "arrows": 7,
+  "status": "proposal_only",
+  "omitted": "Configuration/control routes, buffer internals and failure details are in the report."
+}

@@ -1,0 +1,27 @@
+.env
+runtime/
+__pycache__/
+*.pyc
+.pytest_cache/
+frontend/node_modules/
+frontend/dist/
+
+# Local secrets, model artifacts and generated data are not source control.
+.env.*
+!.env.example
+*.pt
+*.pth
+*.onnx
+*.engine
+*.plan
+vendor/weights/
+dataset/
+datasets/
+node_modules/
+dist/
+*.log
+*.sqlite
+*.sqlite3
+*.db
+tutorial/practice/
+

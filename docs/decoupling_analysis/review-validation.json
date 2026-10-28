@@ -1,0 +1,14 @@
+{
+  "desktop": {
+    "overflow": false,
+    "sections": 11,
+    "tables": 6
+  },
+  "mobile": {
+    "overflow": false,
+    "tableLocalScroll": true
+  },
+  "missingLinks": [],
+  "errors": [],
+  "remoteRequests": []
+}

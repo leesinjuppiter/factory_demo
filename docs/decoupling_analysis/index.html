@@ -1,0 +1,93 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>通用展示模块解耦分析</title><style>body{margin:0;background:#f2f4f3;color:#203039;font:16px/1.8 "Segoe UI","Microsoft YaHei",sans-serif}main{max-width:1320px;margin:auto;padding:36px 24px 80px}h1{font-size:32px;line-height:1.4}h2{margin-top:44px;border-top:1px solid #bdcec6;padding-top:24px;color:#177b68}h3{margin-top:28px}p{overflow-wrap:anywhere}a{color:#2e5aa8}table{border-collapse:collapse;min-width:760px;width:100%;font-size:15px}td,th{border:1px solid #bdcec6;padding:12px;text-align:left;vertical-align:top}th{background:#edf5f1}.table-wrap,.diagram-container{overflow-x:auto;margin:24px 0}svg{display:block;min-width:1280px;width:100%;height:auto}pre{background:#edf5f1;padding:20px;overflow:auto;font:14px/1.7 Consolas,monospace}.tag{border-left:4px solid #177b68;padding:12px 20px;background:#edf5f1}nav{display:flex;gap:20px;flex-wrap:wrap}@media(max-width:600px){main{padding:20px 16px}h1{font-size:26px}}@media print{main{max-width:none}svg{min-width:0}table{min-width:0}h2{break-after:avoid}}</style></head><body><main><nav><a href="architecture.html">单独查看架构图</a><a href="ANALYSIS.md">Markdown 原文</a><a href="../production_proposal/index.html">上一轮生产链路提案</a></nav><p class="tag">分析稿 · 业务代码未变更 · 适用于后续规划与讨论</p><h1>通用展示模块与推理后端解耦分析</h1>
+<p>2026-10-28 · 对照 test_demo 当前源码 · 设计提案，尚未实施</p>
+<h2>1. 结论与本轮边界</h2>
+<p>沿用 test_demo 的“推理后端—数据适配层—展示前端”职责划分，并保留独立管理入口；进一步把执行结果、预览图片、历史归档拆为不同消费路径。通用展示只依赖稳定的展示协议，不直接依赖 YOLO、OpenVINO、TensorRT、相机 SDK、数据库表或本地文件路径。</p>
+<p>解耦首先是输入输出、生命周期和失败传播的解耦，不等于每个模块都要变成独立 HTTP/WS 服务。第一阶段采用单机模块化实现即可，保持独立接口与有界队列；是否分进程应由实测瓶颈、依赖隔离和故障隔离要求决定。原始图像在本机尽量传受控引用，避免仅为了分模块重复序列化大图。</p>
+<p>本轮只检查代码、形成报告和架构图；不改业务源码，不重启服务，不运行推理，不迁移数据库。原有手册和教程继续描述已实现版本，本提案独立存放，不能当成已完成的新功能。pylon 内存取帧作为生产主路线仍待用户确认；本次接口设计同时容纳目录读取和 SDK 两种来源，不替用户作此决定。</p>
+<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="decoupling-title decoupling-desc"><title id="decoupling-title">通用展示与推理模块解耦架构提案</title><desc id="decoupling-desc">采集通过统一帧引用进入可替换推理后端，运行时向执行、预览、归档三个独立消费者分发。通用展示只消费预览服务，历史管理独立。配置控制连接省略。</desc><defs><marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#52676b"/></marker></defs><rect width="1280" height="720" fill="#f2f4f3"/><g font-family="Segoe UI,Microsoft YaHei,sans-serif" fill="#203039"><text x="48" y="48" font-size="26" font-weight="600">统一数据契约，分别处理执行、预览与归档</text><text x="48" y="80" font-size="16" fill="#52676b">架构提案 · 不代表已实现；管理配置连接省略，详见报告第 5、7 节</text><g fill="none" stroke="#52676b" stroke-width="2" marker-end="url(#arrow)"><path d="M248 336H300"/><path d="M500 336H552"/><path d="M784 308H796Q804 308 804 300V256Q804 248 812 248H932Q940 248 940 240V216"/><path d="M784 336H824"/><path d="M784 364H796Q804 364 804 372V424Q804 432 812 432H932Q940 432 940 440V456" stroke-dasharray="5 4"/><path d="M1056 336H1100"/><path d="M1056 512H1100" stroke-dasharray="5 4"/></g><g class="node"><rect x="48" y="280" width="200" height="112" rx="8" fill="#ffffff" stroke="#bdcec6"/><text x="64" y="312" font-size="20" font-weight="600">采集模块</text><text x="64" y="342" font-size="15" fill="#52676b">目录 / 模拟器 / SDK</text><text x="64" y="368" font-size="15" fill="#52676b">统一 FrameRef</text></g><g class="node"><rect x="300" y="280" width="200" height="112" rx="8" fill="#ffffff" stroke="#bdcec6"/><text x="316" y="312" font-size="20" font-weight="600">推理适配器</text><text x="316" y="342" font-size="15" fill="#52676b">PyTorch / OV / TRT</text><text x="316" y="368" font-size="15" fill="#52676b">统一 DetectionResult</text></g><g class="node"><rect x="552" y="280" width="232" height="112" rx="8" fill="#edf5f1" stroke="#177b68"/><text x="568" y="312" font-size="20" font-weight="600">运行编排与分发</text><text x="568" y="342" font-size="15" fill="#52676b">结果 + 帧引用</text><text x="568" y="368" font-size="15" fill="#52676b">消费者独立容量与策略</text></g><g class="node"><rect x="824" y="104" width="232" height="112" rx="8" fill="#ffffff" stroke="#bdcec6"/><text x="840" y="136" font-size="20" font-weight="600">执行对接</text><text x="840" y="166" font-size="15" fill="#52676b">标定 / 时限 / 去重</text><text x="840" y="192" font-size="15" fill="#52676b">无需等待 JPEG 或网页</text></g><g class="node"><rect x="824" y="280" width="232" height="112" rx="8" fill="#edf5f1" stroke="#177b68"/><text x="840" y="312" font-size="20" font-weight="600">数据与预览</text><text x="840" y="342" font-size="15" fill="#52676b">压缩 / 同帧配对 / WS</text><text x="840" y="368" font-size="15" fill="#52676b">标准 ViewFrame</text></g><g class="node"><rect x="824" y="456" width="232" height="112" rx="8" fill="#ffffff" stroke="#bdcec6"/><text x="840" y="488" font-size="20" font-weight="600">归档与管理</text><text x="840" y="518" font-size="15" fill="#52676b">结果、图片、历史</text><text x="840" y="544" font-size="15" fill="#52676b">异步状态与失败策略</text></g><g class="node"><rect x="1100" y="280" width="148" height="112" rx="8" fill="#ffffff" stroke="#bdcec6"/><text x="1116" y="312" font-size="20" font-weight="600">通用展示</text><text x="1116" y="342" font-size="15" fill="#52676b">坐标 / 类别</text><text x="1116" y="368" font-size="15" fill="#52676b">角度 / 图像</text></g><g class="node"><rect x="1100" y="456" width="148" height="112" rx="8" fill="#ffffff" stroke="#bdcec6"/><text x="1116" y="488" font-size="20" font-weight="600">后台页面</text><text x="1116" y="518" font-size="15" fill="#52676b">历史查询</text><text x="1116" y="544" font-size="15" fill="#52676b">运行配置</text></g><text x="48" y="610" font-size="16">关键边界：原始帧引用不出现在浏览器协议；推理模块不访问网页和数据库。</text><text x="48" y="640" font-size="16">图中推理适配器为可选后端，不表示同时运行，也不表示三种引擎均已验证。</text><path d="M48 672H92" stroke="#52676b" stroke-width="2"/><text x="104" y="678" font-size="14">实时数据路径</text><path d="M300 672H344" stroke="#52676b" stroke-width="2" stroke-dasharray="5 4"/><text x="356" y="678" font-size="14">归档 / 历史路径</text><text x="624" y="678" font-size="14" fill="#52676b">采集、执行、归档的过载策略须分别确定</text></g></svg></div><h2>2. test_demo 中可以沿用的设计</h2>
+<div class="table-wrap"><table><tr><th>模块/证据</th><th>现有职责</th><th>建议</th></tr><tr><td>backend/image_source.py</td><td>图片来源封装</td><td>保留来源边界，扩展统一 FrameSource；目录、模拟器、相机均输出相同帧信息</td></tr><tr><td>backend/inference.py:12</td><td>YoloInference，包含 PyTorch/OpenVINO 路径</td><td>保留推理封装思想；按引擎独立适配器，避免推理对象携带展示颜色、历史保留规则</td></tr><tr><td>fastapi/main.py:45、71</td><td>adapt_ready / adapt_frame 转为统一展示字段</td><td>保留适配层；转换、校验独立于网络发送和数据库写入</td></tr><tr><td>fastapi/main.py:409、446、462</td><td>共享上游、每浏览器独立容量为 2 的展示队列、旧展示包淘汰</td><td>保留一次推理、多客户端订阅；淘汰仅限预览，不能套用到执行或待检测帧</td></tr><tr><td>platform_api 与 admin_frontend</td><td>历史查询、配置和平台管理</td><td>保留管理与展示分离；不引入本轮不需要的标注、训练、CVAT 功能</td></tr><tr><td>frontend/src/api/ws.js 与 stores/imageStream.js</td><td>网络客户端与页面状态分层</td><td>保留传输、状态、渲染三层，移除展示侧的生产控制职责</td></tr></table></div>
+<p>代码里的 OpenVINO 分支属于旧项目 HBB 推理，不证明 factory_demo 的 YOLOv5-OBB OpenVINO 已可运行。本轮仅做静态审阅，没有验证旧项目运行状态。</p>
+<h2>3. 不能直接照搬的耦合</h2>
+<h3>3.1 检测结果等待图片编码</h3>
+<p>test_demo/backend/simulator.py 的 prepare_frame（164 起）先 frame_message，再经 PreviewCache 生成 JPEG（190–210），最后返回 message 与 jpeg。frame_message 内还同步执行 retention.apply（141）。ReplayStream.produce 等待完整包后才交给发送队列（约 420–447）。</p>
+<p>约束：执行模块获取识别结果时不能默认等待 JPEG 编码、图片发送或普通历史写入。预览需要图片与检测对应，但执行只需及时、完整、可追踪的识别数据。</p>
+<h3>3.2 历史写入背压传到实时上游</h3>
+<p>fastapi/main.py:319 的 PlatformWriter.add 在 pending_count 达到 MAX_PENDING_EVENTS 后等待容量；pump:508 在广播前 await writer.add。因此数据库持续不可用、待写队列达到上限时，上游接收和实时转发会等待。这是原项目为保证记录完整性作出的取舍，不是“用了异步”就已隔离。</p>
+<p>约束：新系统要明确普通归档故障与必须持久化后才允许动作的区别。采用异步归档，也必须定义容量、满队列事件、可容忍缺口与停机条件；不能同时承诺无限离线、有限内存、全量不丢和永不阻塞。最终现场策略待确认。</p>
+<h3>3.3 生命周期与展示订阅相连</h3>
+<p>fastapi/main.py:539 的 lifespan 只构造 StreamHub；首次 subscribe:450 调用 start，才启动上游 pump。backend/simulator.py:535 的 WS 会话启动 ReplayStream。断开某个浏览器不等于立即停推理，但服务启动后的首次采集依赖首次订阅，上游会话断开也影响生产循环。</p>
+<p>约束：生产服务必须在无浏览器、浏览器重启或全部退出时仍按后台运行策略采集、检测和发送执行候选；展示连接只控制订阅，不启动或停止生产。</p>
+<h3>3.4 展示和操作权限混合</h3>
+<p>fastapi/main.py:580 允许实时展示连接转发 pause/resume/restart；frontend/src/stores/imageStream.js 也包含这些动作。</p>
+<p>约束：factory_demo 展示模块保留筛选、缩放、坐标查看、连接重试等本地操作；模型切换、采集控制、检测启停、参数修改只放管理模块。只拆两个页面不等于权限隔离，生产部署还要在服务端区分只读和管理能力。</p>
+<h3>3.5 表面统一但语义仍不同</h3>
+<p>test_demo/backend/inference.py:106 将 detectionId 同时放入 trackId，实际是图像内检测标识；fastapi/DATA_INTERFACE.md 却把它写成跨帧跟踪标识。adapt_frame:71 转发 polygon 时没有保留原始 obb.angle；指标缺省为 0 也会混淆“未测量”和“测量为零”。</p>
+<p>约束：detection_id 与 track_id 必须分开；没有跟踪时 track_id 为 null。没有可靠方向时 angle 为 null 并给出有效性，不能用 0 伪装已测量。未接入/未测量的准确率和健康指标必须为 unknown/null，不能显示模拟正常状态。只统一 JSON 字段名不能解决这些问题。</p>
+<h2>4. factory_demo 当前还需要拆哪些依赖</h2>
+<div class="table-wrap"><table><tr><th>位置</th><th>当前依赖</th><th>最小拆分方向</th></tr><tr><td>backend/runner.py:40、56</td><td>source 枚举目录，start 冻结有限文件列表</td><td>来源接口与有限任务/连续流模式分开；连续流 total=null</td></tr><tr><td>backend/runner.py:120</td><td>默认直接选择 PytorchOBBAdapter；已有 adapter_factory 注入口</td><td>保留注入口，增加显式引擎注册与能力检查；不让展示判断权重格式</td></tr><tr><td>backend/runner.py:177、199</td><td>读图、固化原图、生成 HTTP URL、推理在同一方法</td><td>采集与帧引用归来源；推理只产结果；URL 和预览归数据展示服务；存图归归档模块</td></tr><tr><td>backend/runner.py:159、102</td><td>先提交数据库再发布状态；snapshot 取帧依赖数据库</td><td>实时结果快照/事件与历史查询分开，保持明确的一致性状态</td></tr><tr><td>frontend/src/DisplayApp.vue:13、21、40</td><td>依赖 run.model.classes、引擎名称映射、/status 轮询</td><td>改由展示流状态层提供模型元信息、类别目录和展示状态</td></tr><tr><td>frontend/src/components/DetectionStage.vue:30</td><td>画布直接 fetch frame.image_url，依赖运行任务结构</td><td>加载与配对归展示流；画布只接收已准备好的 ViewFrame</td></tr></table></div>
+<p>应保留现有画布的成功设计：同帧图片与框一起提交、旧异步请求失效、坐标通过 SVG 逆变换得到、断线标记最后一帧。这些能力不应在解耦时丢失。</p>
+<h2>5. 推荐模块边界及各自约束</h2>
+<h3>A. 采集模块 acquisition</h3>
+<p>职责：目录读取、模拟拍照、未来 pylon 采集；分配 source_id/session_id/frame_id、采集时间和原始帧描述；交付 FrameRef。</p>
+<p>约束：不加载模型、不编码展示 JPEG、不写业务结果表。文件源只接收完成发布的文件（生产者关闭后原子改名或 ready 标记）；目录事件配合补扫。SDK 缓冲不能在下游仍使用时归还相机。缓冲必须有总字节与帧数上限，记录入队时间、帧龄、采集丢帧和溢出原因。暂停检测不自动等于暂停相机。</p>
+<h3>B. 推理模块 inference</h3>
+<p>职责：load / describe / predict / close；分别提供 PyTorchOBB、OpenVINOOBB、TensorRTOBB 适配器，输出统一 DetectionResult。引擎私有的归一化、letterbox、张量布局、NMS、坐标还原由适配器负责。</p>
+<p>约束：不访问数据库、浏览器或机械臂；不把 torch.Tensor / OpenVINO 对象 / CUDA 指针写进通用结果。保留 frame_key，不重新分配。能力描述须说明图形类型、输入尺寸、精度、设备、模型类别和版本。未实现/硬件不支持应显式不可用，不偷偷切 CPU 或伪造结果。三种引擎名字不意味着吞吐、数值或 OBB 算子已验证等价。</p>
+<h3>C. 运行编排 runtime</h3>
+<p>职责：启动/停止来源与推理，选择适配器、冻结配置版本、维护有界调度队列，按统一结果分发给三个消费者。</p>
+<p>约束：不直接拼 HTML、不承担持久化细节。不得因为没有观看者而停采集。运行时更换模型应切换明确的会话/配置版本并排空或作废旧结果，不默认支持无缝热切换。容量满、结果过期和消费者不可用都有可观测计数；每个分支独立策略，不能一个慢消费者隐式拖住全部分支。</p>
+<h3>D. 数据与预览模块 presentation</h3>
+<p>职责：结果格式校验、读取受控帧引用、异步缩放压缩、按帧身份配对、维护最新完整展示包、提供只读 WS 流与连接快照。</p>
+<p>约束：不是所有原始图像和执行数据必须经过的中转站；不负责推理和控制决策。预览可以降采样/淘汰旧包，但不改变检测结果或待执行队列。预览尺寸、裁剪偏移和变换必须显式提供。数据失配、图片解码失败或超时不能配上最近一帧的检测框。必须释放 Blob/帧引用，慢预览不得长期占满采集缓冲。</p>
+<h3>E. 通用展示模块 display_frontend</h3>
+<p>职责：消费 ViewFrame、状态及类别目录，显示图片、HBB/OBB 多边形、类别、置信度、中心/顶点坐标和有效角度，提供本地筛选与缩放。</p>
+<p>约束：不导入引擎包，不读取本地目录，不推断某个模型的类别顺序，不发生产控制命令，不计算物理动作坐标。第一版通用范围是二维检测 HBB/OBB；分割、姿态、3D 点云需要后续协议及渲染扩展，不能宣称任意 AI 任务自动适配。缺少模型/引擎名称仍可显示合法结果。无检测成功帧与处理失败必须区分。</p>
+<h3>F. 归档与管理 storage / management</h3>
+<p>职责：持久化结果与选定图片，历史查询、运行配置、引擎能力与服务管理；对接独立 admin_frontend。</p>
+<p>约束：历史记录和实时预览可以暂时不同步，界面要给出数据时间和归档状态。数据库主键只在该模块内部使用；展示帧身份不能依赖数据库自增 ID。统计须标注是帧数、检测实例数还是去重物体数；不能对降采样后的预览求和冒充生产总量。是否强制落盘后再动作是现场策略，不能本轮默认改变。</p>
+<h3>G. 执行对接 execution</h3>
+<p>职责：接收 DetectionResult；后续进行物体关联/去重、标定坐标转换、输送位移补偿、动作期限检查、命令 ID 和反馈处理。当前仅规划与记录型接口，未连接执行器。</p>
+<p>约束：独立于 JPEG、WS 展示和浏览器。识别结果不是机械臂命令：图像 px 不等于现场 mm，OBB 长轴角不等于末端姿态；180° 对称框无法自动判断头尾。动作已过期或不确定是否执行时，不能盲目补发。相机断线、无目标、推理失败、过期结果是不同状态。机械/PLC 的联锁和最终动作保障需要现场方案，不能由网页连通状态代替。</p>
+<h2>6. 三层数据契约</h2>
+<h3>6.1 进程内部 FrameRef</h3>
+<p>包含 frame_key、width/height、pixel_format、stride_bytes、capture_time/clock_domain、buffer_handle 和释放约定。目录路径、共享内存标识、SDK 缓冲或未来设备缓冲由来源/运行时私有管理；FrameRef 不发送给浏览器。第一版实现 CPU 缓冲即可，不提前实现所有 GPU 内存协议。</p>
+<p>同一帧多消费者时必须约定所有权：谁 retain、谁 release、慢分支何时放弃引用；引用计数或租约可以选一种简洁方案。需要跨进程时另做句柄适配，不把 Python 对象引用直接当 IPC 协议。</p>
+<h3>6.2 引擎无关 DetectionResult</h3>
+<p>建议字段如下，正式 schema 版本与角度细节在实现前冻结：</p>
+<div class="table-wrap"><table><tr><th>字段</th><th>语义与约束</th></tr><tr><td>schema_version</td><td>主版本不兼容时明确拒绝；未知可选字段可忽略</td></tr><tr><td>frame_key</td><td>source_id + session_id + frame_id；frame_id 建议序列字符串，避免 JS 大整数精度问题；重启必须新 session</td></tr><tr><td>model_id / model_version / config_version</td><td>可追溯模型、类别目录与参数；引擎是说明性元数据，不是展示分支条件</td></tr><tr><td>source_width / source_height</td><td>原始采集坐标系尺寸，绝不替换为 640×640 推理尺寸或缩略图尺寸</td></tr><tr><td>capture_time + clock_domain</td><td>时间戳要说明曝光开始/结束或回调时刻；跨主机时钟未同步不能直接相减</td></tr><tr><td>status / error</td><td>ok 且 detections=[] 表示未检出；error 不等于空检测</td></tr><tr><td>detection_id / track_id</td><td>前者帧内唯一；后者可空且只能来自实际跟踪模块</td></tr><tr><td>class_key / class_id / label</td><td>class_key 属于有版本的类别目录；不能假设两个模型 class_id=0 都是同一类</td></tr><tr><td>score</td><td>有限数值，范围 0..1；不作为识别准确率</td></tr><tr><td>geometry_type / polygon_px / center_px</td><td>HBB 与 OBB 都可提供顺序一致的四角点；原图像素坐标，左上原点，x 右 y 下；采用图像连续边界约定 [0,W]×[0,H]，像素索引另用 [0,W-1]×[0,H-1]</td></tr><tr><td>angle_deg / angle_convention / orientation_valid</td><td>候选规范：长轴相对 +x 顺时针、[0,180)；正方形或无方向证据置无效；HBB 的包围框方向不能冒充目标方向</td></tr><tr><td>timings</td><td>阶段起止、时钟域或时长；推理耗时、结果帧龄和端到端延迟分开</td></tr></table></div>
+<p>适配器必须反转引擎的 resize/letterbox，再输出原图坐标。越界框的原始几何与用于绘制的裁剪策略需要分开，不能随意逐点截断四边形后继续把它称作真实 OBB。近正方形的角度无效阈值需要根据任务验证，不在分析阶段虚设。</p>
+<h3>6.3 浏览器 ViewFrame</h3>
+<p>由 DetectionResult 的只读投影、类别目录版本和 PreviewImage 组成。PreviewImage 包含同一 frame_key、preview_id、编码类型、实际宽高、source_to_preview 变换和图片载荷。例：完整原图 4096×2168 缩至 1024×542，sx=sy=0.25；原图点 (2048,1084) 应绘制在预览点 (512,271)，读出的原图坐标仍为 (2048,1084)。裁剪或补边时还需平移项。</p>
+<p>推荐 WS 二进制展示包携带可解析的长度头、JSON 元数据与 JPEG，使帧身份和图片在应用层属于一个完整包。协议必须给出字节序、头长/图片长度上限、MIME、缺包/超长拒绝规则；第一版不要把大图转 Base64。也可以保留“JSON + 下一条 JPEG”的方案，但必须单发送者串行、连接代次隔离、严格配对与断线清空；不能依靠“最近一个 JSON”跨线程或跨连接猜测。WS 在单连接内的有序传输不等于业务级帧关联已解决。</p>
+<p>浏览器配对和解码完再原子提交画面与框；连接恢复先获取会话、类别目录、最新完整帧快照。旧连接和旧会话的异步解码结果必须作废。图像没到时可以显示“结果已到、预览待到”，不能把框画到旧图上。</p>
+<h2>7. 通信选择：不把 WS 当成模块化本身</h2>
+<div class="table-wrap"><table><tr><th>路径</th><th>建议方式</th><th>原因和边界</th></tr><tr><td>同机采集→推理</td><td>函数接口 + 有界帧引用队列；必要时共享内存</td><td>原始帧不强制走 HTTP/WS，不新增不必要的大图复制</td></tr><tr><td>推理→结果消费者</td><td>类型明确的事件接口 + 分支独立队列</td><td>先分离职责和背压；第一版不必引入消息中间件</td></tr><tr><td>预览/状态→展示</td><td>WS 推送 + 初始/重连快照</td><td>事件到达即可更新；慢浏览器只影响自己的队列</td></tr><tr><td>管理页面→运行服务</td><td>HTTP 请求响应</td><td>配置版本、启停结果和错误易确认；无需把低频操作改成 WS</td></tr><tr><td>历史/导出</td><td>HTTP 分页查询与文件下载</td><td>读取归档，不占实时预览队列</td></tr><tr><td>结果→执行设备</td><td>先定义执行端口，现场协议待定</td><td>不承诺普通 WS、HTTP 或 Windows 程序提供硬实时保障；应按控制器能力与时限选择</td></tr></table></div>
+<p>展示 WS 不应成为识别结果到执行器的必经路。前端只连接展示服务及必要只读快照；后台页面连接管理/历史服务。部署时可以使用同一个服务进程和端口，但路由与依赖边界要清楚。</p>
+<h2>8. 最小目录改造建议</h2>
+<p>以下是职责映射，不要求每项立即成为一个服务，也不要求建通用插件平台：</p>
+<pre>backend/
+  contracts/             # 帧、检测结果、展示包与版本校验
+  acquisition/           # directory、simulator，未来 pylon
+  inference/             # 公共接口 + pytorch_obb / openvino_obb / tensorrt_obb
+  runtime/               # 生命周期、调度、分发、队列指标
+  presentation/          # 配对、预览编码、WS 订阅与快照
+  storage/               # 结果/图片归档、历史查询
+  execution/             # 执行对接接口；本阶段仅记录型接收器
+  app.py                 # 装配与路由，不堆业务逻辑
+frontend/src/
+  stream/                # 传输、配对、状态 → ViewFrame
+  components/            # 纯展示画布与面板
+  DisplayApp.vue         # 只读组装
+  AdminApp.vue           # 管理入口，继续与展示分离</pre>
+<p>共用 contracts，具体模块由 app/运行时装配；推理不能反向 import presentation/storage，画布不能反向 import api/engine，历史仓储不能调用推理。暂不为了目录整齐搬动无关代码。</p>
+<h2>9. 迁移顺序与可验证成功标准</h2>
+<div class="table-wrap"><table><tr><th>阶段</th><th>工作</th><th>验收</th></tr><tr><td>1 固定协议</td><td>定义 DetectionResult/ViewFrame，保留现有结果兼容适配器</td><td>现有真实结果经转换后图片尺寸、类别和四角点一致；错误/空检测语义明确</td></tr><tr><td>2 展示解耦</td><td>把取图/轮询移到 stream，画布只收 ViewFrame</td><td>断开真实后端，用独立模拟服务即可展示；换模型类别无需修改组件</td></tr><tr><td>3 引擎解耦</td><td>保留 PyTorch，建立能力描述与统一 predict 输出</td><td>不支持的引擎明确不可用；后续每个真实引擎独立通过协议与数值验证；模拟后端不算 OpenVINO/TensorRT 验收</td></tr><tr><td>4 事件与分支</td><td>增加 WS、预览工作者、归档消费者和记录型执行接收器</td><td>人为延迟 JPEG、断开浏览器、拖慢归档，执行结果路径不意外等待；满队列策略产生可验证事件</td></tr><tr><td>5 来源与模拟器</td><td>目录与模拟拍照统一；SDK 接入保留接口</td><td>完成发布文件才读取；同帧身份贯穿全链路；重启不串帧；模拟采集频率与真实推理吞吐分别计量</td></tr><tr><td>6 现场联调</td><td>选定硬件后接相机、GPU 与控制器</td><td>实测采集到执行接收 P50/P95/P99/最大值，验证坐标标定、队列过期、重复命令与反馈</td></tr></table></div>
+<p>通用性核心验收：同一份前端构建产物，接入 PyTorch 后端、独立协议模拟后端，以及将来真实 OpenVINO/TensorRT 后端，不改展示源码即可显示。每个后端都必须正确实现同一契约，不能要求未经适配的任意输出直接兼容。</p>
+<p>失败场景：两个浏览器不同网速、数据库持续断开、图片缺失/迟到、结果乱序/重复、会话重启、模型类别变化、错误坐标/NaN、连续流无总帧数、缓冲耗尽、执行反馈超时。测试要检验串帧、资源释放和失败传播，而不只是页面能打开。</p>
+<h2>10. 与现场参数的关系及待定事项</h2>
+<p>用户提供：acA4096-40um / uc 候选相机、目标 4096×2168 且至少 42fps；+8.00m 平面 2206# 转载带式输送机，带长 9m、带速 0.45m/s。+8m 不按相机安装高度解释，9m 不按相机到执行器距离解释。单色/彩色、像素格式、GPU、操作系统、编码器、视场和执行位置仍未定。</p>
+<p>按 42fps 计算帧周期约 23.81ms，带面每帧移动约 10.71mm；这些只是输入条件推算，不是系统实测性能或实时性承诺。最晚动作窗口依赖实际拍摄到执行距离、动作耗时和安全余量。解耦后不会自动达到 42fps，更不能把预览 5–10fps 当作推理满足 42fps 的证据。</p>
+<p>不阻碍固定展示协议的待定项：GPU/操作系统、相机 Mono/Bayer 格式、执行设备协议。影响运行策略、须在实现对应路径前确定的项：生产取帧是否采用 SDK 内存主路线；过载时是减速/停机还是允许哪类帧跳过；归档失效是否禁止动作；真实物体覆盖率和去重需求。速度优先不自动授权丢弃待检测图片。</p>
+<h2>11. 代码依据与阅读方法</h2>
+<p>上述路径以 C:\Users\13480\Desktop\codex_ 为根；行号对应本次读取的当前版本，修改后可能变化。核心依据为 test_demo/backend/{image_source,inference,simulator}.py、test_demo/fastapi/main.py、test_demo/frontend/src/stores/imageStream.js，以及 factory_demo/backend/runner.py、frontend/src/DisplayApp.vue、components/DetectionStage.vue。</p>
+<p>本次静态检查确认了职责与调用关系；没有把旧 README、历史文档中的性能或跨帧 tracking 说法当作当前实测事实。报告附架构图与离线网页检查记录；它们证明文档可读，不证明生产性能或相机接入已实现。</p></main></body></html>

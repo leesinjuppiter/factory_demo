@@ -1,0 +1,433 @@
+{
+  "purpose": "真实推理/HTTP/PostgreSQL流程验收，非准确率评测",
+  "runs": [
+    {
+      "id": "67daf076-2771-45d9-9129-e419aa4269dd",
+      "error": null,
+      "model": {
+        "name": "factory_now",
+        "path": "C:\\Users\\13480\\Desktop\\codex_\\factory_demo\\vendor\\weights\\factory_now.pt",
+        "device": "cpu",
+        "sha256": "62af01dbc971d332ad4813d5f2811243f555877ffbdb0755fe428159687ef037",
+        "stride": 32,
+        "classes": [
+          {
+            "id": 0,
+            "name": "coal",
+            "color": "#087f8c",
+            "label": "coal"
+          },
+          {
+            "id": 1,
+            "name": "rockbolt",
+            "color": "#c46a20",
+            "label": "rockbolt"
+          },
+          {
+            "id": 2,
+            "name": "mesh",
+            "color": "#7561b3",
+            "label": "mesh"
+          },
+          {
+            "id": 3,
+            "name": "bottle",
+            "color": "#397a35",
+            "label": "bottle"
+          },
+          {
+            "id": 4,
+            "name": "stick",
+            "color": "#bb4d63",
+            "label": "stick"
+          },
+          {
+            "id": 5,
+            "name": "board",
+            "color": "#315fb1",
+            "label": "board"
+          },
+          {
+            "id": 6,
+            "name": "cap",
+            "color": "#8b6c36",
+            "label": "cap"
+          },
+          {
+            "id": 7,
+            "name": "plate",
+            "color": "#087f8c",
+            "label": "plate"
+          }
+        ],
+        "box_type": "obb",
+        "precision": "float32",
+        "cpu_threads": 4,
+        "load_warmup_ms": 1705.698
+      },
+      "total": 10,
+      "config": {
+        "iou": 0.45,
+        "engine": "pytorch",
+        "max_det": 300,
+        "source_id": "smoke_test",
+        "confidence": 0.25,
+        "image_size": 640,
+        "replay_fps": 10.0
+      },
+      "failed": 0,
+      "status": "completed",
+      "timings": {
+        "fps": 2.30005559174411,
+        "p50_ms": 427.4406002368778,
+        "p95_ms": 466.43358008004725,
+        "mean_ms": 434.77210011333227
+      },
+      "processed": 10,
+      "source_id": "smoke_test",
+      "succeeded": 10,
+      "created_at": "2026-10-28T04:23:03.582721+00:00",
+      "started_at": "2026-10-28T04:23:03.584720+00:00",
+      "finished_at": "2026-10-28T04:23:08.012651+00:00",
+      "class_counts": {
+        "0": 191,
+        "1": 2,
+        "2": 1,
+        "4": 1,
+        "6": 1
+      },
+      "source_label": "Smoke 50 · 测试集（10 张）",
+      "detection_count": 196,
+      "latest_frame_id": 10
+    },
+    {
+      "id": "da629d3b-e6cd-447e-9dbe-fe4a793007d2",
+      "error": null,
+      "model": {
+        "name": "factory_now",
+        "path": "C:\\Users\\13480\\Desktop\\codex_\\factory_demo\\vendor\\weights\\factory_now.pt",
+        "device": "cpu",
+        "sha256": "62af01dbc971d332ad4813d5f2811243f555877ffbdb0755fe428159687ef037",
+        "stride": 32,
+        "classes": [
+          {
+            "id": 0,
+            "name": "coal",
+            "color": "#087f8c",
+            "label": "coal"
+          },
+          {
+            "id": 1,
+            "name": "rockbolt",
+            "color": "#c46a20",
+            "label": "rockbolt"
+          },
+          {
+            "id": 2,
+            "name": "mesh",
+            "color": "#7561b3",
+            "label": "mesh"
+          },
+          {
+            "id": 3,
+            "name": "bottle",
+            "color": "#397a35",
+            "label": "bottle"
+          },
+          {
+            "id": 4,
+            "name": "stick",
+            "color": "#bb4d63",
+            "label": "stick"
+          },
+          {
+            "id": 5,
+            "name": "board",
+            "color": "#315fb1",
+            "label": "board"
+          },
+          {
+            "id": 6,
+            "name": "cap",
+            "color": "#8b6c36",
+            "label": "cap"
+          },
+          {
+            "id": 7,
+            "name": "plate",
+            "color": "#087f8c",
+            "label": "plate"
+          }
+        ],
+        "box_type": "obb",
+        "precision": "float32",
+        "cpu_threads": 4,
+        "load_warmup_ms": 1705.698
+      },
+      "total": 10,
+      "config": {
+        "iou": 0.45,
+        "engine": "pytorch",
+        "max_det": 300,
+        "source_id": "smoke_val",
+        "confidence": 0.25,
+        "image_size": 640,
+        "replay_fps": 10.0
+      },
+      "failed": 0,
+      "status": "completed",
+      "timings": {
+        "fps": 1.8934849575026258,
+        "p50_ms": 529.5426002703607,
+        "p95_ms": 561.438465025276,
+        "mean_ms": 528.1267200130969
+      },
+      "processed": 10,
+      "source_id": "smoke_val",
+      "succeeded": 10,
+      "created_at": "2026-10-28T04:23:08.328841+00:00",
+      "started_at": "2026-10-28T04:23:08.329846+00:00",
+      "finished_at": "2026-10-28T04:23:13.669268+00:00",
+      "class_counts": {
+        "0": 203,
+        "1": 4,
+        "5": 1,
+        "6": 1
+      },
+      "source_label": "Smoke 50 · 验证集（10 张）",
+      "detection_count": 209,
+      "latest_frame_id": 10
+    },
+    {
+      "id": "432ad4e5-51ef-41ee-9a26-44106c631a10",
+      "error": null,
+      "model": {
+        "name": "factory_now",
+        "path": "C:\\Users\\13480\\Desktop\\codex_\\factory_demo\\vendor\\weights\\factory_now.pt",
+        "device": "cpu",
+        "sha256": "62af01dbc971d332ad4813d5f2811243f555877ffbdb0755fe428159687ef037",
+        "stride": 32,
+        "classes": [
+          {
+            "id": 0,
+            "name": "coal",
+            "color": "#087f8c",
+            "label": "coal"
+          },
+          {
+            "id": 1,
+            "name": "rockbolt",
+            "color": "#c46a20",
+            "label": "rockbolt"
+          },
+          {
+            "id": 2,
+            "name": "mesh",
+            "color": "#7561b3",
+            "label": "mesh"
+          },
+          {
+            "id": 3,
+            "name": "bottle",
+            "color": "#397a35",
+            "label": "bottle"
+          },
+          {
+            "id": 4,
+            "name": "stick",
+            "color": "#bb4d63",
+            "label": "stick"
+          },
+          {
+            "id": 5,
+            "name": "board",
+            "color": "#315fb1",
+            "label": "board"
+          },
+          {
+            "id": 6,
+            "name": "cap",
+            "color": "#8b6c36",
+            "label": "cap"
+          },
+          {
+            "id": 7,
+            "name": "plate",
+            "color": "#087f8c",
+            "label": "plate"
+          }
+        ],
+        "box_type": "obb",
+        "precision": "float32",
+        "cpu_threads": 4,
+        "load_warmup_ms": 1705.698
+      },
+      "total": 30,
+      "config": {
+        "iou": 0.45,
+        "engine": "pytorch",
+        "max_det": 300,
+        "source_id": "smoke_train",
+        "confidence": 0.25,
+        "image_size": 640,
+        "replay_fps": 10.0
+      },
+      "failed": 0,
+      "status": "completed",
+      "timings": {
+        "fps": 2.2436023740959676,
+        "p50_ms": 432.5546498876065,
+        "p95_ms": 531.4073646906763,
+        "mean_ms": 445.71177653657895
+      },
+      "processed": 30,
+      "source_id": "smoke_train",
+      "succeeded": 30,
+      "created_at": "2026-10-28T04:23:14.085817+00:00",
+      "started_at": "2026-10-28T04:23:14.087427+00:00",
+      "finished_at": "2026-10-28T04:23:27.676885+00:00",
+      "class_counts": {
+        "0": 808,
+        "1": 6,
+        "2": 2,
+        "4": 1,
+        "5": 1,
+        "6": 1
+      },
+      "source_label": "Smoke 50 · 训练集（30 张）",
+      "detection_count": 819,
+      "latest_frame_id": 30
+    }
+  ],
+  "passed": true,
+  "capabilities": {
+    "protocol_version": "1.0",
+    "engines": [
+      {
+        "id": "pytorch",
+        "label": "PyTorch · YOLOv5-OBB",
+        "available": true,
+        "reason": null
+      },
+      {
+        "id": "openvino",
+        "label": "OpenVINO · Intel CPU",
+        "available": false,
+        "reason": "本版未实现；需要专用OBB导出与适配验证"
+      },
+      {
+        "id": "tensorrt",
+        "label": "TensorRT · NVIDIA GPU",
+        "available": false,
+        "reason": "本版未实现；需要GPU环境与匹配的engine"
+      }
+    ],
+    "model": {
+      "name": "factory_now",
+      "path": "C:\\Users\\13480\\Desktop\\codex_\\factory_demo\\vendor\\weights\\factory_now.pt",
+      "sha256": "62af01dbc971d332ad4813d5f2811243f555877ffbdb0755fe428159687ef037",
+      "classes": [
+        {
+          "id": 0,
+          "name": "coal",
+          "label": "coal",
+          "color": "#087f8c"
+        },
+        {
+          "id": 1,
+          "name": "rockbolt",
+          "label": "rockbolt",
+          "color": "#c46a20"
+        },
+        {
+          "id": 2,
+          "name": "mesh",
+          "label": "mesh",
+          "color": "#7561b3"
+        },
+        {
+          "id": 3,
+          "name": "bottle",
+          "label": "bottle",
+          "color": "#397a35"
+        },
+        {
+          "id": 4,
+          "name": "stick",
+          "label": "stick",
+          "color": "#bb4d63"
+        },
+        {
+          "id": 5,
+          "name": "board",
+          "label": "board",
+          "color": "#315fb1"
+        },
+        {
+          "id": 6,
+          "name": "cap",
+          "label": "cap",
+          "color": "#8b6c36"
+        },
+        {
+          "id": 7,
+          "name": "plate",
+          "label": "plate",
+          "color": "#087f8c"
+        }
+      ],
+      "box_type": "obb",
+      "device": "cpu",
+      "precision": "float32",
+      "cpu_threads": 4,
+      "stride": 32,
+      "load_warmup_ms": 1705.698
+    },
+    "limits": {
+      "max_file_bytes": 20971520,
+      "max_pixels": 40000000,
+      "max_images": 10000,
+      "min_free_bytes": 1073741824,
+      "image_size_min": 320,
+      "image_size_max": 1280,
+      "image_size_step": 32,
+      "confidence_min": 0.001,
+      "confidence_max": 1,
+      "iou_min": 0.01,
+      "iou_max": 1,
+      "max_det_min": 1,
+      "max_det_max": 1000,
+      "replay_fps_min": 0.1,
+      "replay_fps_max": 10,
+      "page_size_max": 100
+    },
+    "sources": [
+      {
+        "id": "smoke_test",
+        "label": "Smoke 50 · 测试集（10 张）",
+        "count": 10,
+        "error": null
+      },
+      {
+        "id": "smoke_val",
+        "label": "Smoke 50 · 验证集（10 张）",
+        "count": 10,
+        "error": null
+      },
+      {
+        "id": "smoke_train",
+        "label": "Smoke 50 · 训练集（30 张）",
+        "count": 30,
+        "error": null
+      }
+    ],
+    "defaults": {
+      "engine": "pytorch",
+      "confidence": 0.25,
+      "iou": 0.45,
+      "image_size": 640,
+      "max_det": 300,
+      "replay_fps": 1
+    }
+  }
+}

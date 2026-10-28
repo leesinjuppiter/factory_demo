@@ -1,0 +1,92 @@
+{
+  "date": "2026-10-28",
+  "documents": [
+    {
+      "section": "release",
+      "source": "docs\\V1_3_DECOUPLING.md",
+      "sha256": "647566354ef5ad68249f6f1a2410990dbf4f4a49ba0becb9344452b61b1f2f4c",
+      "headings": 8
+    },
+    {
+      "section": "status",
+      "source": "docs\\DOCUMENT_STATUS.md",
+      "sha256": "6bd863d4fe46f5d9b5454e9093e4b3eb0e66a6f44416852e7f7d4640b8e3ecb4",
+      "headings": 1
+    },
+    {
+      "section": "camera",
+      "source": "docs\\CAMERA_INBOX.md",
+      "sha256": "5171b1f19496e82a7b2dc87e5d77177983396784864e4d61886e84c4564fe72c",
+      "headings": 4
+    },
+    {
+      "section": "industrial",
+      "source": "docs\\INDUSTRIAL_DISPLAY.md",
+      "sha256": "cc20e080bdb5d70d1e75637aeb01654c475e1984c5789082fc86e37694ae0974",
+      "headings": 11
+    },
+    {
+      "section": "modules",
+      "source": "docs\\MODULE_SPLIT.md",
+      "sha256": "e1bb7a0af9ed0108124e3b7f3ae6e2bd6a2017ce46f62fceba5fe7110c41626a",
+      "headings": 5
+    },
+    {
+      "section": "start",
+      "source": "README.md",
+      "sha256": "cc464517bfac3559563a1c1386811867820a7f14a527684e12cd3bdd9f96c0f2",
+      "headings": 13
+    },
+    {
+      "section": "flow",
+      "source": "docs\\DATA_FLOW_GUIDE.md",
+      "sha256": "2667116f4bedb3a29a73559b770fc4f5568f868647d4c050924b98248b3887b6",
+      "headings": 7
+    },
+    {
+      "section": "product",
+      "source": "docs\\PRODUCT.md",
+      "sha256": "e9bc367d22e418b7977cf49c79827e3c4a8813f28b7676bb0e99306e351bdfd5",
+      "headings": 11
+    },
+    {
+      "section": "architecture",
+      "source": "docs\\ARCHITECTURE.md",
+      "sha256": "fcca14f3e978bf22b550aa4a4d2fb801fb66856413c30c3580d58512ee2a7c3d",
+      "headings": 8
+    },
+    {
+      "section": "contract",
+      "source": "docs\\CONTRACT.md",
+      "sha256": "6f7757854ba1c5a18055c7e6969390d08345a05ea179a8e1fd6de532ad21aeda",
+      "headings": 8
+    },
+    {
+      "section": "inference",
+      "source": "docs\\INFERENCE.md",
+      "sha256": "c8dad3121d63eeacce6fca17d62d352bae441ecd1504741c0810d404c3e554ee",
+      "headings": 6
+    },
+    {
+      "section": "performance",
+      "source": "docs\\PERFORMANCE.md",
+      "sha256": "475e7e19f4db0b3c84093c061fe406b2a6141e9283a9818992e375e03167c3ce",
+      "headings": 8
+    },
+    {
+      "section": "analysis",
+      "source": "docs\\PERFORMANCE_OPTIMIZATION_ANALYSIS_20261028.md",
+      "sha256": "94004b52c13c4b3cfc0ae1d3b77c648bff9440348bb424ab6cba012ec40c6ec3",
+      "headings": 33
+    },
+    {
+      "section": "verification",
+      "source": "docs\\VERIFICATION.md",
+      "sha256": "87d49bd0d9b12cedbc7c9c8a601aaa58341dbf6723b0358f167aa49a24d477cf",
+      "headings": 9
+    }
+  ],
+  "diagram_count": 5,
+  "self_contained_content": true,
+  "note": "External evidence/source links are project-relative; text, diagrams and screenshot are embedded."
+}

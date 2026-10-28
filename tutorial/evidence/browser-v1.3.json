@@ -1,0 +1,36 @@
+{
+  "initial": {
+    "lessons": 20,
+    "visible": 1,
+    "sourceBlocks": 48,
+    "diagrams": 5,
+    "overflow": false
+  },
+  "wrongFeedback": true,
+  "correctFeedback": true,
+  "progress": "1 / 20 节手动完成",
+  "persisted": true,
+  "searchCount": 6,
+  "emptyFeedback": true,
+  "navigation": "lesson-08",
+  "all20Lessons": true,
+  "mobile": {
+    "overflow": false,
+    "diagrams": [
+      {
+        "width": 319,
+        "scroll": 1280,
+        "overflow": "auto"
+      }
+    ]
+  },
+  "canvas": {
+    "width": "50%",
+    "hidden": true,
+    "points": "120,80 240,100 220,200 100,180"
+  },
+  "coordinateUnchanged": true,
+  "errors": [],
+  "remoteRequests": [],
+  "actualFileNavigation": true
+}

@@ -1,0 +1,12 @@
+{
+  "geometry": {
+    "outside": [],
+    "clipped": []
+  },
+  "mobile": {
+    "overflow": false,
+    "diagramScroll": true
+  },
+  "errors": [],
+  "remoteRequests": []
+}

@@ -1,0 +1,77 @@
+{
+  "date": "2026-10-28",
+  "environment": "C:\\Users\\13480\\miniconda3\\envs\\yolo_v5_obb\\python.exe",
+  "static": {
+    "links_checked": 94,
+    "broken_links": [],
+    "duplicate_ids": 0,
+    "scaffold_cumulative_apply": true,
+    "scaffold_preserves_learner_edit": true,
+    "practice_unpopulated": true,
+    "no_credentials_or_weights_copied": true,
+    "original_source_files_checked": 54,
+    "original_source_changed": []
+  },
+  "browser": {
+    "initial": {
+      "lessons": 20,
+      "visible": 1,
+      "sourceBlocks": 32,
+      "diagrams": 5,
+      "overflow": false
+    },
+    "wrongFeedback": true,
+    "correctFeedback": true,
+    "progress": "1 / 20 节手动完成",
+    "persisted": true,
+    "searchCount": 5,
+    "emptyFeedback": true,
+    "navigation": "lesson-08",
+    "all20Lessons": true,
+    "mobile": {
+      "overflow": false,
+      "diagrams": [
+        {
+          "width": 319,
+          "scroll": 1280,
+          "overflow": "auto"
+        }
+      ]
+    },
+    "canvas": {
+      "width": "50%",
+      "hidden": true,
+      "points": "120,80 240,100 220,200 100,180"
+    },
+    "coordinateUnchanged": true,
+    "errors": [],
+    "remoteRequests": [],
+    "actualFileNavigation": true
+  },
+  "examples": {
+    "python_syntax_files": 41,
+    "valid_and_nonfinite_protocol_inputs": "passed",
+    "minimal_api_health_200_create_201_invalid_422": "passed",
+    "runner_lab": {
+      "mode": "teaching fake adapter + memory store",
+      "processed": 3,
+      "succeeded": 2,
+      "failed": 1,
+      "snapshots_survive_source_change": true,
+      "folder": "C:\\Users\\13480\\Desktop\\codex_\\tmp\\20261028-factory-tutorial-01a180ab\\runner-lab\\bc02618a635748e1832663d68aa974c7"
+    }
+  },
+  "visual_review": "Desktop, Runner and inference lessons, narrow viewport and canvas screenshots inspected.",
+  "not_executed": [
+    "PostgreSQL creation or connection for the course",
+    "npm dependency installation or practice frontend build",
+    "large model weight import",
+    "real model inference",
+    "50-image course integration run",
+    "clipboard payload verification",
+    "printed PDF pagination"
+  ],
+  "warning": "Existing Starlette test-client httpx deprecation warning; no packages changed to silence it.",
+  "scope": "Independent teaching deliverable. Original factory_demo source unchanged. Progress tests used a separate temporary browser profile.",
+  "historical_notice": "This file records the previous V1 baseline; V1.1 frontend source and document counts changed. See module-split-validation.json for current verification."
+}

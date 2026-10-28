@@ -1,0 +1,228 @@
+{
+  "source": "C:\\Users\\13480\\Desktop\\codex_\\factory_demo",
+  "files": [
+    {
+      "source": "backend\\app.py",
+      "original_sha256": "301bca9c329426e8fa8f81c2cb87d36989bf5bec3753bf519096a8eb3342232d"
+    },
+    {
+      "source": "backend\\images.py",
+      "original_sha256": "d87c404011562a0b7ad56d5663b66d723f60f287435ae261af0eba31a934ecf5"
+    },
+    {
+      "source": "backend\\runner.py",
+      "original_sha256": "df571a45abefc528568c2d07b8ab72af808177624d7242a4af78133d016f0e59"
+    },
+    {
+      "source": "backend\\settings.py",
+      "original_sha256": "bdf45d5b3a8613e071490be77b1d91792553e2730fe5d63c8f682a84b54f1089"
+    },
+    {
+      "source": "backend\\store.py",
+      "original_sha256": "3e4257c23ff51a25918d3d09f984428deaefbdf8e64751cf41e087918b8fb24b"
+    },
+    {
+      "source": "backend\\__init__.py",
+      "original_sha256": "e9ca51c97e96c4ee5569adab4f2875f79ef8cfe8edccc238bf5921273cfbf58b"
+    },
+    {
+      "source": "backend\\inference\\pytorch_obb.py",
+      "original_sha256": "5a35b5d2b4bb03b2ea42615d0ef256952aa9faa5984fd4630cdbec5415ff75f6"
+    },
+    {
+      "source": "backend\\inference\\__init__.py",
+      "original_sha256": "365a9867fea2fe0658020bcc0f30654750b2e28b6392cc4022c285c854bcfed3"
+    },
+    {
+      "source": "frontend\\src\\api.js",
+      "original_sha256": "11473364f8d68f60875a81946079c245ce9bc4c18d14ba201eae224d664b2eae"
+    },
+    {
+      "source": "frontend\\src\\App.vue",
+      "original_sha256": "c354b8e2a5701808462e40b916be2e540c3504fda1d456b812d2a2011ac91526"
+    },
+    {
+      "source": "frontend\\src\\main.js",
+      "original_sha256": "0d42fb6bb74a51d647f20a0cd2bcdcc7b89b146f4cdfbf6f1f7b640e7e036119"
+    },
+    {
+      "source": "frontend\\src\\style.css",
+      "original_sha256": "f468bb0f037e2b2e404412525eda4eceeb8745e074cb1696df6dc542c7d1c808"
+    },
+    {
+      "source": "frontend\\src\\components\\DetectionStage.vue",
+      "original_sha256": "7b7ead214bff4c125c5264fd5fff7e237bba5562d933e8ac4f7c4f895a3c6213"
+    },
+    {
+      "source": "tests\\test_api.py",
+      "original_sha256": "823b26a167e3a9c3d898d2ded0bf26a666075c4eeb1f913b9bfd2057b19fcb27"
+    },
+    {
+      "source": "tests\\test_inference.py",
+      "original_sha256": "a22c75ec5840ca531430aaf44011c4456e04ffd89bd930258a5761cf27a978e6"
+    },
+    {
+      "source": "vendor\\MANIFEST.json",
+      "original_sha256": "55410faccb10f24e3374a8cf7a0c2f719cb7a97de9bbe2c4e55829f88adc5786"
+    },
+    {
+      "source": "vendor\\README.md",
+      "original_sha256": "f9e1eee123d613dcad570e106f5b757be2a9cf10540002bdadc88d3c309dbf00"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\LICENSE",
+      "original_sha256": "7fa7e56c0db71105f4b59a6a0ac40225eb059876f85cd380383f7d7a066e68be"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\models\\common.py",
+      "original_sha256": "3ebb444c61214671f5856803f748b1291751e8ce2fd20634d0dc675ddac83074"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\models\\experimental.py",
+      "original_sha256": "c42db0677854fb4a43d8a764d0145ad92142b538323b047038efcb6bd0b5d8c6"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\models\\yolo.py",
+      "original_sha256": "0939a96f409f75c97e77c1d0c70f22cb487e2c4a91b349ac1bc2bbc00e83a892"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\models\\__init__.py",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\utils\\augmentations.py",
+      "original_sha256": "5bcbcd27b88b700f1e60cdfd81261b7c80f407a95982420aa79e8235e9dd6093"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\utils\\autoanchor.py",
+      "original_sha256": "793e14511581a3840fabc859ebe9a3097860b0aa178783dda7ffa4a11753e118"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\utils\\datasets.py",
+      "original_sha256": "b176b21165612e074b2797bb12b7bdc974c82a83750ce18855b3fbc73bc234cc"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\utils\\downloads.py",
+      "original_sha256": "eb0a5bad9441a216094ee3f433fb4c25cb3fb0f729af1f37c02c0446bee3a0b1"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\utils\\general.py",
+      "original_sha256": "dbb3d4095bac555bd858c504e2efbd2e0eb3fab0ebcbb7203b97ac18bca5b79d"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\utils\\metrics.py",
+      "original_sha256": "a3315c75721f26faad9200bc977d400fae670d2be9c368301026b375fbd84063"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\utils\\plots.py",
+      "original_sha256": "e692089aee05ed7f30543a0cccdc1fc95cf3d806c38e3f9a7b09673b7fd8b3ee"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\utils\\rboxs_utils.py",
+      "original_sha256": "c715a9a127d2bd352fdf15707384c1fd839eedc36e86f048aa979858dbd00224"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\utils\\torch_utils.py",
+      "original_sha256": "7b0b18cf4d013df9560e8a3afe4d2d6c17b32bb3d39cfb7a87ca2e592749e974"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\utils\\__init__.py",
+      "original_sha256": "946761297801413a031e541dc46b5ae712658245a425c66ed11da077d462e205"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\utils\\nms_rotated\\nms_rotated_ext.cp310-win_amd64.pyd",
+      "original_sha256": "0623b8510a3a2364746ef550c8ecd2e8e4229441d7dc2ee7765affaf84412285"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\utils\\nms_rotated\\nms_rotated_wrapper.py",
+      "original_sha256": "ee09b52350f9f1dcf5e3c505495b73302ff57dca03f930a3856bb2f3ef95c68b"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\utils\\nms_rotated\\setup.py",
+      "original_sha256": "003bc0576c22d186440890d2369f54bd3a2d43ee624f66f006efd49e222111ab"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\utils\\nms_rotated\\__init__.py",
+      "original_sha256": "1fa35d2b93f4378d686b4363bb0bc1894b6463411ae36b1ed393f5981a83df1c"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\utils\\nms_rotated\\src\\box_iou_rotated_utils.h",
+      "original_sha256": "9e10462b46dc78d9a79ad1591f1d90171e94aaa88ae533a353a6f24a25d734af"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\utils\\nms_rotated\\src\\nms_rotated_cpu.cpp",
+      "original_sha256": "2032c93fe071b6871b4b8869be3d58500e02485df68d661c8a9550e705979fe1"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\utils\\nms_rotated\\src\\nms_rotated_cuda.cu",
+      "original_sha256": "b1db93b839421cc159ca5403f9e59ea271967cb655e534ef2caa296331921414"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\utils\\nms_rotated\\src\\nms_rotated_ext.cpp",
+      "original_sha256": "0fb3f85fa30611174ae53dde771c5b639bcb930186fc66a0dc069c2e31704407"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\utils\\nms_rotated\\src\\poly_nms_cpu.cpp",
+      "original_sha256": "62423a733589172a034a2930a0344136adeeb990dc4a832fe9f02e1952d0114f"
+    },
+    {
+      "source": "vendor\\yolov5_obb\\utils\\nms_rotated\\src\\poly_nms_cuda.cu",
+      "original_sha256": "3aa6d685a384e3adccb6a71e27dee994df66991819640138743d492687776353"
+    },
+    {
+      "source": "frontend\\index.html",
+      "original_sha256": "61c2003d62553ffc422480a9bbfaec2415f0e376ae4adf024c4b14852c986b41"
+    },
+    {
+      "source": "frontend\\package.json",
+      "original_sha256": "7b8e950d1fcaa36bd8278f679919ecdf9e327908b1e6d5be6c9ac8cc9330c6f7"
+    },
+    {
+      "source": "frontend\\package-lock.json",
+      "original_sha256": "479676cf41d7cdca0918929669d5525b0545eb70bbfab33ad5df87f4c1c39c19"
+    },
+    {
+      "source": "frontend\\vite.config.js",
+      "original_sha256": "8299137d010bfacd6761fb3de496b31df49af49335b9c973675abede1cc43396"
+    },
+    {
+      "source": "requirements-api.txt",
+      "original_sha256": "49b7b23643e2cc289ebad1ce618e7e29abe6bcc7e99105044c3795973a59f32b"
+    },
+    {
+      "source": "start.cmd",
+      "original_sha256": "54b4cc793771eae338f0a3fbdb0b6c9152f35859ccfbfe5b74d8fcf6bd2ad130"
+    },
+    {
+      "source": "start.ps1",
+      "original_sha256": "feaac80ef7f561d6394a5ec89b8f7ff36ef83c24d7057cbf7bd8d21060e593de"
+    },
+    {
+      "source": "start.py",
+      "original_sha256": "ffc8b75dec63e3cb6a7b6d0e5662ea50512a4b481ca9a39eca6ec20ec59e1e85"
+    },
+    {
+      "source": ".gitignore",
+      "original_sha256": "dd12b245010ac16d3d5060dcb4aec652f21e6b587a2385ac023d0fbc60f6d89c"
+    },
+    {
+      "source": "configs\\local.json",
+      "original_sha256": "0552e5eeb10b4abbe6b03eba870de74d469e634749b8c945a8270e9ecf357bc6"
+    },
+    {
+      "source": "scripts\\check_env.py",
+      "original_sha256": "d2bd12a8942932a80fa431c40b763f95fa17d74181e80d6a6e7e20de3c91c76f"
+    },
+    {
+      "source": "scripts\\smoke.py",
+      "original_sha256": "1f8db8a5d354d07573911eb352ef3c719b3a751faeb1a1030d369f063e528ec3"
+    }
+  ],
+  "adaptations": [
+    "PostgreSQL guard restricted to factory_demo_test_tutorial",
+    "API port 8876; Vite 5176",
+    "Dataset source paths resolved for this machine",
+    "Runtime temporary files stay in practice runtime",
+    "No .env, weights, datasets, node_modules, old runtime or database copied"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "revision": "V1.2",
+  "links": [
+    {
+      "file": "C:\\Users\\13480\\Desktop\\codex_\\factory_demo\\docs\\GUIDE.html",
+      "links": 203,
+      "broken": [],
+      "duplicate_ids": 0
+    },
+    {
+      "file": "C:\\Users\\13480\\Desktop\\codex_\\factory_demo\\docs\\web_manual\\index.html",
+      "links": 203,
+      "broken": [],
+      "duplicate_ids": 0
+    },
+    {
+      "file": "C:\\Users\\13480\\Desktop\\codex_\\tmp\\deliverables\\factory_demo_tutorial\\index.html",
+      "links": 99,
+      "broken": [],
+      "duplicate_ids": 0
+    }
+  ],
+  "lessons": 20,
+  "source_blocks": 37,
+  "diagram_self_check": "5 passed --offline",
+  "course_prose_and_generator_syntax": "passed",
+  "scope": "Static documentation checks only. Browser QA recorded separately by main agent."
+}

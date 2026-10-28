@@ -1,0 +1,89 @@
+{
+  "revision": "V1.1",
+  "browser": {
+    "writesBeforeAdmin": [],
+    "display": {
+      "title": "检测展示",
+      "hasForm": false,
+      "hasHistory": false,
+      "loaded": true
+    },
+    "first": "原图指针：x=100.0, y=100.0 px点击检测框或聚焦后回车查看四点坐标",
+    "zoom": "原图指针：x=150.0, y=120.0 px点击检测框或聚焦后回车查看四点坐标",
+    "selection": "原图指针：x=150.0, y=120.0 px目标 1：P1(563.9, 984.4) · P2(391.5, 1043.7) · P3(288.6, 744.9) · P4(461.0, 685.5)",
+    "mobile": {
+      "overflow": false
+    },
+    "admin": {
+      "hasForm": true,
+      "hasLiveCanvas": false,
+      "navigation": [
+        "▣任务管理",
+        "≡历史记录",
+        "⚙运行配置"
+      ]
+    },
+    "history": true,
+    "config": true,
+    "errors": []
+  },
+  "build": "Vite multi-page build passed",
+  "scope": "Existing saved frame used. No new model inference or performance benchmark.",
+  "documentation_links": [
+    {
+      "file": "C:\\Users\\13480\\Desktop\\codex_\\factory_demo\\docs\\GUIDE.html",
+      "links": 182,
+      "broken": [],
+      "duplicate_ids": 0
+    },
+    {
+      "file": "C:\\Users\\13480\\Desktop\\codex_\\factory_demo\\docs\\web_manual\\index.html",
+      "links": 182,
+      "broken": [],
+      "duplicate_ids": 0
+    },
+    {
+      "file": "C:\\Users\\13480\\Desktop\\codex_\\tmp\\deliverables\\factory_demo_tutorial\\index.html",
+      "links": 98,
+      "broken": [],
+      "duplicate_ids": 0
+    }
+  ],
+  "tutorial_browser": {
+    "initial": {
+      "lessons": 20,
+      "visible": 1,
+      "sourceBlocks": 36,
+      "diagrams": 5,
+      "overflow": false
+    },
+    "wrongFeedback": true,
+    "correctFeedback": true,
+    "progress": "1 / 20 节手动完成",
+    "persisted": true,
+    "searchCount": 5,
+    "emptyFeedback": true,
+    "navigation": "lesson-08",
+    "all20Lessons": true,
+    "mobile": {
+      "overflow": false,
+      "diagrams": [
+        {
+          "width": 319,
+          "scroll": 1280,
+          "overflow": "auto"
+        }
+      ]
+    },
+    "canvas": {
+      "width": "50%",
+      "hidden": true,
+      "points": "120,80 240,100 220,200 100,180"
+    },
+    "coordinateUnchanged": true,
+    "errors": [],
+    "remoteRequests": [],
+    "actualFileNavigation": true
+  },
+  "diagram_self_check": "5 passed --offline"
+}
