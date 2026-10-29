@@ -206,6 +206,7 @@ vendor 内含当前 Windows x64 / CPython 3.10 / PyTorch 环境编译的 CPU rot
 - [公共 API 协议](docs/CONTRACT.md)：前后端统一字段和接口。
 - [推理模块说明](docs/INFERENCE.md)：真实模型、类别映射、原 detect 对比与 NMS 边界。
 - [性能验证与完整数据集指南](docs/PERFORMANCE.md)：计时口径、流程测试与后续精度评估。
+- [完整4911张云端实测报告](docs/benchmarks/20261028-full4911/report.html)：逐阶段耗时、慢帧、资源记录与后续优化依据；2026-10-29已离线复核，本轮不实施优化。
 - `backend/app.py`：API、上传、资源与导出入口。
 - `backend/runner.py`：单任务生命周期、逐图工作与统计。
 - `backend/store.py`：PostgreSQL 事务、查询、单实例锁和中断恢复。

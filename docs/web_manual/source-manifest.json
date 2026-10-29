@@ -1,6 +1,13 @@
 {
   "date": "2026-10-28",
+  "updated_date": "2026-10-29",
   "documents": [
+    {
+      "section": "full4911",
+      "source": "docs\\PERFORMANCE_FULL4911_20261028.md",
+      "sha256": "2aba23505478c6d1abe0a50684c4874c5cba5c87a0e7023a2f43bbcb01779d10",
+      "headings": 1
+    },
     {
       "section": "cloud",
       "source": "docs\\CLOUD_DEPLOYMENT.md",
@@ -16,7 +23,7 @@
     {
       "section": "status",
       "source": "docs\\DOCUMENT_STATUS.md",
-      "sha256": "bf5f356ef66b5de73839e372eb79441c3433d854697e3d1f0cf71f3eada19802",
+      "sha256": "e3611c971c433511dca8c7e5ff9b8f4470adadf45f766bc3ddc6b456ff85bbd1",
       "headings": 1
     },
     {
@@ -40,7 +47,7 @@
     {
       "section": "start",
       "source": "README.md",
-      "sha256": "bcbee1d77c8e59f5df0a37e4afb374d430ea95b1fe3de271ca6bc3df0c8212d7",
+      "sha256": "f0fb7dbe183c236954de2d5fdc1568dbc92eacb618529e934ebeb727ef7d6428",
       "headings": 13
     },
     {
@@ -76,13 +83,13 @@
     {
       "section": "performance",
       "source": "docs\\PERFORMANCE.md",
-      "sha256": "475e7e19f4db0b3c84093c061fe406b2a6141e9283a9818992e375e03167c3ce",
+      "sha256": "ee3bc2abb32ea489ad6a7bc96e53891496af6567af3b69053d4543b90a015116",
       "headings": 8
     },
     {
       "section": "analysis",
       "source": "docs\\PERFORMANCE_OPTIMIZATION_ANALYSIS_20261028.md",
-      "sha256": "94004b52c13c4b3cfc0ae1d3b77c648bff9440348bb424ab6cba012ec40c6ec3",
+      "sha256": "6bace9ea23d0cb6181ed5147560b6b3217b8ede710e5d6755aadadfb6cad5007",
       "headings": 33
     },
     {

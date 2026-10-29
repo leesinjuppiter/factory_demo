@@ -1,0 +1,23 @@
+{
+  "verified_on": "2026-10-29",
+  "offline_only": true,
+  "bundle_bytes": 7815142,
+  "bundle_sha256": "3e62eaf9d08c2c59abe1618328037aca298b1388a63705c8f1c3d5b0a51788d7",
+  "raw_archive_sha256": "7f2068f1b178fe48a4d2fe3747971608bec0c007611496b18ca3db1a42bc5958",
+  "csv_rows": {
+    "baseline": 4911,
+    "pipeline": 4911
+  },
+  "trace_event_rows": {
+    "input": 4911,
+    "adapter": 4911,
+    "frame_cycle": 4911,
+    "preview": 4911
+  },
+  "input_sha256_matches": 4911,
+  "source_snapshots_hashes_match": true,
+  "trace_footers_present": true,
+  "local_observer_http_200": 4911,
+  "all_pipeline_stage_statistics_recomputed": true,
+  "server_current_status": "not_checked_server_disconnected"
+}

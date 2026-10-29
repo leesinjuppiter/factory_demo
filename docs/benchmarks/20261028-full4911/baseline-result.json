@@ -1,0 +1,75 @@
+{
+  "measure_start_ns": 34312647031566429,
+  "measure_end_ns": 34312790650950530,
+  "wall_seconds": 143.619384101,
+  "processed": 4911,
+  "succeeded": 4911,
+  "failed": 0,
+  "detections": 139663,
+  "model": {
+    "name": "factory_now",
+    "path": "/root/autodl-tmp/factory_demo/vendor/weights/factory_now.pt",
+    "sha256": "62af01dbc971d332ad4813d5f2811243f555877ffbdb0755fe428159687ef037",
+    "classes": [
+      {
+        "id": 0,
+        "name": "coal",
+        "label": "coal",
+        "color": "#087f8c"
+      },
+      {
+        "id": 1,
+        "name": "rockbolt",
+        "label": "rockbolt",
+        "color": "#c46a20"
+      },
+      {
+        "id": 2,
+        "name": "mesh",
+        "label": "mesh",
+        "color": "#7561b3"
+      },
+      {
+        "id": 3,
+        "name": "bottle",
+        "label": "bottle",
+        "color": "#397a35"
+      },
+      {
+        "id": 4,
+        "name": "stick",
+        "label": "stick",
+        "color": "#bb4d63"
+      },
+      {
+        "id": 5,
+        "name": "board",
+        "label": "board",
+        "color": "#315fb1"
+      },
+      {
+        "id": 6,
+        "name": "cap",
+        "label": "cap",
+        "color": "#8b6c36"
+      },
+      {
+        "id": 7,
+        "name": "plate",
+        "label": "plate",
+        "color": "#087f8c"
+      }
+    ],
+    "box_type": "obb",
+    "device": "cuda:0",
+    "device_name": "NVIDIA GeForce RTX 3080 Ti",
+    "precision": "float32",
+    "cpu_threads": 4,
+    "stride": 32,
+    "load_warmup_ms": 1696.875
+  },
+  "load_wall_ms": 6503.038224,
+  "warmup_wall_ms": 504.575065,
+  "gpu_peak_allocated_bytes": 432898048,
+  "gpu_peak_reserved_bytes": 624951296
+}

@@ -13,6 +13,7 @@ import sys
 from time import perf_counter
 
 import numpy as np
+from .. import profiling
 
 
 VENDOR = Path(__file__).resolve().parents[2] / "vendor" / "yolov5_obb"
@@ -124,12 +125,15 @@ class PytorchOBBAdapter:
             raise ValueError("max_det 必须在 1..1000 之间")
 
         torch = self.torch
+        profiled = profiling.enabled()
         with torch.inference_mode():
             self._synchronize()
             t0 = perf_counter()
             im = self.letterbox(image_bgr, (image_size, image_size),
                                 stride=self.metadata["stride"], auto=True)[0]
+            letterbox_done = perf_counter()
             im = np.ascontiguousarray(im.transpose((2, 0, 1))[::-1])
+            layout_done = perf_counter()
             tensor = torch.from_numpy(im).to(self.device).float().div_(255).unsqueeze(0)
             self._synchronize()
             t1 = perf_counter()
@@ -139,6 +143,9 @@ class PytorchOBBAdapter:
             if not torch.isfinite(prediction).all():
                 raise ValueError("模型产生非有限数值，当前图片不记录为成功结果")
             det = self.nms(prediction, confidence, iou, multi_label=True, max_det=max_det)[0]
+            if profiled:
+                self._synchronize()
+            nms_done = perf_counter()
             polygons = self.rbox2poly(det[:, :5])
             if len(det):
                 polygons = self.scale_polys(tensor.shape[2:], polygons, image_bgr.shape)
@@ -157,6 +164,17 @@ class PytorchOBBAdapter:
                 })
             self._synchronize()
             t3 = perf_counter()
+        if profiled:
+            profiling.record("adapter", letterbox_ms=(letterbox_done-t0)*1000,
+                             layout_ms=(layout_done-letterbox_done)*1000,
+                             h2d_normalize_ms=(t1-layout_done)*1000,
+                             preprocess_ms=(t1-t0)*1000, inference_ms=(t2-t1)*1000,
+                             nms_ms=(nms_done-t2)*1000, coordinate_result_ms=(t3-nms_done)*1000,
+                             postprocess_ms=(t3-t2)*1000, tensor_shape=list(tensor.shape),
+                             detections=len(detections), device=str(self.device),
+                             gpu_allocated_bytes=torch.cuda.memory_allocated(self.device) if self.device.type == "cuda" else None,
+                             gpu_reserved_bytes=torch.cuda.memory_reserved(self.device) if self.device.type == "cuda" else None,
+                             gpu_peak_allocated_bytes=torch.cuda.max_memory_allocated(self.device) if self.device.type == "cuda" else None)
         return {
             "detections": detections,
             "timing_ms": {"preprocess": (t1 - t0) * 1000,

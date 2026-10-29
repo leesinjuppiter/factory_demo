@@ -15,6 +15,7 @@ import numpy as np
 
 from .images import InputError, check_space, decode, inventory
 from .settings import TERMINAL
+from . import profiling
 
 LOG = logging.getLogger("factory_demo")
 
@@ -88,7 +89,9 @@ class Runner:
             self._starting = True
         files = None
         try:
+            scan_started = time.perf_counter_ns()
             label, files = self.source(params["source_id"])
+            scan_done = time.perf_counter_ns()
             continuous = isinstance(files, dict) and "inbox_root" in files
             if not continuous and not files:
                 raise InputError("所选目录没有支持的图片")
@@ -99,6 +102,11 @@ class Runner:
                    "detection_count": 0, "class_counts": {}, "config": params, "model": copy.deepcopy(self.model),
                    "timings": {"mean_ms": None, "p50_ms": None, "p95_ms": None, "fps": None},
                    "error": None, "latest_frame_id": None}
+            if profiling.enabled():
+                run["benchmark_unpaced"] = profiling.unpaced()
+            profiling.record("inventory", run_id=run["id"], frame_id=None,
+                             source_id=params["source_id"], total=run["total"],
+                             inventory_ms=(scan_done-scan_started)/1e6)
             self.store.save_run(run)
             with self.condition:
                 self.current, self.latest_frame = run, None
@@ -171,6 +179,7 @@ class Runner:
 
     def _work(self, files):
         run = self.current
+        profiling.record("run_start", run_id=run["id"], frame_id=None, source_id=run["source_id"], total=run["total"])
         continuous = isinstance(files, dict) and "inbox_root" in files
         times = deque(maxlen=1000) if continuous else []
         total_time = success_count = 0
@@ -211,9 +220,13 @@ class Runner:
                         break
                     item = files[index]
                 index += 1
+                cycle_start = time.perf_counter_ns()
+                profiling.set_frame(run["id"], index)
                 check_space(self.settings.runtime)
                 tick = time.perf_counter()
+                frame_start = time.perf_counter_ns()
                 frame, image_path = self._frame(run, index, item, output)
+                frame_done = time.perf_counter_ns()
                 with self.condition:
                     # 保存失败不继续处理：否则累计统计可能与数据库脱节。
                     updated = copy.deepcopy(run)
@@ -235,26 +248,45 @@ class Runner:
                             updated["timings"]["quantile_window"] = len(times)
                 # One worker owns persisted state. Control can change its intent
                 # during this transaction; never overwrite that intent afterwards.
+                stats_done = time.perf_counter_ns()
                 self.store.save_frame(updated, frame, image_path)
+                db_done = time.perf_counter_ns()
                 with self.condition:
                     for key, value in updated.items():
                         if key not in {"status", "error", "finished_at"}:
                             run[key] = value
                     self.latest_frame = copy.deepcopy(frame)
                     self._publish(frame, image_path)
+                publish_done = time.perf_counter_ns()
                 if continuous:
                     files.ack(item)
                 with self.condition:
-                    if not continuous and index < len(files):
+                    if not continuous and index < len(files) and not profiling.unpaced():
                         remaining = 1 / run["config"]["replay_fps"] - (time.perf_counter() - tick)
                         if remaining > 0 and run["status"] == "running":
                             self.condition.wait(timeout=remaining)
+                cycle_done = time.perf_counter_ns()
+                profiling.record("frame_cycle", source_id=run["source_id"], name=frame["name"],
+                                 status=frame["status"], detections=len(frame["detections"]),
+                                 cycle_start_ns=cycle_start, frame_start_ns=frame_start,
+                                 db_committed_ns=db_done, published_ns=publish_done,
+                                 space_check_ms=(frame_start-cycle_start)/1e6,
+                                 frame_work_ms=(frame_done-frame_start)/1e6,
+                                 stats_copy_ms=(stats_done-frame_done)/1e6,
+                                 db_commit_ms=(db_done-stats_done)/1e6,
+                                 publish_ms=(publish_done-db_done)/1e6,
+                                 pacing_wait_ms=(cycle_done-publish_done)/1e6,
+                                 active_cycle_ms=(publish_done-cycle_start)/1e6,
+                                 cycle_ms=(cycle_done-cycle_start)/1e6,
+                                 processing_ms=frame["timing_ms"].get("total"))
             with self.condition:
                 run.update(status="stopped" if run["status"] == "stopping" else "completed", finished_at=now())
                 final = copy.deepcopy(run)
             self.store.save_run(final)
             with self.condition:
                 self._publish()
+            profiling.record("run_end", run_id=run["id"], frame_id=None, source_id=run["source_id"],
+                             processed=run["processed"], failed=run["failed"], status=run["status"])
         except Exception as exc:
             LOG.exception("运行 %s 失败", run["id"])
             with self.condition:
@@ -284,20 +316,25 @@ class Runner:
             stat = path.stat()
             if stat.st_size != item["size"] or stat.st_mtime_ns != item["mtime"]:
                 raise InputError("图片在创建任务后发生变化，请重新创建任务")
+            stat_done = time.perf_counter()
             from .settings import LIMITS
             with path.open("rb") as stream:
                 data = stream.read(LIMITS["max_file_bytes"] + 1)
+            file_read_done = time.perf_counter()
             after = path.stat()
             if (after.st_size, after.st_mtime_ns) != (item["size"], item["mtime"]):
                 raise InputError("图片在读取时发生变化，请重新创建任务")
             digest = hashlib.sha256(data).hexdigest()
             if item.get("expected_sha256") and digest != item["expected_sha256"]:
                 raise InputError("相机图片内容与发布清单哈希不一致")
+            integrity_done = time.perf_counter()
             image = decode(data)
             read_ms = (time.perf_counter() - tick) * 1000
             # 原始字节固化，历史查看和导出始终使用该次推理的输入。
             saved = output / f"{index:06d}{path.suffix.lower()}"
+            snapshot_start = time.perf_counter()
             saved.write_bytes(data)
+            snapshot_done = time.perf_counter()
             frame.update(width=int(image.shape[1]), height=int(image.shape[0]), image_url=base + "/image",
                          annotated_url=base + "/annotated", sha256=digest)
         except (OSError, InputError) as exc:
@@ -306,10 +343,20 @@ class Runner:
         params = run["config"]
         result = self.adapter.predict(image, image_size=params["image_size"], confidence=params["confidence"],
                                       iou=params["iou"], max_det=params["max_det"])
+        geometry_start = time.perf_counter()
         from .contracts import detection_view
         for item in result["detections"]:
             geometry = detection_view(item, self.model.get("box_type", "obb"))
             item.update({key: geometry[key] for key in ("center_px", "angle_deg", "angle_convention", "orientation_valid", "geometry_type")})
+        geometry_done = time.perf_counter()
+        profiling.record("input", name=frame["name"], file_bytes=len(data),
+                         width=int(image.shape[1]), height=int(image.shape[0]),
+                         stat_ms=(stat_done-tick)*1000,
+                         file_read_ms=(file_read_done-stat_done)*1000,
+                         integrity_hash_ms=(integrity_done-file_read_done)*1000,
+                         decode_ms=read_ms-(integrity_done-tick)*1000,
+                         snapshot_write_ms=(snapshot_done-snapshot_start)*1000,
+                         geometry_enrich_ms=(geometry_done-geometry_start)*1000)
         timing = {"read": read_ms, **result["timing_ms"]}
         timing["total"] = sum(timing[k] for k in ("read", "preprocess", "inference", "postprocess"))
         frame.update(status="ok", detections=result["detections"], timing_ms=timing)

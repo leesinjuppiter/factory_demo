@@ -1,0 +1,460 @@
+{
+  "runs": [
+    {
+      "run": {
+        "id": "6dbf9a2e-2be3-487c-b1cf-4edd5fcd6336",
+        "error": null,
+        "model": {
+          "name": "factory_now",
+          "path": "/root/autodl-tmp/factory_demo/vendor/weights/factory_now.pt",
+          "device": "cuda:0",
+          "sha256": "62af01dbc971d332ad4813d5f2811243f555877ffbdb0755fe428159687ef037",
+          "stride": 32,
+          "classes": [
+            {
+              "id": 0,
+              "name": "coal",
+              "color": "#087f8c",
+              "label": "coal"
+            },
+            {
+              "id": 1,
+              "name": "rockbolt",
+              "color": "#c46a20",
+              "label": "rockbolt"
+            },
+            {
+              "id": 2,
+              "name": "mesh",
+              "color": "#7561b3",
+              "label": "mesh"
+            },
+            {
+              "id": 3,
+              "name": "bottle",
+              "color": "#397a35",
+              "label": "bottle"
+            },
+            {
+              "id": 4,
+              "name": "stick",
+              "color": "#bb4d63",
+              "label": "stick"
+            },
+            {
+              "id": 5,
+              "name": "board",
+              "color": "#315fb1",
+              "label": "board"
+            },
+            {
+              "id": 6,
+              "name": "cap",
+              "color": "#8b6c36",
+              "label": "cap"
+            },
+            {
+              "id": 7,
+              "name": "plate",
+              "color": "#087f8c",
+              "label": "plate"
+            }
+          ],
+          "box_type": "obb",
+          "precision": "float32",
+          "cpu_threads": 4,
+          "device_name": "NVIDIA GeForce RTX 3080 Ti",
+          "load_warmup_ms": 1686.595
+        },
+        "total": 2947,
+        "config": {
+          "iou": 0.45,
+          "engine": "pytorch",
+          "max_det": 300,
+          "source_id": "bench_train",
+          "confidence": 0.25,
+          "image_size": 640,
+          "replay_fps": 10.0
+        },
+        "failed": 0,
+        "status": "completed",
+        "timings": {
+          "fps": 25.992326204261534,
+          "p50_ms": 36.42234206199646,
+          "p95_ms": 51.96510180830955,
+          "mean_ms": 38.472893581800555
+        },
+        "processed": 2947,
+        "source_id": "bench_train",
+        "succeeded": 2947,
+        "created_at": "2026-10-28T14:58:21.647644+00:00",
+        "started_at": "2026-10-28T14:58:21.652414+00:00",
+        "finished_at": "2026-10-28T15:00:58.545367+00:00",
+        "class_counts": {
+          "0": 82813,
+          "1": 568,
+          "2": 453,
+          "3": 1,
+          "4": 24,
+          "5": 10,
+          "6": 3
+        },
+        "source_label": "完整4911 · train",
+        "detection_count": 83872,
+        "latest_frame_id": 2947,
+        "benchmark_unpaced": true
+      },
+      "request_start_ns": 34314078315057468,
+      "observed_end_ns": 34314236028965040,
+      "api_wall_seconds": 157.713907572
+    },
+    {
+      "run": {
+        "id": "f498ec66-a7a3-42ac-b04a-870166e06ded",
+        "error": null,
+        "model": {
+          "name": "factory_now",
+          "path": "/root/autodl-tmp/factory_demo/vendor/weights/factory_now.pt",
+          "device": "cuda:0",
+          "sha256": "62af01dbc971d332ad4813d5f2811243f555877ffbdb0755fe428159687ef037",
+          "stride": 32,
+          "classes": [
+            {
+              "id": 0,
+              "name": "coal",
+              "color": "#087f8c",
+              "label": "coal"
+            },
+            {
+              "id": 1,
+              "name": "rockbolt",
+              "color": "#c46a20",
+              "label": "rockbolt"
+            },
+            {
+              "id": 2,
+              "name": "mesh",
+              "color": "#7561b3",
+              "label": "mesh"
+            },
+            {
+              "id": 3,
+              "name": "bottle",
+              "color": "#397a35",
+              "label": "bottle"
+            },
+            {
+              "id": 4,
+              "name": "stick",
+              "color": "#bb4d63",
+              "label": "stick"
+            },
+            {
+              "id": 5,
+              "name": "board",
+              "color": "#315fb1",
+              "label": "board"
+            },
+            {
+              "id": 6,
+              "name": "cap",
+              "color": "#8b6c36",
+              "label": "cap"
+            },
+            {
+              "id": 7,
+              "name": "plate",
+              "color": "#087f8c",
+              "label": "plate"
+            }
+          ],
+          "box_type": "obb",
+          "precision": "float32",
+          "cpu_threads": 4,
+          "device_name": "NVIDIA GeForce RTX 3080 Ti",
+          "load_warmup_ms": 1686.595
+        },
+        "total": 982,
+        "config": {
+          "iou": 0.45,
+          "engine": "pytorch",
+          "max_det": 300,
+          "source_id": "bench_val",
+          "confidence": 0.25,
+          "image_size": 640,
+          "replay_fps": 10.0
+        },
+        "failed": 0,
+        "status": "completed",
+        "timings": {
+          "fps": 28.74796288519932,
+          "p50_ms": 33.728063106536865,
+          "p95_ms": 44.40131634473801,
+          "mean_ms": 34.78507343262373
+        },
+        "processed": 982,
+        "source_id": "bench_val",
+        "succeeded": 982,
+        "created_at": "2026-10-28T15:00:59.061191+00:00",
+        "started_at": "2026-10-28T15:00:59.067670+00:00",
+        "finished_at": "2026-10-28T15:01:45.822737+00:00",
+        "class_counts": {
+          "0": 27449,
+          "1": 191,
+          "2": 150,
+          "4": 5,
+          "5": 2,
+          "6": 1
+        },
+        "source_label": "完整4911 · val",
+        "detection_count": 27798,
+        "latest_frame_id": 982,
+        "benchmark_unpaced": true
+      },
+      "request_start_ns": 34314236028975960,
+      "observed_end_ns": 34314283079704070,
+      "api_wall_seconds": 47.05072811
+    },
+    {
+      "run": {
+        "id": "373a7f14-5a84-4191-9684-9cb133cf1fc0",
+        "error": null,
+        "model": {
+          "name": "factory_now",
+          "path": "/root/autodl-tmp/factory_demo/vendor/weights/factory_now.pt",
+          "device": "cuda:0",
+          "sha256": "62af01dbc971d332ad4813d5f2811243f555877ffbdb0755fe428159687ef037",
+          "stride": 32,
+          "classes": [
+            {
+              "id": 0,
+              "name": "coal",
+              "color": "#087f8c",
+              "label": "coal"
+            },
+            {
+              "id": 1,
+              "name": "rockbolt",
+              "color": "#c46a20",
+              "label": "rockbolt"
+            },
+            {
+              "id": 2,
+              "name": "mesh",
+              "color": "#7561b3",
+              "label": "mesh"
+            },
+            {
+              "id": 3,
+              "name": "bottle",
+              "color": "#397a35",
+              "label": "bottle"
+            },
+            {
+              "id": 4,
+              "name": "stick",
+              "color": "#bb4d63",
+              "label": "stick"
+            },
+            {
+              "id": 5,
+              "name": "board",
+              "color": "#315fb1",
+              "label": "board"
+            },
+            {
+              "id": 6,
+              "name": "cap",
+              "color": "#8b6c36",
+              "label": "cap"
+            },
+            {
+              "id": 7,
+              "name": "plate",
+              "color": "#087f8c",
+              "label": "plate"
+            }
+          ],
+          "box_type": "obb",
+          "precision": "float32",
+          "cpu_threads": 4,
+          "device_name": "NVIDIA GeForce RTX 3080 Ti",
+          "load_warmup_ms": 1686.595
+        },
+        "total": 982,
+        "config": {
+          "iou": 0.45,
+          "engine": "pytorch",
+          "max_det": 300,
+          "source_id": "bench_test",
+          "confidence": 0.25,
+          "image_size": 640,
+          "replay_fps": 10.0
+        },
+        "failed": 0,
+        "status": "completed",
+        "timings": {
+          "fps": 28.129579171808537,
+          "p50_ms": 34.33339297771454,
+          "p95_ms": 44.77329216897487,
+          "mean_ms": 35.549767520240756
+        },
+        "processed": 982,
+        "source_id": "bench_test",
+        "succeeded": 982,
+        "created_at": "2026-10-28T15:01:46.110128+00:00",
+        "started_at": "2026-10-28T15:01:46.114045+00:00",
+        "finished_at": "2026-10-28T15:02:33.871798+00:00",
+        "class_counts": {
+          "0": 27636,
+          "1": 199,
+          "2": 144,
+          "4": 9,
+          "5": 3,
+          "6": 2
+        },
+        "source_label": "完整4911 · test",
+        "detection_count": 27993,
+        "latest_frame_id": 982,
+        "benchmark_unpaced": true
+      },
+      "request_start_ns": 34314283079710170,
+      "observed_end_ns": 34314331222512201,
+      "api_wall_seconds": 48.142802031
+    }
+  ],
+  "warmup": {
+    "run": {
+      "id": "087bb759-c4d5-4eac-aaaf-a9b914004666",
+      "error": null,
+      "model": {
+        "name": "factory_now",
+        "path": "/root/autodl-tmp/factory_demo/vendor/weights/factory_now.pt",
+        "device": "cuda:0",
+        "sha256": "62af01dbc971d332ad4813d5f2811243f555877ffbdb0755fe428159687ef037",
+        "stride": 32,
+        "classes": [
+          {
+            "id": 0,
+            "name": "coal",
+            "color": "#087f8c",
+            "label": "coal"
+          },
+          {
+            "id": 1,
+            "name": "rockbolt",
+            "color": "#c46a20",
+            "label": "rockbolt"
+          },
+          {
+            "id": 2,
+            "name": "mesh",
+            "color": "#7561b3",
+            "label": "mesh"
+          },
+          {
+            "id": 3,
+            "name": "bottle",
+            "color": "#397a35",
+            "label": "bottle"
+          },
+          {
+            "id": 4,
+            "name": "stick",
+            "color": "#bb4d63",
+            "label": "stick"
+          },
+          {
+            "id": 5,
+            "name": "board",
+            "color": "#315fb1",
+            "label": "board"
+          },
+          {
+            "id": 6,
+            "name": "cap",
+            "color": "#8b6c36",
+            "label": "cap"
+          },
+          {
+            "id": 7,
+            "name": "plate",
+            "color": "#087f8c",
+            "label": "plate"
+          }
+        ],
+        "box_type": "obb",
+        "precision": "float32",
+        "cpu_threads": 4,
+        "device_name": "NVIDIA GeForce RTX 3080 Ti",
+        "load_warmup_ms": 1686.595
+      },
+      "total": 10,
+      "config": {
+        "iou": 0.45,
+        "engine": "pytorch",
+        "max_det": 300,
+        "source_id": "bench_warmup",
+        "confidence": 0.25,
+        "image_size": 640,
+        "replay_fps": 10.0
+      },
+      "failed": 0,
+      "status": "completed",
+      "timings": {
+        "fps": 17.36743436287481,
+        "p50_ms": 40.00155255198479,
+        "p95_ms": 142.9583977907894,
+        "mean_ms": 57.579028606414795
+      },
+      "processed": 10,
+      "source_id": "bench_warmup",
+      "succeeded": 10,
+      "created_at": "2026-10-28T14:58:13.932659+00:00",
+      "started_at": "2026-10-28T14:58:20.505098+00:00",
+      "finished_at": "2026-10-28T14:58:21.250894+00:00",
+      "class_counts": {
+        "0": 289,
+        "1": 2,
+        "2": 1
+      },
+      "source_label": "Benchmark warm-up (excluded)",
+      "detection_count": 292,
+      "latest_frame_id": 10,
+      "benchmark_unpaced": true
+    },
+    "request_start_ns": 34314070974501994,
+    "observed_end_ns": 34314078315053774,
+    "api_wall_seconds": 7.34055178
+  },
+  "database_before": {
+    "bytes": 41692507,
+    "wal_lsn": "0/3FE15E0",
+    "version": "PostgreSQL 14.24 (Ubuntu 14.24-0ubuntu0.22.04.1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0, 64-bit",
+    "synchronous_commit": "on",
+    "fsync": "on",
+    "track_io_timing": "off"
+  },
+  "filesystem_free_before": 50159947776,
+  "display_end": {
+    "preview_skipped": 0,
+    "preview_errors": 0,
+    "preview_cache_bytes": 1819723,
+    "preview_cache_limit_bytes": 33554432,
+    "subscribers": 1,
+    "latest_result_key": {
+      "source_id": "bench_test",
+      "session_id": "373a7f14-5a84-4191-9684-9cb133cf1fc0",
+      "frame_id": "982"
+    }
+  },
+  "database_after": {
+    "bytes": 73215323,
+    "wal_lsn": "0/631F4E0",
+    "version": "PostgreSQL 14.24 (Ubuntu 14.24-0ubuntu0.22.04.1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0, 64-bit",
+    "synchronous_commit": "on",
+    "fsync": "on",
+    "track_io_timing": "off"
+  },
+  "filesystem_free_after": 48583426048
+}

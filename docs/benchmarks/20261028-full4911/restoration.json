@@ -1,0 +1,7 @@
+{
+  "pid": 12299,
+  "trace_enabled": false,
+  "unpaced_enabled": false,
+  "config": "configs/cloud.json",
+  "health": "ok"
+}

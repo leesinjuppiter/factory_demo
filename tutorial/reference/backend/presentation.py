@@ -3,6 +3,7 @@ import asyncio
 import copy
 import logging
 import threading
+import time
 import uuid
 from collections import OrderedDict
 
@@ -10,6 +11,7 @@ import cv2
 
 from .contracts import SCHEMA_VERSION, frame_view, stream_view
 from .images import decode
+from . import profiling
 
 LOG = logging.getLogger("factory_demo.presentation")
 
@@ -30,6 +32,7 @@ class Presentation:
         self.skipped = self.errors = 0
         self.result_sequence = self.display_sequence = 0
         self.latest_result_key = None
+        self.pending_queued_ns = 0
         self.closed = False
         self.worker = threading.Thread(target=self._work, name="factory-preview", daemon=True)
         self.worker.start()
@@ -56,16 +59,23 @@ class Presentation:
                     self.subscribers.pop(token, None)
 
     def _deliver(self, token):
+        started = time.perf_counter_ns()
         with self.condition:
             sub = self.subscribers.get(token)
             if not sub:
                 return
             sub["scheduled"] = False
             snapshot = self._snapshot()
+            copied = time.perf_counter_ns()
             queue = sub["queue"]
             if queue.full():
                 queue.get_nowait()
             queue.put_nowait(snapshot)
+        frame = snapshot.get("frame") or {}
+        profiling.record("ws_queue", run_id=frame.get("stream_session_id"), frame_id=frame.get("id"),
+                         subscriber=token, revision=snapshot["revision"],
+                         lock_and_snapshot_ms=(copied-started)/1e6,
+                         queue_ms=(time.perf_counter_ns()-copied)/1e6)
 
     def subscribe(self, loop):
         with self.condition:
@@ -100,6 +110,7 @@ class Presentation:
                     if self.pending is not None:
                         self.skipped += 1
                     self.pending = (projected, self.result_sequence, stream["model"]["version"], image_path)
+                    self.pending_queued_ns = time.perf_counter_ns()
                     # Keep the latest COMPLETE display frame while newer results
                     # arrive. Faster inference must not cancel every slow encode.
                     if self.frame is None or self.frame["preview_status"] != "ready":
@@ -125,15 +136,22 @@ class Presentation:
                 if self.closed:
                     return
                 projected, sequence, model_version, path = self.pending
+                queued_ns = self.pending_queued_ns
+                dequeued_ns = time.perf_counter_ns()
                 key, session = projected["frame_key"], projected["stream_session_id"]
                 self.pending = None
             try:
-                image = decode(path.read_bytes())
+                data = path.read_bytes()
+                read_done = time.perf_counter_ns()
+                image = decode(data)
+                decode_done = time.perf_counter_ns()
                 height, width = image.shape[:2]
                 scale = min(1, self.PREVIEW_WIDTH / width)
                 size = (max(1, round(width*scale)), max(1, round(height*scale)))
                 resized = cv2.resize(image, size, interpolation=cv2.INTER_AREA) if size != (width, height) else image
+                resize_done = time.perf_counter_ns()
                 ok, encoded = cv2.imencode(".jpg", resized, [cv2.IMWRITE_JPEG_QUALITY, 82])
+                encode_done = time.perf_counter_ns()
                 if not ok:
                     raise ValueError("JPEG 编码失败")
                 data = encoded.tobytes()
@@ -142,6 +160,7 @@ class Presentation:
                 identity = uuid.uuid4().hex
                 preview = {"id": identity, "url": f"/api/display/previews/{identity}.jpg", "mime": "image/jpeg",
                            "width": size[0], "height": size[1], "sx": size[0]/width, "sy": size[1]/height, "ox": 0, "oy": 0}
+                cache_start = time.perf_counter_ns()
                 with self.condition:
                     if (not self.stream or self.stream["session_id"] != session
                             or self.stream["model"]["version"] != model_version or sequence <= self.display_sequence):
@@ -156,6 +175,17 @@ class Presentation:
                     self.display_sequence = sequence
                     self.frame.update(preview=preview, preview_status="ready")
                     self._changed()
+                ready_ns = time.perf_counter_ns()
+                profiling.record("preview", run_id=session, frame_id=projected["id"],
+                                 preview_id=identity, queued_ns=queued_ns, ready_ns=ready_ns,
+                                 queue_wait_ms=(dequeued_ns-queued_ns)/1e6,
+                                 snapshot_read_ms=(read_done-dequeued_ns)/1e6,
+                                 decode_ms=(decode_done-read_done)/1e6,
+                                 resize_ms=(resize_done-decode_done)/1e6,
+                                 jpeg_encode_ms=(encode_done-resize_done)/1e6,
+                                 pack_bytes_ms=(cache_start-encode_done)/1e6,
+                                 cache_publish_ms=(ready_ns-cache_start)/1e6,
+                                 preview_work_ms=(ready_ns-dequeued_ns)/1e6, bytes=len(data))
             except Exception:
                 LOG.exception("预览生成失败（检测及归档结果不受影响）")
                 with self.condition:

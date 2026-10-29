@@ -1,0 +1,10 @@
+{
+  "discarded_pipeline_attempt": "/root/autodl-tmp/tmp/bench4911-20261028-01",
+  "processed_successfully": 4911,
+  "missing_frame_cycle_records": 2,
+  "reason": "trace buffer tail lost on shutdown; original results retained, not used for final full-stage statistics",
+  "observer_correction": "separate WS reader from JPEG consumer; one pending latest frame, matching frontend policy",
+  "baseline_reused_from": "/root/autodl-tmp/tmp/bench4911-20261028-01",
+  "baseline_timed_function_unchanged": true,
+  "uvicorn_replays_signal": true
+}

@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-29",
+  "html_ids_anchors_passed": [
+    "C:\\Users\\13480\\Desktop\\codex_\\factory_demo\\docs\\benchmarks\\20261028-full4911\\report.html",
+    "C:\\Users\\13480\\Desktop\\codex_\\factory_demo\\docs\\GUIDE.html",
+    "C:\\Users\\13480\\Desktop\\codex_\\factory_demo\\docs\\web_manual\\index.html",
+    "C:\\Users\\13480\\Desktop\\codex_\\factory_demo\\tutorial\\index.html",
+    "C:\\Users\\13480\\Desktop\\codex_\\factory_demo\\tutorial\\performance_full4911\\report.html",
+    "C:\\Users\\13480\\Desktop\\codex_\\tmp\\deliverables\\factory_demo_tutorial\\index.html",
+    "C:\\Users\\13480\\Desktop\\codex_\\tmp\\deliverables\\factory_demo_tutorial\\performance_full4911\\report.html"
+  ],
+  "performance_report_file_links": "all resolved",
+  "python_ast": "passed",
+  "chart_rendering": "Matplotlib PNG exports visually inspected; SVG/HTML self_check passed",
+  "html_browser_rendering": "not_performed_in_app_browser_blocks_file_protocol; no browser workaround attempted",
+  "offline_only": true,
+  "production_optimizations_applied": false,
+  "reports_sha256": {
+    "docs\\benchmarks\\20261028-full4911\\report.html": "dc4b2b1e980a90bd769365289f1097162aecdf4880ac030f324bc341d826812d",
+    "docs\\GUIDE.html": "b69040e357e73fb9f718ba46b0dd08cbb0e8a727ba8834429b163cfd508d76ef",
+    "tutorial\\index.html": "d621ed94c42cbdf55c37a6c52014aa609c1decbcb78f6d9b5b2f260832bd2720"
+  }
+}

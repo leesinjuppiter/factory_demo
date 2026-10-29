@@ -1,6 +1,6 @@
 {
   "lessons": 20,
-  "source_blocks": 48,
+  "source_blocks": 50,
   "files": [
     {
       "lesson": 1,
@@ -90,12 +90,12 @@
     {
       "lesson": 8,
       "file": "reference/backend/runner.py",
-      "sha256": "fa3da642dafa1b4a72099e7511048fb630b8d2e14c374a929d0e59c5166c6e3c"
+      "sha256": "f30c5701bf9b6471d488b18c6c2049df87208d06912899c69044caddb3f26c97"
     },
     {
       "lesson": 8,
       "file": "reference/backend/presentation.py",
-      "sha256": "6e01909b24b6c5fd61b3a901ff46cb01a2414a462f6210acd979b66bff159838"
+      "sha256": "560420497f21a00f3b24371999910c4d1ce8974ad57c281b10e9629ade7dcda7"
     },
     {
       "lesson": 8,
@@ -110,7 +110,7 @@
     {
       "lesson": 9,
       "file": "reference/backend/app.py",
-      "sha256": "b37a17936fbdc58fca0ab7369c29b9817c186a5ac5d2b2d45636f5bcd2d4bac8"
+      "sha256": "9d3d9a4efaef68ee7cf803554fdadcbc41c1e30a863ee54dcafee8c75f513b64"
     },
     {
       "lesson": 9,
@@ -125,7 +125,7 @@
     {
       "lesson": 11,
       "file": "reference/backend/inference/pytorch_obb.py",
-      "sha256": "9e4c48abd274e42558aa9bbcba2eb0d80a81bc5f1e2edf1a2aa8a30c12d0e099"
+      "sha256": "b41bf562fef5c46747eb8a39b248ae0a82ff54a7ef4753e8c1d36b54f0081e62"
     },
     {
       "lesson": 12,
@@ -236,6 +236,16 @@
       "lesson": 16,
       "file": "reference/frontend/tests/stream.test.mjs",
       "sha256": "51253c8ce36bca94c5aa9adb5dcfc525daeeb07bef2511d68e86aae007b5ed5e"
+    },
+    {
+      "lesson": 16,
+      "file": "reference/backend/profiling.py",
+      "sha256": "9a365bb3b3b143ed2090449ee648c09df977fed73920c5372caf89f6e630d509"
+    },
+    {
+      "lesson": 16,
+      "file": "reference/tests/test_profiling.py",
+      "sha256": "470f1c51a39ee28cd33daf5c556ec9131fc6577112187a5b784dbc901320a6d1"
     },
     {
       "lesson": 18,

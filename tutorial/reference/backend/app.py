@@ -3,6 +3,7 @@ import csv
 import io
 import json
 import logging
+import time
 import uuid
 import asyncio
 from contextlib import asynccontextmanager
@@ -25,6 +26,7 @@ from .runner import Conflict, Runner
 from .settings import EXTENSIONS, LIMITS, ROOT, TERMINAL, Settings
 from .store import Store
 from .presentation import Presentation
+from . import profiling
 from .inference.factory import capabilities as engine_capabilities
 
 LOG = logging.getLogger("factory_demo")
@@ -95,6 +97,7 @@ def create_app(settings=None, adapter_factory=None):
             if runner is None or runner.close():
                 store.close()
             app.state.presentation.close()
+            profiling.close()
 
     app = FastAPI(title="Factory Demo", version="1.3.0", lifespan=lifespan)
     app.add_middleware(UploadSizeLimit)
@@ -260,7 +263,14 @@ def create_app(settings=None, adapter_factory=None):
                 except asyncio.TimeoutError:
                     packet = {"schema_version": "1.0", "type": "heartbeat",
                               "revision": app.state.presentation.snapshot()["revision"]}
+                send_start = time.perf_counter_ns()
                 await asyncio.wait_for(websocket.send_json(packet), timeout=5)
+                frame = packet.get("frame") or {}
+                profiling.record("ws_send", run_id=frame.get("stream_session_id"), frame_id=frame.get("id"),
+                                 subscriber=token, revision=packet.get("revision"),
+                                 observer=websocket.headers.get("x-benchmark-observer") == "1",
+                                 send_start_ns=send_start, send_done_ns=time.perf_counter_ns(),
+                                 send_ms=(time.perf_counter_ns()-send_start)/1e6)
 
         async def receive():
             # The display channel has no production control capability.

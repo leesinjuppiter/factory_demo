@@ -1,0 +1,116 @@
+{
+  "analysis_date": "2026-10-29",
+  "comparison_ms": {
+    "file_read_ms": {
+      "baseline_mean": 0.176382366727754,
+      "pipeline_mean": 1.9391852974697472,
+      "difference_ms": 1.7628029307419932
+    },
+    "integrity_hash_ms": {
+      "baseline_mean": 0.8035151484422723,
+      "pipeline_mean": 1.6319409340492603,
+      "difference_ms": 0.828425785606988
+    },
+    "decode_ms": {
+      "baseline_mean": 9.188824721238039,
+      "pipeline_mean": 13.24514092695832,
+      "difference_ms": 4.056316205720281
+    },
+    "preprocess_ms": {
+      "baseline_mean": 2.200863565138318,
+      "pipeline_mean": 2.3802723837976565,
+      "difference_ms": 0.17940881865933855
+    },
+    "inference_ms": {
+      "baseline_mean": 12.168828906983325,
+      "pipeline_mean": 13.512959356003103,
+      "difference_ms": 1.3441304490197776
+    },
+    "postprocess_ms": {
+      "baseline_mean": 2.7424630329143342,
+      "pipeline_mean": 3.540355746310589,
+      "difference_ms": 0.7978927133962546
+    },
+    "geometry_enrich_ms": {
+      "baseline_mean": 0.5621582533088983,
+      "pipeline_mean": 0.6460865966731433,
+      "difference_ms": 0.08392834336424493
+    }
+  },
+  "active_cycle_gt100ms": {
+    "frames": 22,
+    "largest_listed_stage_counts": {
+      "db_commit_ms": 19,
+      "file_read_ms": 2,
+      "space_check_ms": 1
+    },
+    "definition": "Largest measured stage among listed columns; correlation/attribution clue, not root-cause proof"
+  },
+  "split_windows": {
+    "train": {
+      "first20pct": {
+        "stats_copy_ms": 1.6824399779286927,
+        "db_commit_ms": 7.387743139219015,
+        "inference_ms": 14.972816450688956,
+        "decode_ms": 15.25881126244728,
+        "active_cycle_ms": 58.30411118845502
+      },
+      "last20pct": {
+        "stats_copy_ms": 1.6405124210526314,
+        "db_commit_ms": 5.970881594227504,
+        "inference_ms": 13.18840501618102,
+        "decode_ms": 13.76397750879589,
+        "active_cycle_ms": 49.469323100169774
+      }
+    },
+    "val": {
+      "first20pct": {
+        "stats_copy_ms": 0.6675314285714286,
+        "db_commit_ms": 6.915382637755101,
+        "inference_ms": 13.093026544974775,
+        "decode_ms": 11.487185042731616,
+        "active_cycle_ms": 48.26395936734693
+      },
+      "last20pct": {
+        "stats_copy_ms": 1.2128644540816327,
+        "db_commit_ms": 6.884539346938775,
+        "inference_ms": 13.354466429778508,
+        "decode_ms": 11.868598585834308,
+        "active_cycle_ms": 49.78670078571429
+      }
+    },
+    "test": {
+      "first20pct": {
+        "stats_copy_ms": 0.9813350969387755,
+        "db_commit_ms": 6.720932974489795,
+        "inference_ms": 13.215765090925354,
+        "decode_ms": 12.059461439446528,
+        "active_cycle_ms": 50.07239721938776
+      },
+      "last20pct": {
+        "stats_copy_ms": 0.9362244336734692,
+        "db_commit_ms": 6.781210265306122,
+        "inference_ms": 13.338002813409785,
+        "decode_ms": 11.122984355505633,
+        "active_cycle_ms": 46.59802509183674
+      }
+    }
+  },
+  "jpeg_bytes": {
+    "mean": 55916.320301364285,
+    "p95": 63196.0,
+    "max": 72230
+  },
+  "fixed_service_arrival42fps": {
+    "arrival_fps": 42,
+    "observed_scenario_service_fps": 19.41817019662252,
+    "backlog_growth_frames_per_second": 22.58182980337748,
+    "excess_frames_per_minute": 1354.9097882026488,
+    "assumption": "Same input workload and sustained service rate; illustrative queue arithmetic, not measured camera experiment"
+  },
+  "limitations": [
+    "No repeated runs or no-preview paired condition; differences cannot isolate preview causality",
+    "Finite directory statistics use an increasing list; continuous inbox uses a capped deque of 1000, so do not transpose long-run scaling directly",
+    "Stage largest-value counts are descriptive, not evidence of disk/SQL root cause"
+  ]
+}

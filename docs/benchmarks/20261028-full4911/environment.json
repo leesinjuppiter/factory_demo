@@ -1,0 +1,63 @@
+{
+  "python": "/root/miniconda3/envs/factory_demo/bin/python",
+  "python_version": "3.10.22 (main, Oct  1 2026, 20:14:04) [GCC 14.3.0]",
+  "packages": {
+    "torch": "2.5.1",
+    "torchvision": "0.20.1",
+    "numpy": "1.26.4",
+    "opencv-python": "4.10.0.84",
+    "Pillow": "12.3.0",
+    "fastapi": "0.162.0",
+    "uvicorn": "0.54.0",
+    "websockets": "15.0.1",
+    "psycopg": "3.3.6",
+    "python-dotenv": "1.2.4"
+  },
+  "parameters": {
+    "engine": "pytorch",
+    "image_size": 640,
+    "confidence": 0.25,
+    "iou": 0.45,
+    "max_det": 300,
+    "replay_fps": 10
+  },
+  "batch": 1,
+  "precision": "float32",
+  "device": "cuda:0",
+  "split_counts": {
+    "train": 2947,
+    "val": 982,
+    "test": 982
+  },
+  "source_bytes": 1526260344,
+  "resolution_counts": {
+    "1580x1080": 4911
+  },
+  "warmup_images": 10,
+  "manifest_sha256": "5905bd0b31664b935b60c7958ff5e6fdfcb6fbb440db6788f42450617b02bb3a",
+  "code_base_commit": "277d7f547890dcccbd74b86f7f44ac67b8e2626c",
+  "source_hashes": {
+    "backend/profiling.py": "69b21a09f6227776963923e18683b958f7a8b2b1a3895eacd5b2c10a87f6375d",
+    "backend/runner.py": "76a004e8cc6c35ee2d5f995ae1a03784b4fcc24c6c28ec46715646f6db28fe25",
+    "backend/presentation.py": "b6097bdd61fdb73767394764991a9c9e670dc7149101891c960bb3715dbd71d1",
+    "backend/app.py": "e8059ddd9235f8595ad046f709b0ac1f3e1873a231a098c04924af267d1dca37",
+    "backend/inference/pytorch_obb.py": "faed6fe4cb2ace98231711d4b59b1ff6ef1dfb0d31b58474504f6633247d184c",
+    "scripts/benchmark_full4911.py": "0719ca097be5ff60040917cd209704e8467db0c44451f234349a8995f52f1a5d"
+  },
+  "cache_policy": "All input bytes hashed before timing; no OS cache flush; warm-cache-oriented, not cold disk throughput",
+  "timing_policy": "perf_counter_ns wall times; existing CUDA sync plus one extra NMS-boundary sync while tracing",
+  "limitations": [
+    "one measured pass per condition, not repeat-run variance",
+    "no accuracy/AP assessment",
+    "source files already on disk; no real exposure or actuator timing",
+    "local HTTP/JPEG observer is not a browser paint or WAN measurement"
+  ],
+  "pipeline_source_hashes": {
+    "backend/profiling.py": "69b21a09f6227776963923e18683b958f7a8b2b1a3895eacd5b2c10a87f6375d",
+    "backend/runner.py": "76a004e8cc6c35ee2d5f995ae1a03784b4fcc24c6c28ec46715646f6db28fe25",
+    "backend/presentation.py": "b6097bdd61fdb73767394764991a9c9e670dc7149101891c960bb3715dbd71d1",
+    "backend/app.py": "845164ef087f76585754636826d2d700e8e9d295ff0880a8121bfd4eaac1931e",
+    "backend/inference/pytorch_obb.py": "faed6fe4cb2ace98231711d4b59b1ff6ef1dfb0d31b58474504f6633247d184c",
+    "scripts/benchmark_full4911.py": "1855244ce8de9636e17f8e249062f7b69b74334f43fc9e794e57be9af7393634"
+  }
+}

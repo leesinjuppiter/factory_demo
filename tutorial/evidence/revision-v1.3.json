@@ -12,15 +12,16 @@
   "files": {
     "backend\\__init__.py": "d3b37f3aea64128f9eb1a8d83df45ff4ee23314fdaae753a2fca91da6083f19d",
     "backend\\acquisition.py": "6ed3e962f4f88920734c1e18dfab30dddc21a4e91dc448df571ee5bf4d2f560f",
-    "backend\\app.py": "b37a17936fbdc58fca0ab7369c29b9817c186a5ac5d2b2d45636f5bcd2d4bac8",
+    "backend\\app.py": "9d3d9a4efaef68ee7cf803554fdadcbc41c1e30a863ee54dcafee8c75f513b64",
     "backend\\contracts.py": "091d3dcddb9b6c2bba00f5fa6bb78464f3cd12bf000bbd7dc6edaebc1060cc2b",
     "backend\\display_gateway.py": "9cb3b79bfb0c09de5fb1ea874ae75584fbcf503a3f24ff4ea458afa0e6338899",
     "backend\\images.py": "f8c48ce18c7f1cc20dac0c3f31325309fcacf7773e9cc16d5e0a41d93707155d",
     "backend\\inference\\__init__.py": "a8ad36ce17b72c7e9da5f19440b884f3018a292d5c400d3671a095954f4d6210",
     "backend\\inference\\factory.py": "443f9c225d647102f0a2cbd72fb1e9142cb535db33fb72b8003ab0b8298d45c8",
-    "backend\\inference\\pytorch_obb.py": "9e4c48abd274e42558aa9bbcba2eb0d80a81bc5f1e2edf1a2aa8a30c12d0e099",
-    "backend\\presentation.py": "6e01909b24b6c5fd61b3a901ff46cb01a2414a462f6210acd979b66bff159838",
-    "backend\\runner.py": "fa3da642dafa1b4a72099e7511048fb630b8d2e14c374a929d0e59c5166c6e3c",
+    "backend\\inference\\pytorch_obb.py": "b41bf562fef5c46747eb8a39b248ae0a82ff54a7ef4753e8c1d36b54f0081e62",
+    "backend\\presentation.py": "560420497f21a00f3b24371999910c4d1ce8974ad57c281b10e9629ade7dcda7",
+    "backend\\profiling.py": "9a365bb3b3b143ed2090449ee648c09df977fed73920c5372caf89f6e630d509",
+    "backend\\runner.py": "f30c5701bf9b6471d488b18c6c2049df87208d06912899c69044caddb3f26c97",
     "backend\\settings.py": "332cbe5f0b9b9dc8e2174208c1a32bcb270b61f7da08c620dcdb58fc6a9670a3",
     "backend\\store.py": "7ce3cf220cca6b84acc36240672e05b20ae0c9a996a0a2ce32169921e052e08f",
     "frontend\\src\\AdminApp.vue": "5f3ad9bdf4103afdf8092cc595e048226443a8517238414ce35b7005ae680fa2",
@@ -46,6 +47,7 @@
     "tests\\test_display_gateway.py": "530fdd5d84cbff53d6b5ab388dd1006ccd36c780d46d411797affeb433defd34",
     "tests\\test_gpu.py": "70579733cdaa61b54bc5ec8079af677d61dc55bae105d8f6d1b25b7ea315e525",
     "tests\\test_inference.py": "3f27c00458c2ebb42649e84e05467b9622c9bd27c99414b8cc1bf8f6785eeed2",
-    "tests\\test_presentation.py": "91d5b472585785d6797c03e4647bcd185a550ea607fd7ac6250af18f26714058"
+    "tests\\test_presentation.py": "91d5b472585785d6797c03e4647bcd185a550ea607fd7ac6250af18f26714058",
+    "tests\\test_profiling.py": "470f1c51a39ee28cd33daf5c556ec9131fc6577112187a5b784dbc901320a6d1"
   }
 }
