@@ -1,12 +1,14 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import DetectionStage from './components/DetectionStage.vue'
+import SingleImageControls from './components/SingleImageControls.vue'
 import { useDisplayStream } from './stream/useDisplayStream.js'
 import { errorText } from './stream/contract.js'
 import './display.css'
 
 const { snapshot, prepared, connected, checked, error, lastContact } = useDisplayStream()
 const readOnlyGateway = document.querySelector('meta[name="factory-display-readonly"]')?.content === 'true'
+const localControls = !readOnlyGateway && !new URLSearchParams(window.location.search).has('display_origin')
 const stream = computed(() => snapshot.value?.stream)
 const frame = computed(() => prepared.value.frame)
 const filter = ref(''), clock = ref(new Date()), display = ref({ frame: null, selected: null })
@@ -45,8 +47,8 @@ onBeforeUnmount(() => clearInterval(clockTimer))
 <template>
   <main class="display-page industrial-display">
     <header class="industrial-header">
-      <div class="industrial-brand"><span class="brand-mark" aria-hidden="true">F</span><div><strong>FACTORY DEMO</strong><small>工业视觉 · 检测展示</small></div></div>
-      <div class="industrial-title"><h1>工业视觉检测展示系统</h1><p>INDUSTRIAL VISION INSPECTION</p></div>
+      <div class="industrial-brand"><span class="brand-mark" aria-hidden="true">F</span><div><strong>FACTORY</strong><small>工业视觉 · 检测展示</small></div></div>
+      <div class="industrial-title"><h1>察哈素选煤厂智能分拣系统</h1><p>检测结果 · 原图坐标 · {{ localControls ? '实时展示' : '只读展示' }}</p></div>
       <div class="industrial-clock"><time>{{ timeText }}</time><span>{{ dateText }} · 本机时间</span></div>
     </header>
     <div class="display-statusbar">
@@ -57,7 +59,7 @@ onBeforeUnmount(() => clearInterval(clockTimer))
     <div class="industrial-grid">
       <aside class="industrial-left">
         <section class="panel dashboard-panel">
-          <h2 class="dashboard-heading"><span>服务与任务状态</span><small>SYSTEM STATUS</small></h2>
+          <h2 class="dashboard-heading"><span>服务与任务状态</span></h2>
           <div class="health-grid">
             <article><span>结果连接</span><strong :class="connected ? 'good' : checked ? 'danger' : 'neutral'">{{ connected ? '已连接' : checked ? '中断' : '检查中' }}</strong></article>
             <article><span>结果距今</span><strong class="neutral">{{ frameAge }}</strong></article>
@@ -65,10 +67,10 @@ onBeforeUnmount(() => clearInterval(clockTimer))
             <article><span>运行设备</span><strong class="neutral">{{ stream?.model?.device || '—' }}</strong></article>
           </div>
           <dl class="source-info"><dt>推理引擎</dt><dd>{{ engine }}</dd><dt>模型</dt><dd>{{ stream?.model?.name || '尚未加载' }}</dd><dt>图片来源</dt><dd>{{ stream?.source_label || '—' }}</dd></dl>
-          <p class="dashboard-note">展示只依赖统一协议；结果距今按本机时钟计算，不代表采集到动作延迟。</p>
+<!--          <p class="dashboard-note">展示只依赖统一协议；结果距今按本机时钟计算，不代表采集到动作延迟。</p>-->
         </section>
         <section class="panel dashboard-panel category-panel">
-          <h2 class="dashboard-heading"><span>检测类别统计</span><small>OBJECT CLASSES</small></h2>
+          <h2 class="dashboard-heading"><span>检测类别统计</span></h2>
           <label class="display-filter">画面筛选<select v-model="filter"><option value="">全部类别</option><option v-for="c in classes" :key="c.id" :value="String(c.id)">{{ c.label || c.name }}</option></select></label>
           <div class="category-columns"><span>检测类别</span><span>当前帧</span><span>任务累计</span></div>
           <div v-for="c in classes" :key="c.id" class="category-row"><span><i :style="{ background: c.color || '#57d9e9' }"></i>{{ c.label || c.name }}</span><strong>{{ count(c.id) }}</strong><b>{{ stream?.class_counts?.[c.id] || 0 }}</b></div>
@@ -77,32 +79,33 @@ onBeforeUnmount(() => clearInterval(clockTimer))
         </section>
       </aside>
       <section class="industrial-center">
+        <SingleImageControls v-if="localControls" :stream="stream" :connected="connected" />
         <DetectionStage :key="stream?.session_id || 'idle'" :frame="frame" :loading="prepared.loading" :error="prepared.error" :connected="connected" :state="stream?.status" :class-filter="filter" @display-change="display = $event" />
         <details class="panel coordinate-details">
           <summary><span>当前帧坐标明细</span><span>{{ visibleFrame ? `${detections.length} 个可见目标 · FRAME ${visibleFrame.id}` : '等待画面' }}</span></summary>
           <div class="coordinate-context">原图左上角为原点，x 向右、y 向下，单位 px。任务 {{ visibleFrame?.sessionId || '—' }} / 帧 {{ visibleFrame?.id || '—' }}。</div>
           <div class="table-scroll"><table><thead><tr><th>帧内编号</th><th>类别</th><th>置信度</th><th>P1 → P2 → P3 → P4</th></tr></thead><tbody><tr v-for="d in detections" :key="d.id"><td>{{ d.id }}</td><td>{{ classLabel(d) }}</td><td>{{ (d.confidence * 100).toFixed(1) }}%</td><td class="coordinates">{{ d.polygon.map(p => `(${p.map(v => v.toFixed(1)).join(', ')})`).join(' → ') }}</td></tr><tr v-if="!detections.length"><td colspan="4">{{ prepared.loading ? '等待预览加载完成' : '当前没有可显示的检测框' }}</td></tr></tbody></table></div>
         </details>
-        <div class="display-footnote"><span>HBB / OBB 原图像素坐标</span><span>只读展示 · 任务控制与历史查询在后台进行</span></div>
+        <div class="display-footnote"><span>HBB / OBB 原图像素坐标</span><span>{{ localControls ? '批量任务与历史查询在后台管理' : '只读展示' }}</span></div>
       </section>
       <aside class="industrial-right">
         <section class="panel dashboard-panel metrics-panel">
-          <h2 class="dashboard-heading"><span>任务处理指标</span><small>RUN METRICS</small></h2>
+          <h2 class="dashboard-heading"><span>任务处理指标</span></h2>
           <div class="primary-metric"><span>已处理图片</span><strong>{{ stream?.processed ?? '—' }}<small>/ {{ !stream ? '—' : stream.total == null ? '连续流' : stream.total + ' 张' }}</small></strong></div>
           <progress v-if="stream?.total != null" :value="progress" max="100" aria-label="任务处理进度"></progress>
           <div class="result-counts"><div><span>成功</span><b class="good">{{ stream?.succeeded ?? '—' }}</b></div><div><span>失败</span><b :class="stream?.failed ? 'danger' : 'neutral'">{{ stream?.failed ?? '—' }}</b></div><div><span>当前帧目标</span><b>{{ visibleFrame?.detections.length ?? '—' }}</b></div></div>
           <div class="timing-heading">当前帧处理耗时 <small>ms</small></div>
           <dl class="timing-values"><dt>读取 / 预处理</dt><dd>{{ ms(visibleFrame?.timing_ms?.read) }} / {{ ms(visibleFrame?.timing_ms?.preprocess) }}</dd><dt>模型前向</dt><dd class="accent-value">{{ ms(visibleFrame?.timing_ms?.inference) }}</dd><dt>后处理 / 合计</dt><dd>{{ ms(visibleFrame?.timing_ms?.postprocess) }} / {{ ms(visibleFrame?.timing_ms?.total) }}</dd></dl>
           <div class="run-quantiles"><span>{{ stream?.mode === 'continuous' ? '最近窗口 P50' : '任务 P50' }} <b>{{ ms(stream?.timings?.p50_ms) }}</b> ms</span><span>P95 <b>{{ ms(stream?.timings?.p95_ms) }}</b> ms</span></div>
-          <p class="dashboard-note">耗时来自后端处理统计，不含传输和页面渲染；置信度不等于准确率。</p>
+<!--          <p class="dashboard-note">耗时来自后端处理统计，不含传输和页面渲染；置信度不等于准确率。</p>-->
         </section>
         <section class="panel dashboard-panel target-panel">
-          <h2 class="dashboard-heading"><span>选中目标坐标</span><small>TARGET DETAIL</small></h2>
+          <h2 class="dashboard-heading"><span>选中目标坐标</span></h2>
           <template v-if="selected"><div class="target-title"><strong>{{ classLabel(selected) }}</strong><span>#{{ selected.id }} · {{ (selected.confidence * 100).toFixed(1) }}%</span></div><div class="point-grid"><div v-for="(point, index) in selected.polygon" :key="index"><span>P{{ index + 1 }}</span><b>{{ point[0].toFixed(1) }}, {{ point[1].toFixed(1) }}</b></div></div><p class="dashboard-note">中心 {{ selected.center.map(v => v.toFixed(1)).join(', ') }} px · 角度 {{ selected.orientation_valid ? selected.angle_deg.toFixed(1) + '°' : '无有效方向' }}<br>长轴方向不等于机械臂姿态；顶点为原图像素坐标。</p></template>
-          <div v-else class="target-empty"><span aria-hidden="true">⌖</span><p>点击检测框查看四点坐标</p><small>也可用 Tab 聚焦检测框，按回车选择</small></div>
+          <div v-else class="target-empty"><p>点击检测框查看四点坐标</p><small>也可用 Tab 聚焦检测框，按回车选择</small></div>
         </section>
         <section class="panel dashboard-panel notices-panel">
-          <h2 class="dashboard-heading"><span>当前状态提示</span><small>STATUS NOTICE</small></h2>
+          <h2 class="dashboard-heading"><span>当前状态提示</span></h2>
           <div class="notice-list"><article v-for="(notice, index) in notices" :key="index" :class="notice.tone"><i></i><div><strong>{{ notice.title }}</strong><p>{{ notice.text }}</p></div></article></div>
           <p class="dashboard-note">结果生成时间 {{ timeOf(visibleFrame?.created_at) }}。此处不保存历史日志。</p>
         </section>

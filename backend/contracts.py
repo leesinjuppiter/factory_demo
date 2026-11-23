@@ -7,6 +7,12 @@ ANGLE_CONVENTION = "long_axis_clockwise_from_positive_x_mod_180"
 ENGINE_LABELS = {"pytorch": "PyTorch · YOLOv5-OBB", "openvino": "OpenVINO", "tensorrt": "TensorRT"}
 
 
+def engine_label(engine, model_family=None):
+    if engine == "pytorch" and model_family == "yolo26-obb":
+        return "PyTorch · YOLO26-OBB"
+    return ENGINE_LABELS.get(engine, str(engine))
+
+
 def finite(value, *, nullable=True):
     if value is None and nullable:
         return None
@@ -62,9 +68,10 @@ def stream_view(run):
     classes = [{k: c.get(k) for k in ("id", "name", "label", "color")} for c in model.get("classes", [])]
     return {"session_id": run["id"], "source_id": run["source_id"], "source_label": run["source_label"],
             "mode": "continuous" if run.get("total") is None else "finite", "status": run["status"],
+            **({"image_position": dict(run["image_position"])} if "image_position" in run else {}),
             "model": {"id": model.get("name"), "version": model.get("sha256"),
                       "name": model.get("name"), "device": model.get("device")},
-            "engine_label": ENGINE_LABELS.get(engine, str(engine)), "classes": classes,
+            "engine_label": engine_label(engine, model.get("family")), "classes": classes,
             "class_catalog_version": model.get("sha256"),
             **{k: deepcopy(run.get(k)) for k in ("class_counts", "processed", "total", "succeeded", "failed", "timings")},
             "error": safe_error(run.get("error"), "RUN_FAILED")}

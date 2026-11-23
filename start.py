@@ -12,6 +12,8 @@ temp = ROOT.parent / "tmp" / datetime.now(ZoneInfo("Asia/Shanghai")).strftime("%
 temp.mkdir(parents=True, exist_ok=True)
 os.environ["TEMP"] = os.environ["TMP"] = str(temp)
 os.environ.setdefault("MPLCONFIGDIR", str(temp / "matplotlib"))
+os.environ.setdefault("YOLO_CONFIG_DIR", str(temp))
+os.environ.setdefault("YOLO_AUTOINSTALL", "false")
 os.environ["PYTHONDONTWRITEBYTECODE"] = "1"
 
 if __name__ == "__main__":

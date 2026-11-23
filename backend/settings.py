@@ -26,6 +26,7 @@ class Settings:
             raise ValueError("请先运行 scripts/setup_db.py 配置独立 PostgreSQL DATABASE_URL")
         self.runtime = (ROOT / self.config["runtime_dir"]).resolve()
         self.weights = (ROOT / self.config["weights"]).resolve()
+        self.model_family = self.config.get("model_family", "yolov5-obb")
         self.sources = {s["id"]: {**s, "path": (ROOT / s["path"]).resolve()} for s in self.config["sources"]}
         if len(self.sources) != len(self.config["sources"]):
             raise ValueError("配置中的 source id 重复")

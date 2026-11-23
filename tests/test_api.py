@@ -83,6 +83,20 @@ def start(client, **kwargs):
     return result.json()["id"]
 
 
+def test_single_image_selection_is_reported_in_display(context):
+    client, _, _ = context
+    for index, name in [(3, "2.png"), (2, "1.png")]:
+        run_id = start(client, image_index=index)
+        run = finish(client, run_id)
+        assert (run["total"], run["processed"], run["succeeded"]) == (1, 1, 1)
+        assert run["image_position"] == {"index": index, "total": 5}
+        snapshot = client.get("/api/display/snapshot").json()
+        assert snapshot["stream"]["image_position"] == run["image_position"]
+        assert snapshot["frame"]["name"] == name
+    assert client.post("/api/runs", json={"source_id": "test", "image_index": 0}).status_code == 422
+    assert client.post("/api/runs", json={"source_id": "test", "image_index": 6}).status_code == 400
+
+
 def test_full_run_empty_and_bad_image_export_persistence(context):
     client, cfg, directory = context
     run_id = start(client)

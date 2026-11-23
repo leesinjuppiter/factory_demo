@@ -4,7 +4,7 @@
 
 本项目把单图/图片目录、YOLOv5-OBB 真实推理、检测画面、运行控制、PostgreSQL 历史和结果导出连成一个本机流程。前端通过统一协议显示 HBB/OBB 四点框，不绑定特定类别或推理引擎。
 
-**本版实际实现 PyTorch YOLOv5-OBB CPU/CUDA FP32。默认CPU，云端通过 `FACTORY_DEVICE=cuda:0` 显式选择GPU；部署与验证见 [AutoDL 云端说明](docs/CLOUD_DEPLOYMENT.md)。OpenVINO、TensorRT 显示为未实现；无 CVAT、标注、训练、视频或真实相机 SDK 接入。**
+**本地默认使用 PyTorch YOLO26-OBB 和 CPU。云端 YOLOv5-OBB 部署通过 `FACTORY_DEVICE=cuda:0` 显式选择 GPU，详见 [AutoDL 云端说明](docs/CLOUD_DEPLOYMENT.md)。OpenVINO、TensorRT 显示为未实现；无 CVAT、标注、训练、视频或真实相机 SDK 接入。**
 
 默认权重为用户指定 `factory_now.pt` 的独立副本。实际权重 **8 类**，而 smoke 数据集 **7 类且顺序不同**；本版显示与统计采用权重顺序，不计算精度。请先阅读下方类别说明。
 
@@ -32,14 +32,14 @@
 
 项目位置：`C:\Users\13480\Desktop\codex_\factory_demo`。
 
-后端固定使用 `C:\Users\13480\miniconda3\envs\yolo_v5_obb\python.exe`，本地 PostgreSQL 服务需运行。配置与独立数据库已由实施流程建立时，不必重复初始化。
+本地启动脚本使用 `C:\Users\13480\miniconda3\envs\yolo26obb\python.exe`，并连接本机 PostgreSQL。首次配置 Python 环境时，按第 7 节安装依赖。已有 `.env` 和应用数据库可继续使用。
 
 **PowerShell**
 
 ```powershell
 Set-Location 'C:\Users\13480\Desktop\codex_\factory_demo'
-& 'C:\Users\13480\miniconda3\envs\yolo_v5_obb\python.exe' -B scripts\check_env.py
-& 'C:\Users\13480\miniconda3\envs\yolo_v5_obb\python.exe' -B start.py
+& 'C:\Users\13480\miniconda3\envs\yolo26obb\python.exe' -B scripts\check_env.py
+& 'C:\Users\13480\miniconda3\envs\yolo26obb\python.exe' -B start.py
 ```
 
 **CMD / Anaconda Prompt**
@@ -55,9 +55,13 @@ start.cmd
 
 ## 2. 第一次操作
 
+在本地展示页使用「单张推理」，选择图片目录后点「推理第一张」。用「上一张」和「下一张」实时推理选中的图片，索引按文件名排序。首张和末张分别禁用对应的翻页按钮。
+
+需要执行整批任务时，使用后台管理页。
+
 1. 打开后台管理 `http://127.0.0.1:8765/admin.html`，选择 `Smoke 50 · 测试集（10 张）`，或上传一张 JPG/JPEG/PNG/BMP。
 2. 保留默认 PyTorch、输入尺寸 640、置信度 0.25、NMS IoU 0.45、最多 300 框、目标回放 1 FPS。
-3. 点击开始。首次运行需要加载约 8,743 万参数的权重并预热，页面显示 loading；这段等待不是卡死，也不计入每图推理均值。
+3. 点击开始。首次运行会加载本地权重并预热，页面显示 loading。加载和预热耗时独立于每图推理均值。
 4. 在展示页 `http://127.0.0.1:8765/` 查看原图、旋转框、类别、置信度和统计。可以隐藏框/标签、按类别筛选、缩放或全屏。
 5. 暂停会在当前帧结束后生效；继续处理剩余图片。停止保存已经完成的部分，不强行打断 PyTorch 原生算子。
 6. 一次遍历结束后进入 completed。到后台“历史记录”查看配置与逐图结果，下载 JSON/CSV 或单图绘框 PNG。
@@ -83,22 +87,14 @@ start.cmd
 
 ## 4. 权重与类别映射
 
-权重副本：`vendor/weights/factory_now.pt`。
+本地权重为 `vendor/weights/yolo26obb.pt`，来源为桌面的 `yolo26obb.pt`。本地适配器使用 YOLO26 的 one-to-many 检测头和旋转框 NMS，工作台设置的 NMS IoU 会传给推理器。
 
-SHA-256：`62af01dbc971d332ad4813d5f2811243f555877ffbdb0755fe428159687ef037`。
+| 权重 ID | 类别 |
+|---:|---|
+| 0 | `foreign` |
+| 1 | `surrounding_material` |
 
-| 权重 ID | 名称 | smoke 数据集 ID |
-|---:|---|---:|
-| 0 | coal | 0 |
-| 1 | rockbolt | 1 |
-| 2 | mesh | 2 |
-| 3 | bottle | 6 |
-| 4 | stick | 3 |
-| 5 | board | 4 |
-| 6 | cap | 5 |
-| 7 | plate | 无对应类 |
-
-界面、数据库和预测导出全部遵循权重 ID。完整数据集评估前需按名称映射，并单独确定 `plate` 的评估规则。不得直接把预测 ID 与标签 ID 逐项比较。
+界面、数据库和导出均使用模型的类别 ID。默认 Smoke 50 图片源可用于验证流程，原有标注采用 YOLOv5-OBB 的类别体系。旧模型与类别信息见 [YOLOv5-OBB 推理说明](docs/INFERENCE.md)。
 
 ## 5. 配置其他图片目录
 
@@ -114,7 +110,7 @@ SHA-256：`62af01dbc971d332ad4813d5f2811243f555877ffbdb0755fe428159687ef037`。
 
 路径可为绝对路径，或相对于项目根目录的路径。源 ID 必须唯一。目录只扫描第一层；不递归处理子目录。创建任务时冻结清单并记录文件大小/修改时间，之后新增图片留到下一次任务。
 
-默认数据源引用旁边 YOLOv5-OBB 项目的 smoke 数据集。推理代码与权重已复制进新项目，不依赖旁边仓库代码运行；图片数据仍是外部可配置资源。搬迁项目后需要修改这些路径。
+本地配置登记了 `E:/20260409_195028` 和相邻项目中的 Smoke 50 图片目录。修改 `sources` 下对应项的 `path`，或新增带唯一 `id` 的目录项，重启后即可在展示页选择。单张推理使用普通图片目录，`mode: "inbox"` 用于连续相机数据。
 
 **本版资源上限**
 
@@ -151,27 +147,31 @@ SHA-256：`62af01dbc971d332ad4813d5f2811243f555877ffbdb0755fe428159687ef037`。
 
 ## 7. 重建依赖与数据库
 
-本节用于迁移或环境损坏后的恢复。本机已经配置好时无需重复执行。
-
-API 新增依赖固定在 [requirements-api.txt](requirements-api.txt)。它**不包含完整模型环境**；已有 `yolo_v5_obb` 中的 Torch、torchvision、OpenCV、NumPy 等仍是运行前提。不要为了安装 API 依赖重装 Torch 或切换 CUDA。
+本机 Conda 环境 `yolo26obb` 使用 Python 3.13。以下命令安装 CPU 版 PyTorch、与权重保存版本一致的 Ultralytics、Windows 时区数据和 [API 依赖](requirements-api.txt)。NumPy、OpenCV、Pillow 随 Ultralytics 安装。
 
 ```powershell
 Set-Location 'C:\Users\13480\Desktop\codex_\factory_demo'
-& 'C:\Users\13480\miniconda3\envs\yolo_v5_obb\python.exe' -m pip install -r requirements-api.txt
+conda activate yolo26obb
+python -m pip install torch==2.15.0 torchvision==0.29.2 --index-url https://download.pytorch.org/whl/cpu
+python -m pip install "ultralytics==8.4.115" tzdata -r requirements-api.txt
+python -m pip check
+```
+
+前端构建文件位于 `frontend/dist`，由 API 托管。需要重新生成前端文件时执行以下命令。独立开发时可在 frontend 运行 `npm run dev`，Vite 将 `/api` 转发到本机 8765。
+
+```powershell
 Set-Location frontend
 npm ci
 npm run build
 Set-Location ..
 ```
 
-前端生产文件位于 `frontend/dist`，由 API 托管；修改前端后重新 build，再重启服务。独立开发时可在 frontend 运行 `npm run dev`，Vite 将 `/api` 转发到本机 8765。
-
 数据库初始化脚本为 `scripts/setup_db.py`，支持 `--from-env` 读取一个本机管理员 `.env` 中的连接，或使用进程环境变量 `FACTORY_ADMIN_DATABASE_URL`。它连接本机 PostgreSQL 的管理库，建立独立 `factory_demo` 非超级用户与同名数据库，并把随机生成的应用凭据写入新项目 `.env`；不会复制管理员密码到新配置。
 
 示例命令中的路径需替换为已有的本机管理员配置文件：
 
 ```powershell
-& 'C:\Users\13480\miniconda3\envs\yolo_v5_obb\python.exe' -B scripts\setup_db.py --from-env 'C:\path\to\local-admin.env'
+& 'C:\Users\13480\miniconda3\envs\yolo26obb\python.exe' -B scripts\setup_db.py --from-env 'C:\path\to\local-admin.env'
 ```
 
 已有 `.env` 时脚本只检查连接，不覆盖。没有 `.env` 但同名角色/数据库已存在时拒绝覆盖，需要手工配置正确连接。不要将密码粘贴到文档、聊天或命令输出中。
@@ -211,7 +211,8 @@ vendor 内含当前 Windows x64 / CPython 3.10 / PyTorch 环境编译的 CPU rot
 - `backend/runner.py`：单任务生命周期、逐图工作与统计。
 - `backend/store.py`：PostgreSQL 事务、查询、单实例锁和中断恢复。
 - `backend/images.py`：目录清单、读图校验与空间检查。
-- `backend/inference/pytorch_obb.py`：PyTorch OBB 适配器。
+- `backend/inference/ultralytics_obb.py`：本地 YOLO26-OBB 适配器。
+- `backend/inference/pytorch_obb.py`：YOLOv5-OBB 适配器。
 - `frontend/src/`：独立 DisplayApp 展示页、AdminApp 后台管理页与共享坐标画布。
 
 验证结论以本次交付验收记录为准。单图与 50 张流程测试不能证明完整数据集精度、连续工业吞吐或 OpenVINO/TensorRT 已可用。
@@ -222,14 +223,14 @@ vendor 内含当前 Windows x64 / CPython 3.10 / PyTorch 环境编译的 CPU rot
 
 ```powershell
 Set-Location 'C:\Users\13480\Desktop\codex_\factory_demo'
-& 'C:\Users\13480\miniconda3\envs\yolo_v5_obb\python.exe' -B scripts\smoke.py --output 'C:\Users\13480\Desktop\codex_\tmp\deliverables\factory_demo\smoke50-local.json'
+& 'C:\Users\13480\miniconda3\envs\yolo26obb\python.exe' -B scripts\smoke.py --output 'C:\Users\13480\Desktop\codex_\tmp\deliverables\factory_demo\smoke50-local.json'
 ```
 
 默认分别执行测试 10 张、验证 10 张、训练 30 张；使用真实 HTTP、真实模型与 PostgreSQL，创建新的运行记录及图片快照，不修改原数据集。脚本把目标回放设为 10 FPS 以减少人为等待，实际参数和耗时保存在报告中；运行结束不计算精度。
 
 只检查测试子集可以追加 `--sources smoke_test`。`--timeout` 控制每个任务的等待秒数，默认 600；超时时脚本报错，不自动删除记录或强制终止后台模型，应在后台任务管理查看并按需停止。
 
-真实模型单元测试：
+旧版 YOLOv5-OBB 真权重单元测试：
 
 ```powershell
 & 'C:\Users\13480\miniconda3\envs\yolo_v5_obb\python.exe' -B tests\test_inference.py -v

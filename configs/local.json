@@ -1,7 +1,9 @@
 {
-  "weights": "vendor/weights/factory_now.pt",
+  "weights": "vendor/weights/yolo26obb.pt",
+  "model_family": "yolo26-obb",
   "runtime_dir": "runtime",
   "sources": [
+    {"id": "capture_20260409_195028", "label": "20260409_195028", "path": "E:/20260409_195028"},
     {"id": "smoke_test", "label": "Smoke 50 · 测试集（10 张）", "path": "../yolov5_obb-master/dataset/dataset4911_obb_smoke_50/test/images"},
     {"id": "smoke_val", "label": "Smoke 50 · 验证集（10 张）", "path": "../yolov5_obb-master/dataset/dataset4911_obb_smoke_50/val/images"},
     {"id": "smoke_train", "label": "Smoke 50 · 训练集（30 张）", "path": "../yolov5_obb-master/dataset/dataset4911_obb_smoke_50/train/images"},

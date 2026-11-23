@@ -37,12 +37,15 @@ class Runner:
         self.shutting_down = False
         self.adapter = None
         self.adapter_factory = adapter_factory
+        self.model_family = getattr(settings, "model_family", "yolov5-obb")
         self.presentation = presentation
         self._starting = False
         self._control_dirty = False
         self.latest_frame = None
         self.model = {"name": settings.weights.stem, "path": str(settings.weights), "sha256": None,
                       "classes": [], "box_type": "obb", "device": os.getenv("FACTORY_DEVICE", "cpu")}
+        if self.model_family == "yolo26-obb":
+            self.model["family"] = self.model_family
         # Recovery is a startup operation. Steady-state status/display reads never
         # query PostgreSQL; cold start still intentionally requires the database.
         self.current = store.latest_run()
@@ -95,6 +98,15 @@ class Runner:
             continuous = isinstance(files, dict) and "inbox_root" in files
             if not continuous and not files:
                 raise InputError("所选目录没有支持的图片")
+            image_index = params.get("image_index")
+            image_position = None
+            if image_index is not None:
+                if continuous:
+                    raise InputError("单张推理需要选择图片目录")
+                if image_index > len(files):
+                    raise InputError(f"当前目录有 {len(files)} 张图片，请选择有效序号")
+                image_position = {"index": image_index, "total": len(files)}
+                files = [files[image_index - 1]]
             check_space(self.settings.runtime)
             run = {"id": str(uuid.uuid4()), "status": "loading", "source_id": params["source_id"],
                    "source_label": label, "created_at": now(), "started_at": None, "finished_at": None,
@@ -102,6 +114,8 @@ class Runner:
                    "detection_count": 0, "class_counts": {}, "config": params, "model": copy.deepcopy(self.model),
                    "timings": {"mean_ms": None, "p50_ms": None, "p95_ms": None, "fps": None},
                    "error": None, "latest_frame_id": None}
+            if image_position is not None:
+                run["image_position"] = image_position
             if profiling.enabled():
                 run["benchmark_unpaced"] = profiling.unpaced()
             profiling.record("inventory", run_id=run["id"], frame_id=None,
@@ -190,7 +204,8 @@ class Runner:
             if self.adapter is None:
                 if self.adapter_factory is None:
                     from .inference.factory import create_adapter
-                    adapter = create_adapter(run["config"]["engine"], self.settings.weights)
+                    adapter = create_adapter(run["config"]["engine"], self.settings.weights,
+                                             self.model_family)
                 else:
                     adapter = self.adapter_factory(self.settings.weights)
                 model = adapter.load()

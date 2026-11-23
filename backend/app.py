@@ -60,6 +60,7 @@ class UploadSizeLimit:
 class RunRequest(BaseModel):
     model_config = ConfigDict(extra="forbid", allow_inf_nan=False)
     source_id: str = Field(min_length=1, max_length=100)
+    image_index: int | None = Field(default=None, ge=1, le=LIMITS["max_images"], strict=True)
     engine: Literal["pytorch", "openvino", "tensorrt"] = "pytorch"
     confidence: float = Field(default=0.25, ge=0.001, le=1)
     iou: float = Field(default=0.45, ge=0.01, le=1)
@@ -186,7 +187,7 @@ def create_app(settings=None, adapter_factory=None):
                 count, error = 0, str(exc)
             sources.append({"id": source["id"], "label": source["label"], "count": count, "error": error,
                             "mode": "continuous" if source.get("mode") == "inbox" else "finite"})
-        return {"protocol_version": "1.0", "engines": engine_capabilities(cfg.weights),
+        return {"protocol_version": "1.0", "engines": engine_capabilities(cfg.weights, cfg.model_family),
             "model": app.state.runner.model, "limits": LIMITS, "sources": sources, "defaults": cfg.defaults}
 
     @app.post("/api/uploads", status_code=201)
@@ -222,7 +223,7 @@ def create_app(settings=None, adapter_factory=None):
     def start(params: RunRequest):
         if params.engine != "pytorch":
             fail(409, "ENGINE_UNAVAILABLE", "此引擎本版未实现，请选择 PyTorch")
-        return app.state.runner.start(params.model_dump())
+        return app.state.runner.start(params.model_dump(exclude_none=True))
 
     @app.get("/api/status")
     def status():
